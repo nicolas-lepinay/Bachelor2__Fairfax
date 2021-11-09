@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
+.login {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    .loginWrapper {
+        display: flex;
+        height: 70%;
+        width: 70%;
+        .loginLeft,
+        .loginRight {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            .loginLogo {
+                font-family: 'Crimson Text', serif;
+                font-size: 70px;
+                font-weight: bold;
+                background-image: radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                background-image: -webkit-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                background-image: -moz-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                background-image: -ms-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                background-image: -o-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                color: transparent;
+                background-clip: text;
+                -webkit-background-clip: text;
+                text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+            }
+            .loginDesc {
+                font-size: 24px;
+            }
+        }
+        .loginRight {
+            .loginBox {
+                background-color: white;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 20px;
+                margin-left: 100px;
+                height: 450px;
+                .loginInput {
+                    border: 1px solid gray;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    height: 50px;
+                    padding-left: 20px;
+                }
+                .loginInput:focus {
+                    outline: none;
+                }
+                .loginButton {
+                    background-color: #7269c0;
+                    border: none;
+                    border-radius: 10px;
+                    color: white;
+                    cursor: pointer;
+                    height: 50px;
+                    margin: 0 auto;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    left: 0;
+                    right: 0;
+                    width: 200px;
+                }
+                .loginForgot {
+                    color: rgb(7, 5, 134);
+                    cursor: pointer;
+                    text-align: center;
+                    text-decoration: underline;
+                }
+                .loginRegisterButton {
+                    border: none;
+                    color: white;
+                    cursor: pointer;
+                    font-weight: normal;
+                    height: 45px;
+                    margin: 0 auto;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    left: 0;
+                    right: 0;
+                    width: 170px;
+                    background-image: radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                    background-image: -webkit-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                    background-image: -moz-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                    background-image: -ms-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                    background-image: -o-radial-gradient(circle, rgba(222, 208, 160, 1) 0%, rgba(167, 150, 102, 1) 100%);
+                }
+            }
+        }
+    }
+}

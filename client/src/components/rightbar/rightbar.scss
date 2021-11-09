@@ -1,0 +1,68 @@
+.rightbar {
+    flex: 20;
+    // background-color: rgb(250, 246, 240);
+    background-color: rgba(36, 38, 51);
+    .rightbarWrapper {
+        color: white;
+        padding: 20px 20px 0 20px;
+        .birthdayContainer {
+            display: flex;
+            align-items: center;
+            .birthdayImg {
+                height: 40px;
+                margin-right: 10px;
+                width: 40px;
+            }
+            .birthdayText {
+                font-size: 15px;
+                font-weight: 200;
+            }
+        }
+        .rightbarAd {
+            border-radius: 10px;
+            margin: 30px 0;
+            width: 100%;
+        }
+        .rightbarFriendList {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .rightbarTitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .rightbarInfo {
+            margin-bottom: 10px;
+            .rightbarInfoItem {
+                margin-bottom: 10px;
+                .rightbarInfoKey {
+                    color: rgb(179, 158, 92);
+                    font-weight: 700;
+                    margin-right: 15px;
+                }
+                .rightbarInfoValue {
+                    // Nothing
+                }
+            }
+        }
+        .rightbarFollowings {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            .rightbarFollowing {
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                padding: 15px;
+                margin-bottom: 20px;
+                .rightbarFollowingImg {
+                    border-radius: 50%;
+                    height: 100px;
+                    object-fit: cover;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

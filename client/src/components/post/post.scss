@@ -1,0 +1,76 @@
+.post {
+    background-color: white;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    color: black;
+    margin: 30px 0;
+    width: 100%;
+    .postWrapper {
+        padding: 10px;
+        .postTop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .postTopLeft {
+                display: flex;
+                align-items: center;
+                .postProfileImg {
+                    border-radius: 50%;
+                    height: 32px;
+                    object-fit: cover;
+                    width: 32px;
+                }
+                .postUsername {
+                    font-size: 15px;
+                    margin: 0 10px;
+                }
+                .postDate {
+                    font-size: 12px;
+                }
+            }
+        }
+        .postCenter {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+            .postText {
+                margin-bottom: 20px;
+            }
+            .postImg {
+                left: 0;
+                right: 0;
+                //margin-top: 20px;
+                margin: auto;
+                max-height: 500px;
+                object-fit: contain;
+                width: 60%;
+            }
+        }
+        .postBottom {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            .postBottomLeft {
+                align-items: center;
+                display: flex;
+                .likeIcon {
+                    cursor: pointer;
+                    height: 24px;
+                    margin-right: 5px;
+                    width: 24px;
+                }
+                .postLikeCounter {
+                    font-size: 12px;
+                }
+            }
+            .postBottomRight {
+                .postCommentText {
+                    border-bottom: 1px dashed gray;
+                    cursor: pointer;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
