@@ -1,14 +1,38 @@
 import "./sidebar.css"
+
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import { RssFeed } from "@material-ui/icons"
 import { HelpOutline } from "@material-ui/icons"
 import { Event } from "@material-ui/icons"
 import { Security } from "@material-ui/icons"
 import { Map } from "@material-ui/icons"
 import { LocalMall } from "@material-ui/icons"
-import { Users } from "../../dummyData"
+// import { Users } from "../../dummyData"
 import CloseFriend from "../closeFriend/CloseFriend"
 
+import { AuthContext } from "../../context/AuthContext";
+
 export default function Sidebar() {
+
+    const { user } = useContext(AuthContext);
+
+    const [friends, setFriends] = useState([]);
+
+    useEffect( () => {
+        const getFriends = async () => {
+            try {
+                const friendList = await axios.get("/users/friends/" + user._id);
+                setFriends(friendList.data);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getFriends();
+    }, [user]);
+
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -42,13 +66,38 @@ export default function Sidebar() {
                         <LocalMall className="sidebarIcon"/>
                         <span className="sidebarListItemText">Inventory</span>
                     </li>
+
+                    <li className="sidebarListItem">
+                        <Link to="/category/Café" style={{textDecoration: "none"}}>
+                            <span className="sidebarListItemText">Café</span>
+                        </Link>
+                    </li>
+
+                    <li className="sidebarListItem">
+                        <Link to="/category/Theater" style={{textDecoration: "none"}}>
+                            <span className="sidebarListItemText">Theater</span>
+                        </Link>
+                    </li>
+
+                    <li className="sidebarListItem">
+                        <Link to="/category/Library" style={{textDecoration: "none"}}>
+                            <span className="sidebarListItemText">Library</span>
+                        </Link>
+                    </li>
+
+                    <li className="sidebarListItem">
+                        <Link to="/category/Arcade" style={{textDecoration: "none"}}>
+                            <span className="sidebarListItemText">Arcade</span>
+                        </Link>
+                    </li>
+
                 </ul>
 
                 <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr"/>
                 <ul className="sidebarFriendList">
-                    {Users.map(u =>( 
-                        <CloseFriend key={u.id} user={u}/>
+                    {friends.map(friend =>( 
+                        <CloseFriend key={friend.id} user={friend}/>
                     ))}
                 </ul>
             </div>

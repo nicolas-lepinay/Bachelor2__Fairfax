@@ -5,6 +5,20 @@
     .rightbarWrapper {
         color: white;
         padding: 20px 20px 0 20px;
+        .followButton {
+            align-items: center;
+            background-color: #7269c0;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+        }
         .birthdayContainer {
             display: flex;
             align-items: center;
@@ -56,6 +70,7 @@
                 flex-direction: column;
                 padding: 15px;
                 margin-bottom: 20px;
+                text-decoration: none;
                 .rightbarFollowingImg {
                     border-radius: 50%;
                     height: 100px;

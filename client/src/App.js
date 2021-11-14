@@ -2,6 +2,8 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Category from "./pages/category/Category";
+
 import { AuthContext } from "./context/AuthContext";
 
 import { useContext } from "react";
@@ -35,6 +37,10 @@ function App() {
 
             <Route path="/profile/:username">
                 <Profile/>
+            </Route>
+
+            <Route path="/category/:categoryName">
+                <Category/>
             </Route>
         </Switch>
     </Router>

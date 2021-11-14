@@ -3,12 +3,13 @@ import "./login.css"
 import { loginCall } from "../../apiCalls"
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core"
+import { Link } from "react-router-dom";
 
 export default function Login() {
 
     const identifier = useRef();
     const password = useRef();
-    const { user, isFetching, error, dispatch } = useContext(AuthContext);
+    const { isFetching, dispatch } = useContext(AuthContext);
 
 
     const handleSubmit = (e) => {
@@ -31,7 +32,9 @@ export default function Login() {
                             { isFetching ? <CircularProgress color="inherit" size="20px"/> : "Login"}
                             </button>
                         <span className="loginForgot">I forgot my password</span>
-                        <button className="loginRegisterButton">{ isFetching ? <CircularProgress color="inherit" size="20px"/> : "Register"}</button>
+                        <Link to="/register">
+                            <button className="loginRegisterButton">Register</button>
+                        </Link>
                     </form>
                 </div>
             </div>

@@ -4,7 +4,6 @@
     -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     color: black;
-    height: 170px;
     width: 100%;
     .shareWrapper {
         padding: 10px;
@@ -61,4 +60,22 @@
             }
         }
     }
+}
+
+.shareImgContainer {
+    padding: 0 20px 10px 20px;
+    position: relative;
+}
+
+.shareImg {
+    object-fit: cover;
+    width: 100%;
+}
+
+.shareCancel {
+    color: red;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 20px;
 }
