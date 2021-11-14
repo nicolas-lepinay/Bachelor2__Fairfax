@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const { verifyToken, verifyTokenAndAuth, verifyTokenAndAdmin } = require("./verifyToken");
 
 // * GET A USER *
 router.get("/", async(req, res) => {
@@ -14,52 +15,52 @@ router.get("/", async(req, res) => {
             await User.findOne({ username: username }); // ...soit par son username.
 
         !user && res.status(404).json("No user was found."); // Si la requête ne renvoit aucun utilisateur
-        const { password, updatedAt, ...other } = user._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
-        res.status(200).json(other);
+        const { password, updatedAt, ...rest } = user._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
+        res.status(200).json(rest);
     } catch (err) {
         res.status(500).json(err);
     }
+})
 
+// * GET ALL USERS *
+// todo: Add verifyTokenAndAdmin middleware 
+router.get("/findAll", async(req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json(err);
+    }
 })
 
 // * UPDATE A USER *
-router.put("/:id", async(req, res) => {
-    // Si l'utilisateur est bien celui dont l'ID est dans l'URL, ou un admin :
-    if (req.body.userId === req.params.id || req.body.role === ADMIN) {
-        // Si l'utilisateur veut modifier son mot de passe :
-        if (req.body.password) {
-            try {
-                req.body.password = bcrypt.hashSync(req.body.password, 10);
-            } catch (err) {
-                return res.status(500).json(err);
-            }
-        }
-        // Sinon, on modifie les autres champs :
+router.put("/:id", verifyTokenAndAuth, async(req, res) => {
+    // Si l'utilisateur veut modifier son mot de passe :
+    if (req.body.password) {
         try {
-            const user = await User.findByIdAndUpdate(req.body.userId, {
-                $set: req.body,
-            });
-            res.status(200).json("Account has been updated successfully.")
+            req.body.password = bcrypt.hashSync(req.body.password, 10);
         } catch (err) {
             return res.status(500).json(err);
         }
-    } else {
-        return res.status(401).json("UPDATE ACCOUNT: Invalid credentials.")
+    }
+    // Sinon, on modifie les autres champs :
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
+            $set: req.body,
+        }, {new: true});
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        return res.status(500).json(err);
     }
 })
 
 // * DELETE A USER *
-router.delete("/:id", async(req, res) => {
-    // Si l'utilisateur est bien celui dont l'ID est dans l'URL, ou un admin :
-    if (req.body.userId === req.params.id || req.body.role === ADMIN) {
-        try {
-            const user = await User.findByIdAndDelete(req.body.userId);
-            res.status(200).json("Account has been deleted successfully.")
-        } catch (err) {
-            return res.status(500).json(err);
-        }
-    } else {
-        return res.status(401).json("DELETE ACCOUNT: Invalid credentials.")
+router.delete("/:id", verifyTokenAndAuth, async(req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id)
+        res.status(200).json("Account has been deleted successfully.")
+    } catch(err) {
+        res.status(500).json(err)
     }
 });
 
