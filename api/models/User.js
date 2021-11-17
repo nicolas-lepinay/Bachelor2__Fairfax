@@ -36,6 +36,21 @@ const UserSchema = new mongoose.Schema({
             type: Array,
             default: []
         },
+        friends: {
+            type: Array,
+            default: []
+        },
+        houseId: {
+            type: String
+        },
+        rewards: {
+            type: Array,
+            default: []
+        },
+        inventory: {
+            type: Array,
+            default: []
+        },
         role: {
             type: Number,
             default: 1
