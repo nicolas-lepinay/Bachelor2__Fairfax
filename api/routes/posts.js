@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 
 // * CREATE A POST *
 router.post("/", async(req, res) => {
@@ -95,6 +96,17 @@ router.get("/profile/:username", async(req, res) => {
         const user = await User.findOne({ username: req.params.username }); // Trouve le user en fonction de son username
         const posts = await Post.find({ userId: user._id }) // Trouve les posts en fonction d'un user
         res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+        console.log(err)
+    }
+})
+
+
+router.get("/:postID/comment", async(req, res) => {
+    try {
+        const commentall = await Comment.find({ postID: req.params.postID });
+        res.status(200).json(commentall);
     } catch (err) {
         res.status(500).json(err);
         console.log(err)

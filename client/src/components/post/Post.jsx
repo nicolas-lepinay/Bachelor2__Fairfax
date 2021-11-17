@@ -14,7 +14,7 @@ export default function Post({post}) {
 
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
-
+    const [comme , setComm] = useState([]);
     const { user: currentUser } = useContext(AuthContext); // On donne l'alias currentUser à user, car user existe déjà plus bas (c'est l'auteur du post)
 
     const likeHandler = () => {
@@ -27,6 +27,10 @@ export default function Post({post}) {
         setIsLiked(!isLiked)
     }
 
+    const ajoutcomm = () => {
+        const pos = document.getElementById('');
+    } 
+
     useEffect ( () => {
         setIsLiked(post.likes.includes(currentUser._id)) // Si l'array de likes comporte le currentUser -> true, sinon false.
     }, [currentUser._id, post.likes])
@@ -37,9 +41,20 @@ export default function Post({post}) {
         const fetchUser = async () => {
             const res = await axios.get(`/users?userId=${post.userId}`);
             setUser(res.data);
+           
         }
         fetchUser();
     }, [post.userId])
+
+    useEffect ( () => {
+        const fetchComme = async () => {
+            const res = await axios.get(`/posts/${post._id}/comment`);
+            setComm(res.data);
+            
+        
+        }
+        fetchComme();
+    })
 
     return (
         <div className="post">
@@ -70,7 +85,19 @@ export default function Post({post}) {
                     <div className="postBottomRight">
                         <span className="postCommentText">{post?.comments.length} comments</span>
                     </div>
-
+                </div>
+                
+                <div className="comme">
+                    <button className="commebtn">Commentaire</button>
+                    <div className="commeall">
+                        {comme.map((r)=>(
+                            <div><p>{r.content}</p> <p id="rep">{r.postID}</p> </div> 
+                        )
+                        )}
+                    </div>
+                    <label htmlFor="">Commentaire</label>
+                    <input type="text" id="comme" />
+                    <button>envoie</button>
                 </div>
             </div>
         </div>
