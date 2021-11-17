@@ -3,6 +3,7 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
+import PostDetails from "./pages/postDetails/PostDetails"
 
 import { AuthContext } from "./context/AuthContext";
 
@@ -43,6 +44,10 @@ function App() {
                 <Category/>
             </Route>
         </Switch>
+        
+        <Route path="/post">
+            <PostDetails/>
+        </Route>
     </Router>
 
     )

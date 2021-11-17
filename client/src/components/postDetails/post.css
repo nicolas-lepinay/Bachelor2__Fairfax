@@ -1,0 +1,9 @@
+.post-container { 
+    width: 25%;
+    height: 85vh;
+    margin: 2%;
+    padding: 2%;
+    background-color: #090966;
+    color: white;
+    border-radius: 30px;
+}

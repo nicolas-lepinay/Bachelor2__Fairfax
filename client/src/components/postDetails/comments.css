@@ -1,0 +1,82 @@
+.comments-container { 
+    width: 55%;
+    height: 85vh;
+    margin: 2%;
+    padding: 2%;
+    background-color: #eeeeee;
+    border-radius: 30px;
+}
+
+.comment {
+    width: 90%;
+    margin-bottom: 50px;
+}
+
+.comment-userInfo { 
+    display: flex;
+    width: 22%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-profilePicture { 
+    max-width: 50px; 
+    max-height: 50px;
+    border-radius: 50%;
+}
+
+.comment-profileName { 
+    font-weight: bold;
+}
+
+.comment-postedAt { 
+    color: grey;
+}
+
+.comment-content { 
+    margin: 15px 0;
+    font-size: 90%;
+}
+
+.comment-interaction { 
+    display: inherit;
+    border: 1px solid grey;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 70%;
+    color: black;
+    background-color: transparent;
+    transition: all ease .3s;
+    cursor: pointer;
+    align-items: center;
+}
+
+.comment-interaction img { 
+    height: 10px;
+    width:10px;
+    margin-left: 5px;
+}
+
+
+.comment-interaction:hover {
+    color: white;
+    background-color: black;
+    transition: all ease .3s;
+}
+img#needInvert.comment-interaction:hover { 
+    background-color: white;
+    filter: invert();
+}
+
+
+.comment-interactions { 
+   display: flex;
+   justify-content: space-between; 
+   align-items: center;
+}
+
+.interactions-right { 
+    display: flex;
+    justify-content: space-around;
+    width: 20%;
+}
