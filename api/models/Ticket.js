@@ -5,7 +5,7 @@ const NPC = process.env.NPC;
 const mongoose = require("mongoose")
 
 const TicketSchema = new mongoose.Schema({
-        authorUUID: {
+        authorID: {
             type: String,
             required: true,
             max: 50

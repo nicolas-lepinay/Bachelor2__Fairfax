@@ -5,11 +5,11 @@ const NPC = process.env.NPC;
 const mongoose = require("mongoose")
 
 const CommentSchema = new mongoose.Schema({
-        authorUUID: {
+        authorID: {
             type: String,
             required: true
         },
-        postUUID: {
+        postID: {
             type: String,
             required: true
         },
