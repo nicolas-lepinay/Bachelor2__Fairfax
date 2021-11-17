@@ -4,50 +4,26 @@ const NPC = process.env.NPC;
 
 const mongoose = require("mongoose")
 
-const UserSchema = new mongoose.Schema({
-        username: {
+const CommentSchema = new mongoose.Schema({
+        name: {
             type: String,
             required: true,
-            min: 3,
-            max: 20,
-            unique: true
+            max: 50
         },
-        email: {
+        theme: {
             type: String,
             required: true,
-            min: 6,
-            max: 50,
-            unique: true
+            max: 50
         },
-        password: {
+        description: {
             type: String,
             required: true,
-            min: 8
-        },
-        avatar: {
-            type: String,
-            default: ""
-        },
-        followers: {
-            type: Array,
-            default: []
-        },
-        following: {
-            type: Array,
-            default: []
-        },
-        badge: {
-            type: Array,
-            default: []
-        },
-        role: {
-            type: Number,
-            default: 1
+            max: 5000
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Comment", CommentSchema);
 
 /** List of parameters for mongoose.model(...) :
  * @param name  <String> : model name
