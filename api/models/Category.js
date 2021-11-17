@@ -9,16 +9,6 @@ const CommentSchema = new mongoose.Schema({
             type: String,
             required: true,
             max: 50
-        },
-        theme: {
-            type: String,
-            required: true,
-            max: 50
-        },
-        description: {
-            type: String,
-            required: true,
-            max: 5000
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );
