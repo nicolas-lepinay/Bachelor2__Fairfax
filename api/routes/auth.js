@@ -68,7 +68,7 @@ router.post("/logout", verifyToken, (req, res) => {
      
 });
 
-// ------------------------------------
+// ----------------------------------------------------
 // router.post("/signup", authController.signup_POST);
 // router.post("/signin", authController.signin_POST);
 
