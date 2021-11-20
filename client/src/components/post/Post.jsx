@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import "./post.css"
 import { MoreVert } from "@material-ui/icons"
-import { AuthContext } from "../../context/AuthContext"
+import { UserContext } from "../../context/UserContext"
 
 export default function Post({post}) {
 
@@ -15,13 +15,13 @@ export default function Post({post}) {
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [comme , setComm] = useState([]);
-    const { user: currentUser } = useContext(AuthContext); // On donne l'alias currentUser à user, car user existe déjà plus bas (c'est l'auteur du post)
+    const { user: currentUser } = useContext(UserContext); // On donne l'alias currentUser à user, car user existe déjà plus bas (c'est l'auteur du post)
 
     const likeHandler = () => {
         try {
             axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
         } catch(err) {
-
+            console.log(err)
         }
         setLike(isLiked ? like-1 : like+1)
         setIsLiked(!isLiked)

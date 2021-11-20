@@ -8,7 +8,7 @@ export default function CloseFriend({user}) {
     return (
         <Link to={`/profile/${user.username}`} style={{textDecoration: "none"}}>
             <li className="sidebarFriend">
-                <img className="sidebarFriendImg" src={`${MEDIA}/${user.avatar}`} alt="" />
+                <img className="sidebarFriendImg"  src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
                 <span className="sidebarFriendName">{user.username}</span>
             </li>
         </Link>

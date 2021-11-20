@@ -2,19 +2,24 @@ import "./topbar.css"
 import { Search, Person, Chat, Notifications } from "@material-ui/icons"
 import { Link } from "react-router-dom"
 import { useContext } from "react"
-import { AuthContext } from "../../context/AuthContext"
+import { UserContext } from "../../context/UserContext"
 
 export default function Topbar() {
 
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(UserContext);
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
+
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem("user");
+    }
 
     return (
         <div className="topbarContainer">
 
             <div className="topbarLeft">
                 <Link to="/" style={{textDecoration:"none"}}>
-                    <span className="logo">[Logo] </span>
+                    <span className="logo">Home</span>
                 </Link>
             </div>
 
@@ -27,8 +32,10 @@ export default function Topbar() {
 
             <div className="topbarRight">
                 <div className="topbarLinks">
+                <Link to="/" style={{textDecoration:"none"}}>
                     <span className="topbarLink">Home</span>
-                    <span className="topbarLink">Timeline</span>
+                </Link>                    
+                {user && <span className="topbarLink" onClick={handleLogout}>Logout</span>}
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">

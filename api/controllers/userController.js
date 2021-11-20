@@ -60,7 +60,7 @@ module.exports.delete_DELETE = async (req, res) => {
     }
 }
 
-// * FOLLOW A USER *
+// * FOLLOW OR UNFOLLOW A USER *
 module.exports.follow_PUT = async (req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
@@ -74,37 +74,16 @@ module.exports.follow_PUT = async (req, res) => {
                 await currentUser.updateOne({ $push: { following: req.params.id } });
                 res.status(200).json("User has been followed successfully.");
             } else {
-                res.status(403).json("You already follow this user.");
+                // Si l'utilisateur à suivre est déjà suivi par l'utilisateur loggé, on le unfollow :
+                await user.updateOne({ $pull: { followers: req.body.userId } });
+                await currentUser.updateOne({ $pull: { following: req.params.id } });
+                res.status(200).json("User has been unfollowed successfully.");
             }
         } catch (err) {
             res.status(500).json(err);
         }
     } else {
         res.status(403).json("Users cannot follow themselves.")
-    }
-}
-
-// * UNFOLLOW A USER *
-module.exports.unfollow_PUT = async (req, res) => {
-    if (req.body.userId !== req.params.id) {
-        try {
-            // On récupère l'utilisateur à suivre et l'utilisateur loggé :
-            const user = await User.findById(req.params.id);
-            const currentUser = await User.findById(req.body.userId);
-
-            // Si l'utilisateur à suivre est bien déjà suivi par l'utilisateur loggé :
-            if (user.followers.includes(req.body.userId)) {
-                await user.updateOne({ $pull: { followers: req.body.userId } });
-                await currentUser.updateOne({ $pull: { following: req.params.id } });
-                res.status(200).json("User has been unfollowed successfully.");
-            } else {
-                res.status(403).json("You are not following this user yet, so you cannot unfollow them.");
-            }
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    } else {
-        res.status(403).json("Users cannot unfollow themselves.")
     }
 }
 

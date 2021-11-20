@@ -4,12 +4,12 @@ import axios from "axios";
 
 import Share from "../share/Share"
 import Post from "../post/Post"
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
 
 export default function Feed({username}) {
 
     const [posts, setPosts] = useState([]);
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(UserContext)
 
     // Si Feed a un username en argument, fetch les posts du user pour la page de profile. Sinon, fetch Timeline
     useEffect ( () => {

@@ -4,7 +4,8 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Online from "../online/Online"
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
+
 import { Add, Remove } from "@material-ui/icons";
 
 export default function Rightbar({user}) {
@@ -13,8 +14,7 @@ export default function Rightbar({user}) {
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
 
     const [friends, setFriends] = useState([]);
-    const { user: currentUser, dispatch } = useContext(AuthContext);
-    const [followed, setFollowed] = useState(user ? currentUser.following.includes(user._id) : false)
+    const { user: currentUser, setUser: setCurrentUser } = useContext(UserContext);
 
     useEffect( () => {
         const getFriends = async () => {
@@ -26,22 +26,7 @@ export default function Rightbar({user}) {
             }
         }
         getFriends();
-    }, [user]);
-
-    const followHandler = async () => {
-        try {
-            if(followed) {
-                await axios.put(`/users/${user._id}/unfollow`, {userId: currentUser._id})
-                dispatch( {type: "UNFOLLOW", payload: user._id} )
-            } else {
-                await axios.put(`/users/${user._id}/follow`, {userId: currentUser._id});
-                dispatch( {type: "FOLLOW", payload: user._id} )
-            }
-        } catch(err) {
-            console.log(err)
-        }
-        setFollowed(!followed);
-    }
+    }, [user, currentUser.following]);
 
     const HomeRightbar = () => {
         return(
@@ -62,6 +47,25 @@ export default function Rightbar({user}) {
     }
 
     const ProfileRightbar = () => {
+
+        const [followed, setFollowed] = useState(false);
+
+        const followHandler = async () => {
+            try {
+                await axios.put(`/users/${user._id}/follow`, {userId: currentUser._id});
+                const updatedUser = await axios.get(`/users?userId=${currentUser._id}`);
+                setCurrentUser(updatedUser.data);
+            } catch(err) {
+                console.log(err)
+                alert("Follow/Unfollow failed.")
+            }
+            setFollowed(!followed);
+        }
+
+        useEffect ( () => {
+            setFollowed(currentUser.following.includes(user._id))
+        }, [user.username, currentUser.following])
+
         return(
         <>
             { user.username !== currentUser.username && (
@@ -100,14 +104,10 @@ export default function Rightbar({user}) {
                         </div>
                     </Link>
                     ))}
-
-
             </div>
-
         </>
         )
     }
-
 
     return (
         <div className="rightbar">

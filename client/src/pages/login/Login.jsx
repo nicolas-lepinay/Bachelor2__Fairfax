@@ -1,20 +1,29 @@
 import { useRef, useContext } from "react";
 import "./login.css" 
 import { loginCall } from "../../apiCalls"
-import { AuthContext } from "../../context/AuthContext";
-import { CircularProgress } from "@material-ui/core"
+import axios from "axios"
+
+import { UserContext } from "../../context/UserContext";
+
+// import { CircularProgress } from "@material-ui/core"
 import { Link } from "react-router-dom";
 
 export default function Login() {
 
     const identifier = useRef();
     const password = useRef();
-    const { isFetching, dispatch } = useContext(AuthContext);
+    const { user: currentUser, setUser: setCurrentUser } = useContext(UserContext)
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        loginCall( { identifier: identifier.current.value, password: password.current.value }, dispatch) // userCredentials, dispatch
+    const handleSubmit = async (e) => {
+        e.preventDefault();        
+        try {
+            const res = await axios.post("/auth/login", { identifier: identifier.current.value, password: password.current.value })
+            setCurrentUser(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data))
+        } catch (err) {
+            console.log(err);
+            alert("Login failed.\n\nError: " + err)
+        }
     };
 
     return (
@@ -28,8 +37,9 @@ export default function Login() {
                     <form className="loginBox" onSubmit={handleSubmit}>
                         <input placeholder="Email or username" type="text" className="loginInput" required ref={identifier} />
                         <input placeholder="Password" type="password" className="loginInput" required minLength="6" ref={password} />
-                        <button className="loginButton" type="submit" disabled={isFetching}>
-                            { isFetching ? <CircularProgress color="inherit" size="20px"/> : "Login"}
+                        <button className="loginButton" type="submit">
+                            {/* { isFetching ? <CircularProgress color="inherit" size="20px"/> : "Login"} */}
+                            Login
                             </button>
                         <span className="loginForgot">I forgot my password</span>
                         <Link to="/register">
