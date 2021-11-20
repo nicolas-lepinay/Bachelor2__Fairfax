@@ -1,25 +1,8 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-// Handle error :
-const handleError = (err) => {
-    console.log(err.message, err.code);
-    let errors = { email: '', password: '' };
-  
-    // Duplicate email error:
-    if (err.code === 11000) {
-      errors.email = 'This email is already registered.';
-      return errors;
-    }
-    // Validation errors
-    if (err.message.includes('user validation failed')) {
-      Object.values(err.errors).forEach(({ properties }) => {
-        errors[properties.path] = properties.message;
-      });
-    }
-    return errors;
-  }
-
-module.exports.signup_POST = async (req, res) => {
+module.exports.register_POST = async (req, res) => {
     try {
         // Hashage du mot de passe :
         const hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -34,11 +17,38 @@ module.exports.signup_POST = async (req, res) => {
         const user = await newUser.save()
         res.status(201).json(user)
     } catch (err) {
-        const error = handleError(err);
+        console.log(err);
         res.status(400).json(error);
     }
 }
 
-module.exports.signin_POST = async (req, res) => {
-    const { identifier, password } = req.body;
+module.exports.login_POST = async (req, res) => {
+  try {
+    const user = await User.findOne({
+        $or: [
+            { username: req.body.identifier },
+            { email: req.body.identifier }
+        ]
+    });
+    // Si la requête ne renvoit aucun utilisateur :
+    !user && res.status(404).json("No matching account was found."); 
+
+    // Comparaison du mot de passe saisi avec le mot de passe hashé stocké dans la DB :
+    const validPassword = bcrypt.compareSync(req.body.password, user.password);
+
+    // Si le mot de passe saisi est faux :
+    !validPassword && res.status(400).json("Password is incorrect.");
+
+    const accessToken = jwt.sign({
+        id: user._id, 
+        role: user.role,
+    }, process.env.JWT_SECRET, {expiresIn: "1d"})
+
+    // ✔️ Requête valide :
+    const { password, ...rest } = user._doc;
+    res.status(200).json({...rest, accessToken}); // On renvoit tous les champs sauf le mot de passe (par sécurité)
+
+  } catch (err) {
+    res.status(500).json(err);
+    }
 }

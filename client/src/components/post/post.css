@@ -72,4 +72,21 @@
   font-size: 12px;
 }
 
+.comme {
+  display: flex;
+  margin-top: 6px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.commebtn {
+  background: #242633;
+  color: #f0b22bd6;
+  text-decoration: none;
+  border: none;
+  height: 40px;
+  width: 120px;
+}
+
 /*# sourceMappingURL=post.css.map */
