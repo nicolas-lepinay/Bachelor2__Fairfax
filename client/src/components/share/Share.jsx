@@ -1,14 +1,15 @@
 import "./share.css"
 import { PermMedia, Label, Room, EmojiEmotions, Cancel } from "@material-ui/icons"
 import { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
+
 import axios from "axios";
 
 export default function Share() {
 
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
     
-    const { user } = useContext(AuthContext);
+    const {user} = useContext(UserContext);
     const content = useRef();
     const [file, setFile] = useState(null)
 

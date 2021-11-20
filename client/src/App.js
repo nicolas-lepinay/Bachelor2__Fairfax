@@ -5,9 +5,9 @@ import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
 
-import { AuthContext } from "./context/AuthContext";
+import { UserContext } from "./context/UserContext"
+import { useState, useMemo } from "react";
 
-import { useContext } from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,37 +17,33 @@ import {
 
 function App() {
 
-    const { user } = useContext(AuthContext);
-
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+    const currentUser = useMemo( () => ({user, setUser}), [user, setUser] );
 
     return (
     <Router>
         <Switch>
-            {/*Toujours ajouter 'exact' pour la racine ! */}
-            <Route exact path="/">
-                {user ? <Home/> : <Register/>}
-            </Route>
 
-            <Route path="/login">
-                {user ? <Redirect to="/"/> : <Login/>}
-            </Route>
+            <UserContext.Provider value={currentUser}>
 
-            <Route path="/register">
-            {user ? <Redirect to="/"/> : <Register/>}
-            </Route>
+                {/*Toujours ajouter 'exact' pour la racine ! */}
+                <Route exact path="/" component={user ? Home : Register} />
 
-            <Route path="/profile/:username">
-                <Profile/>
-            </Route>
+                <Route path="/login" >
+                    {user ? <Redirect to="/"/> : <Login/>}
+                </Route>
 
-            <Route path="/category/:categoryName">
-                <Category/>
-            </Route>
+                <Route path="/register">
+                {user ? <Redirect to="/"/> : <Register/>}
+                </Route>
+
+                <Route path="/profile/:username" component={Profile} />
+                <Route path="/category/:categoryName" component={Category} />
+                <Route path="/post" component={PostDetails} />
+
+            </UserContext.Provider>
+
         </Switch>
-        
-        <Route path="/post">
-            <PostDetails/>
-        </Route>
     </Router>
 
     )

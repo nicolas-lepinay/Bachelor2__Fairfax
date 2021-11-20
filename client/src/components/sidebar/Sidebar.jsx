@@ -10,15 +10,13 @@ import { Event } from "@material-ui/icons"
 import { Security } from "@material-ui/icons"
 import { Map } from "@material-ui/icons"
 import { LocalMall } from "@material-ui/icons"
-// import { Users } from "../../dummyData"
 import CloseFriend from "../closeFriend/CloseFriend"
 
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
 
-    const { user } = useContext(AuthContext);
-
+    const { user } = useContext(UserContext);
     const [friends, setFriends] = useState([]);
 
     useEffect( () => {
