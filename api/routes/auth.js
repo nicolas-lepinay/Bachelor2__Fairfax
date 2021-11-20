@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require("./verifyToken");
+const authController = require("../controllers/authController");
 
 // * REGISTER *
 router.post("/register", async(req, res) => {
@@ -67,6 +68,8 @@ router.post("/logout", verifyToken, (req, res) => {
      
 });
 
-
+// ------------------------------------
+// router.post("/signup", authController.signup_POST);
+// router.post("/signin", authController.signin_POST);
 
 module.exports = router // Export public pour qu'il puisse être importé ailleurs
