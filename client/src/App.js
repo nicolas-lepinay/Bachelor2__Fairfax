@@ -5,6 +5,9 @@ import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
 
+import LandingPage from "./pages/landingPage/LandingPage"
+import LoginModal from "./modals/loginModal/LoginModal"
+
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo } from "react";
 
@@ -31,6 +34,14 @@ function App() {
 
                 <Route path="/login" >
                     {user ? <Redirect to="/"/> : <Login/>}
+                </Route>
+
+                <Route path="/signin" >
+                    <LandingPage/>
+                </Route>
+
+                <Route path="/login-modal" >
+                    <LoginModal/>
                 </Route>
 
                 <Route path="/register">

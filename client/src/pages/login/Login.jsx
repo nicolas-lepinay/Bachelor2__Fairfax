@@ -1,6 +1,5 @@
 import { useRef, useContext } from "react";
 import "./login.css" 
-import { loginCall } from "../../apiCalls"
 import axios from "axios"
 
 import { UserContext } from "../../context/UserContext";
