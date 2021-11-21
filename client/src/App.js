@@ -4,7 +4,6 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
-
 import LandingPage from "./pages/landingPage/LandingPage"
 import LoginModal from "./modals/loginModal/LoginModal"
 
