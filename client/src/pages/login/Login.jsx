@@ -4,7 +4,6 @@ import axios from "axios"
 
 import { UserContext } from "../../context/UserContext";
 
-// import { CircularProgress } from "@material-ui/core"
 import { Link } from "react-router-dom";
 
 export default function Login() {
