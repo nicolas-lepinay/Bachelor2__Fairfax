@@ -6,7 +6,7 @@ function LandingPage() {
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
     return (
-        <div className="main">
+        <div className="landing__page">
             <div className="images">
                 <img className="background" src={`${ASSETS}/landing_page/background.svg`}/>
                 <div className="foreground__wrapper">

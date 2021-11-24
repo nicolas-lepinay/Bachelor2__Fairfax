@@ -158,7 +158,7 @@ export const ModalWrapper = styled.div`
 `
 
 export const ModalContainer = styled.div`
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(250, 250, 250);
     border-radius: 15px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     max-width: 90vw;
@@ -211,7 +211,7 @@ export const FormWrapper = styled.div`
 `
 
 export const Form = styled.form`
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(250, 250, 250);
     display: flex;
     align-items: center;
     justify-content: center;
