@@ -50,7 +50,6 @@ function App() {
                 <Route path="/profile/:username" component={Profile} />
                 <Route path="/category/:categoryName" component={Category} />
                 <Route path="/post" component={PostDetails} />
-
             </UserContext.Provider>
 
         </Switch>
