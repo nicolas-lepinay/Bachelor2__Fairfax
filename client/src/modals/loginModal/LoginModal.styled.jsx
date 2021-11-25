@@ -146,13 +146,7 @@ export const Description = styled.p`
 
 export const ModalWrapper = styled.div`
     @import url(${theme.mainFontURL});
-    position: fixed;
-    top: 50%;
-    left: 50%;
     font-family: ${theme.mainFont};
-    opacity: 1;
-    transform: translate(-50%, -50%);
-    visibility: visible;
     z-index: 1000;
     transition: 0.6s ease-out;
 `
