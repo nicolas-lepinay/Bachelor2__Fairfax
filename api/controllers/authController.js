@@ -18,7 +18,7 @@ module.exports.register_POST = async (req, res) => {
         res.status(201).json(user)
     } catch (err) {
         console.log(err);
-        res.status(400).json(error);
+        res.status(400).json(err);
     }
 }
 

@@ -1,11 +1,8 @@
+import LandingPage from "./pages/landingPage/LandingPage"
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
-import LandingPage from "./pages/landingPage/LandingPage"
-import LoginModal from "./modals/loginModal/LoginModal"
 
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo } from "react";
@@ -29,22 +26,12 @@ function App() {
             <UserContext.Provider value={currentUser}>
 
                 {/*Toujours ajouter 'exact' pour la racine ! */}
-                <Route exact path="/" component={user ? Home : Register} />
-
-                <Route path="/login" >
-                    {user ? <Redirect to="/"/> : <Login/>}
+                <Route exact path="/" >
+                    {user ? <Redirect to="/home"/> : <LandingPage/>}
                 </Route>
 
-                <Route path="/signin" >
-                    <LandingPage/>
-                </Route>
-
-                <Route path="/login-modal" >
-                    <LoginModal/>
-                </Route>
-
-                <Route path="/register">
-                {user ? <Redirect to="/"/> : <Register/>}
+                <Route path="/home" >
+                    {user ? <Home/> : <Redirect to="/"/>}
                 </Route>
 
                 <Route path="/profile/:username" component={Profile} />
