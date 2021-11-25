@@ -1,4 +1,6 @@
 import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+
 const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
 const theme = {
@@ -28,6 +30,21 @@ const slide = keyframes`
     }
 `
 
+export const shake = keyframes`
+    10%, 90% {
+      transform: translate3d(-4px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(8px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-16px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(16px, 0, 0);
+    }
+`
+
 const size = {
     tablet_XL: '960px',
     tablet_L: '830px',
@@ -53,6 +70,14 @@ export const MATERIAL_STYLE = {
     left: "20px",
     top: "49%",
     opacity: "0.15",
+    position: "absolute",
+    transform: "translateY(-50%)"
+}
+
+export const CHECK_STYLE = {
+    color: "green",
+    left: "-30px",
+    top: "49%",
     position: "absolute",
     transform: "translateY(-50%)"
 }
@@ -144,22 +169,28 @@ export const Description = styled.p`
     }
 `
 
+export const Backdrop = styled(props => <motion.div {...props} />)`
+    background: transparent;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+`
+
 export const ModalWrapper = styled.div`
     @import url(${theme.mainFontURL});
-    position: fixed;
-    top: 50%;
-    left: 50%;
     font-family: ${theme.mainFont};
-    opacity: 1;
-    transform: translate(-50%, -50%);
-    visibility: visible;
     z-index: 1000;
     transition: 0.6s ease-out;
 `
 
 export const ModalContainer = styled.div`
     background-color: rgb(250, 250, 250);
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     max-width: 90vw;
     min-width: 300px;
@@ -190,7 +221,7 @@ export const ModalContainer = styled.div`
     }
 
     @media ${device.mobile_XL} { 
-        max-height: 500px;
+        max-height: 550px;
     }
 `
 
@@ -309,7 +340,10 @@ export const Input = styled.input`
 `
 
 export const Info = styled.div`
-    font-size: 80%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 0.8rem;
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
     margin-top: 20px;
     margin-bottom: 40px;
@@ -320,32 +354,17 @@ export const Info = styled.div`
 `
 
 export const Requirements = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    margin-top: 13px;
+`
+
+export const TextAndIcon = styled.span`
     position: relative;
-    margin-left: 0px;
-
-    @media ${device.tablet_XL} { 
-        margin-left: 0px;
-    }
-
-    @media ${device.tablet_L} { 
-        margin-left: -10px;
-    }
-
-    @media ${device.tablet_M} { 
-        margin-left: -20px;
-    }
 `
 
-export const Text = styled.span`
-    float: left;
-    padding-left: 30px;
-
-    @media ${device.tablet_XL} { 
-        padding-left: 20px;
-    }
-`
-
-export const Button = styled.button`
+export const Button = styled(props => <motion.button {...props} />)`
     background-color: ${theme.buttonColor};
     border: 1px solid ${theme.buttonColor};
     border-radius: 50px;
@@ -394,6 +413,28 @@ export const Button = styled.button`
         @media ${device.tablet_S} { 
             margin-top: 50px;
         }
+    }
+`
+
+export const InvalidEntry = styled.span`
+    font-size: 0.8rem;
+    color: rgb(255, 0, 34);
+    padding-top: 5px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+
+    @media ${device.tablet_M} { 
+        font-size: 0.7rem;
+    }
+    @media ${device.mobile_XL} { 
+        text-indent: -9999px;
+        line-height: 0;
+        &:after {
+            content: "Your passwords do not match." !important;
+            text-indent: 0;
+            display: block;
+            line-height: initial; 
+        }  
+    
     }
 `
 
