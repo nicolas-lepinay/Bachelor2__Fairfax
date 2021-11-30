@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import PasswordForgot from "./pages/passwordForgot/PasswordForgot";
 import Category from "./pages/category/Category";
 
 import { AuthContext } from "./context/AuthContext";
@@ -33,6 +34,10 @@ function App() {
 
             <Route path="/register">
             {user ? <Redirect to="/"/> : <Register/>}
+            </Route>
+
+            <Route path="/passwordForgot">
+                {user ? <Redirect to="/"/> : <PasswordForgot/>}
             </Route>
 
             <Route path="/profile/:username">

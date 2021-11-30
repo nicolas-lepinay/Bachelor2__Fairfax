@@ -31,7 +31,9 @@ export default function Login() {
                         <button className="loginButton" type="submit" disabled={isFetching}>
                             { isFetching ? <CircularProgress color="inherit" size="20px"/> : "Login"}
                             </button>
-                        <span className="loginForgot">I forgot my password</span>
+                        <Link to="/passwordForgot">
+                            <span className="loginForgot">I forgot my password</span>
+                        </Link>
                         <Link to="/register">
                             <button className="loginRegisterButton">Register</button>
                         </Link>
