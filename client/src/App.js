@@ -1,7 +1,6 @@
+import LandingPage from "./pages/landingPage/LandingPage"
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails";
 import LandingPage from "./pages/landingPage/LandingPage";
@@ -26,31 +25,25 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <UserContext.Provider value={currentUser}>
-          {/*Toujours ajouter 'exact' pour la racine ! */}
-          <Route exact path="/" component={user ? Home : Register} />
+        <Switch>
 
-          <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+            <UserContext.Provider value={currentUser}>
 
-          <Route path="/signin">
-            <LandingPage />
-          </Route>
+                {/*Toujours ajouter 'exact' pour la racine ! */}
+                <Route exact path="/" >
+                    {user ? <Redirect to="/home"/> : <LandingPage/>}
+                </Route>
 
-          <Route path="/login-modal">
-            <LoginModal />
-          </Route>
+                <Route path="/home" >
+                    {user ? <Home/> : <Redirect to="/"/>}
+                </Route>
 
-          <Route path="/register">
-            {user ? <Redirect to="/" /> : <Register />}
-          </Route>
+                <Route path="/profile/:username" component={Profile} />
+                <Route path="/category/:categoryName" component={Category} />
+                <Route path="/post" component={PostDetails} />
+            </UserContext.Provider>
 
-          <Route path="/profile/:username" component={Profile} />
-          <Route path="/category/:categoryName" component={Category} />
-          <Route path="/post" component={PostDetails} />
-          <Route path="/admin" component={Admin} />
-        </UserContext.Provider>
-      </Switch>
+        </Switch>
     </Router>
   );
 }
