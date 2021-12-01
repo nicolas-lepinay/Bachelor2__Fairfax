@@ -5,6 +5,7 @@ import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
 import LandingPage from "./pages/landingPage/LandingPage"
+import Account from "./pages/account/Account"
 import LoginModal from "./modals/loginModal/LoginModal"
 
 import { UserContext } from "./context/UserContext"
@@ -49,6 +50,7 @@ function App() {
 
                 <Route path="/profile/:username" component={Profile} />
                 <Route path="/category/:categoryName" component={Category} />
+                <Route path="/account/:username" component={Account}/>
                 <Route path="/post" component={PostDetails} />
 
             </UserContext.Provider>
