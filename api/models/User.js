@@ -54,6 +54,13 @@ const UserSchema = new mongoose.Schema({
         role: {
             type: Number,
             default: 1
+        },
+        resetPasswordToken: {
+            type: String,
+            unique: true
+        },
+        PasswordTokenExpire:{
+            type: Date
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );
