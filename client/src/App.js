@@ -3,7 +3,7 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
-
+import Detaile from "./components/post/Detaile";
 import { AuthContext } from "./context/AuthContext";
 
 import { useContext } from "react";
@@ -41,6 +41,10 @@ function App() {
 
             <Route path="/category/:categoryName">
                 <Category/>
+            </Route>
+            
+            <Route path="/post/:id">
+                <Detaile/>
             </Route>
         </Switch>
     </Router>

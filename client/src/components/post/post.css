@@ -87,4 +87,14 @@
     height: 40px;
     width: 120px;
 }
+.detaille{
+    border-radius: 10px;
+    height: 3pc;
+    width: auto;
+      margin-left: 40pc;
+      text-decoration: none;
+      background: black;
+      color: white;
+      border: none;
+  }
 /*# sourceMappingURL=post.css.map */

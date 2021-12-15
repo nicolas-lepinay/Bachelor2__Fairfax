@@ -86,8 +86,12 @@ export default function Post({post}) {
                         <span className="postCommentText">{post?.comments.length} comments</span>
                     </div>
                 </div>
-                
-                <div className="comme">
+                <div>
+                <Link to={`post/${post._id}`} >  
+                    <button className="detaille">Lire plus</button>
+                </Link>
+                </div>
+                {/* <div className="comme">
                     <button className="commebtn">Commentaire</button>
                     <div className="commeall">
                         {comme.map((r)=>(
@@ -98,7 +102,7 @@ export default function Post({post}) {
                     <label htmlFor="">Commentaire</label>
                     <input type="text" id="comme" />
                     <button>envoie</button>
-                </div>
+                </div> */}
             </div>
         </div>
     )
