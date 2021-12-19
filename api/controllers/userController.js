@@ -32,22 +32,67 @@ module.exports.findAll_GET = async (req, res) => {
 // * UPDATE A USER *
 module.exports.update_PUT = async (req, res) => {
     // Si l'utilisateur veut modifier son mot de passe :
-    if (req.body.password) {
+    /* if (req.body.password) {
         try {
             req.body.password = bcrypt.hashSync(req.body.password, 10);
         } catch (err) {
             return res.status(500).json(err);
         }
-    }
+    } */
     // Sinon, on modifie les autres champs :
-    try {
+    /* try {
         const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
             $set: req.body,
         }, {new: true});
         res.status(200).json(updatedUser);
     } catch (err) {
         return res.status(500).json(err);
+    } */
+    console.log(req.body);
+
+    let userID = req.body.userId;
+    let userName = req.body.username;
+    let userAvatar = req.body.avatar;
+    let userEmail = req.body.email;
+    let userPassword = req.body.password;
+
+    if (userAvatar) {
+        
+        console.log("oui");
+
     }
+
+    if (userPassword) {
+        
+        console.log("oui!");
+
+    }
+
+    try {
+
+        if (userName === "" || userName === undefined) throw "UserName ne peut pas être vide!";
+
+        //if (userEmail === "" || userEmail === undefined) throw "L'email ne peut pas être vide!";
+        
+        const updateUser = await User.findByIdAndUpdate(userID, {
+
+            $set: {
+
+                username: userName,
+                //email: userEmail,
+
+             }
+
+        }, {new: true});
+
+        res.status(200).json(updateUser);
+
+    } catch (error) {
+        
+        return res.status(500).json(error);
+
+    }
+
 }
 
 // * DELETE A USER *

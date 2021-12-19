@@ -1,10 +1,11 @@
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
+import { UserContext } from "../../context/UserContext";
 
 import "./account.css";
 
@@ -12,9 +13,6 @@ export default function Account(){
 
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
-
-    const [user, setUser] = useState({});
-    const username = useParams().username;
 
     const MATERIAL_STYLE = {
 
@@ -27,18 +25,61 @@ export default function Account(){
 
     };
 
-    useEffect ( () => {
+    /* const [user, setUser] = useState({});
+    const username = useParams().username; */
+    const { user } = useContext(UserContext);
+    const usernameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const checkPasswordRef = useRef();
 
-        const fetchUser = async () => {
+    useEffect(() => {
 
-            const res = await axios.get(`/users?username=${username}`);
-            setUser(res.data);
+        usernameRef.current.value = user.username;
+        emailRef.current.value = user.email;
+
+    }, []);
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        //console.log(document.getElementById('username').value);
+        let newUsername = usernameRef.current.value;
+        console.log(newUsername);
+        console.log(emailRef.current.value);
+        let data = {
+
+            userId: user._id,
+            avatar: user.avatar,
+            username: usernameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            checkPassword: checkPasswordRef.current.value
 
         };
 
-        fetchUser();
+        try {
 
-    }, [username]); 
+            await axios.put(`/users/${user._id}`, data, {headers: { token: user.accessToken}});
+
+        } catch (err) {
+
+            console.log(err);
+            alert("Echec: " + err);
+
+        }
+
+    };
+
+    /* useEffect ( () => {
+        
+        username.current.value = user.username;
+
+    }, []) */
+
+    console.log(user);
+    console.log(user.accessToken);
 
     return (
 
@@ -54,7 +95,9 @@ export default function Account(){
                     <div id="fading-line-right"></div>
                 </div>
 
-                <form action="#" id="form-validation" method="POST" enctype="multipart/form-data">
+                <form id="form-validation" onSubmit={handleSubmit} enctype="multipart/form-data">
+
+                    <input type="hidden" id="userId" value={user._id} />
 
                     <div className="label">Profile picture</div>
                     <label className="custom-file-upload">
@@ -64,24 +107,24 @@ export default function Account(){
 
                     <div className="label">Username</div>
                     <div className="inputWithIcon">
-                        <input id="username" type="text" name="username" placeholder="Change your username" pattern="^[ a-zA-Z0-9._]{3,20}" title="Only letters, numbers, spaces, dots and underscores. Length required: 3 ~ 20"/>
+                        <input id="username" type="text" name="username" placeholder="Change your username" pattern="^[ a-zA-Z0-9._]{3,20}" title="Only letters, numbers, spaces, dots and underscores. Length required: 3 ~ 20" ref={usernameRef}/>
                         <FontAwesomeIcon icon={faUser} style={MATERIAL_STYLE}/>
                     </div>
 
                     <div className="label">Email address</div>
                     <div className="inputWithIcon">
-                        <input type="email" name="email" placeholder="Change your email address" maxlength="40"/>
+                        <input type="email" name="email" placeholder="Change your email address" maxlength="40" ref={emailRef}/>
                         <FontAwesomeIcon icon={faEnvelope} style={MATERIAL_STYLE} />
                     </div>
 
                     <div className="label">Password</div>
                     <div className="inputWithIcon">
-                        <input id="pwd-1" name="password" type="password" placeholder="Change your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}"/>
+                        <input id="pwd-1" name="password" type="password" placeholder="Change your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}" ref={passwordRef}/>
                         <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE} />
                     </div>
 
                     <div class="inputWithIcon">
-                        <input id="pwd-2" name="password" type="password" placeholder="Confirm your new password"/>
+                        <input id="pwd-2" name="password" type="password" placeholder="Confirm your new password" ref={checkPasswordRef}/>
                         <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE} />
                     </div>
 
@@ -103,7 +146,7 @@ export default function Account(){
                         </div>
                     </div> */}
 
-                    <button type="submit" className="btn">Apply changes</button>
+                    <button className="btn">Apply changes</button>
 
                 </form>
 

@@ -36,6 +36,7 @@ export default function Topbar() {
                     <span className="topbarLink">Home</span>
                 </Link>                    
                 {user && <span className="topbarLink" onClick={handleLogout}>Logout</span>}
+                <Link to={`/account/${user.username}`}>Account</Link>
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
