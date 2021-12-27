@@ -83,7 +83,6 @@ function LoginModal({ handleClose }) {
     const checkPasswordValid = () => {
         checkPasswordsMatch();
         checkPasswordPattern();
-        console.log(validPattern && validLength)
     }
 
     const handleRegister = async (e) => {
@@ -101,7 +100,7 @@ function LoginModal({ handleClose }) {
                 slidePanel(); // Le panneau coulisse pour inviter l'utilisateur à se connecter
             } catch(err) {
                 console.log(err);
-                alert("Register failed.\n\nError: " + err)
+                alert("Oops, we encountered a problem registering your account.\n\nError: " + err)
             }
         }
     };
@@ -114,8 +113,8 @@ function LoginModal({ handleClose }) {
             localStorage.setItem("user", JSON.stringify(res.data))
             document.getElementById('root').style.filter = 'blur(0px)'; // J'enlève le fond flouté
         } catch (err) {
-            console.log(err);
             shakeModal();
+            console.log(err);
         }
     };
 

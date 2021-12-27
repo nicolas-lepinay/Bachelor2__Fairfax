@@ -32,7 +32,7 @@ export default function Topbar() {
 
             <div className="topbarRight">
                 <div className="topbarLinks">
-                <Link to="/" style={{textDecoration:"none"}}>
+                <Link to="/" style={{textDecoration:"none", color: "inherit"}}>
                     <span className="topbarLink">Home</span>
                 </Link>                    
                 {user && <span className="topbarLink" onClick={handleLogout}>Logout</span>}
@@ -43,10 +43,12 @@ export default function Topbar() {
                         <span className="topbarIconBadge">1</span>
                     </div>
 
-                    <div className="topbarIconItem">
-                        <Chat/>
-                        <span className="topbarIconBadge">2</span>
-                    </div>
+                    <Link to="/messages" style={{textDecoration:"none", color: "inherit"}}>
+                        <div className="topbarIconItem">
+                            <Chat/>
+                            <span className="topbarIconBadge">2</span>
+                        </div>
+                    </Link>                    
 
                     <div className="topbarIconItem">
                         <Notifications/>

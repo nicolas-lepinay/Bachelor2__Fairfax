@@ -10,6 +10,8 @@ const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts")
 const commentRoute = require("./routes/comments")
+const conversationRoute = require("./routes/chatConversations")
+const messageRoute = require("./routes/chatMessages")
 
 dotenv.config();
 
@@ -55,6 +57,8 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 const port = 8000
 

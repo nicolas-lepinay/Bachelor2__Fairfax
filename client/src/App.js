@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
+import Messages from "./pages/messenger/Messenger.jsx"
 
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo } from "react";
@@ -37,6 +38,11 @@ function App() {
                 <Route path="/profile/:username" component={Profile} />
                 <Route path="/category/:categoryName" component={Category} />
                 <Route path="/post" component={PostDetails} />
+
+                <Route path="/messages">
+                    {user ? <Messages/> : <Redirect to="/"/>}
+                </Route>
+
             </UserContext.Provider>
 
         </Switch>

@@ -28,6 +28,10 @@ const PostSchema = new mongoose.Schema({
         comments: {
             type: Array,
             default: []
+        },
+        state: {
+            type: Number,
+            default: 0
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );

@@ -23,6 +23,10 @@ const TicketSchema = new mongoose.Schema({
         messages: {
             type: Array,
             default: []
+        },
+        state: {
+            type: Number,
+            default: 0
         }
     }, { timestamps: true }
 );
