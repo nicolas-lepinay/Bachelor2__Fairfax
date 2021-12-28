@@ -24,3 +24,17 @@ module.exports.create_POST = async (req, res) => {
         res.status(500).json(err); 
     }
 }
+
+// * GET TWO USERS' CONVERSATION *
+module.exports.findByTwoUsers_GET = async (req, res) => {
+    try {
+        const conversation = await ChatConversation.findOne({
+            users: {
+                $all: [req.params.userId_1, req.params.userId_2]
+            },
+        });
+        res.status(200).json(conversation);
+    } catch(err) {
+        res.status(500).json(err);
+    }
+}

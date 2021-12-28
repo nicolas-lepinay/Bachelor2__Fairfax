@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
         },
         avatar: {
             type: String,
-            default: "profile/defaultAvatar.jpg"
+            // default: "profile/defaultAvatar.jpg"
         },
         followers: {
             type: Array,

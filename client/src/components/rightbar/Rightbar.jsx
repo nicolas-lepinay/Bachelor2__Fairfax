@@ -55,11 +55,11 @@ export default function Rightbar({user}) {
                 await axios.put(`/users/${user._id}/follow`, {userId: currentUser._id});
                 const updatedUser = await axios.get(`/users?userId=${currentUser._id}`);
                 setCurrentUser(updatedUser.data);
+                setFollowed(!followed);
             } catch(err) {
                 console.log(err)
                 alert("Follow/Unfollow failed.")
             }
-            setFollowed(!followed);
         }
 
         useEffect ( () => {

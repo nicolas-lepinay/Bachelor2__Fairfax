@@ -18,10 +18,12 @@ function Messages() {
     const { user } = useContext(UserContext);
     
     // UseStates :
-    const [conversations, setConversations] = useState([]); // [ID de l'utilisateur + celui de l'interlocuteur]
-    const [chat, setChat] = useState(null); // Objet d'objets {users, messages, etc.}
-    const [messages, setMessages] = useState([]); // [Array de messages]
-    const [newMessage, setNewMessage] = useState(""); // Nouveau message
+    const [conversations, setConversations] = useState([]); // [ ID de l'utilisateur + celui de l'interlocuteur ]
+    const [chat, setChat] = useState(null);                 // Objet d'objets { users, messages, ... }
+    const [messages, setMessages] = useState([]);           // [ Array de messages ]
+    const [newMessage, setNewMessage] = useState("");       // Nouveau message expédié
+    const [arrivalMessage, setArrivalMessage] = useState(null); // Nouveau message reçu
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
     // ✒️ UseRef :
     const scrollRef = useRef(null); // Auto-scroll to last message
@@ -49,7 +51,7 @@ function Messages() {
                 console.log(err);
             }
         }
-        (chat && getMessages()); // Si chat est non null
+        chat && getMessages(); // Si chat est non null
     }, [chat]);
 
     // 🖱️ Scroll to last message :
@@ -60,16 +62,35 @@ function Messages() {
     // 🔌 Socket.io :
     useEffect( () => {
         socket.current = io("ws://localhost:9000"); // Initialisation de la socket
+        
+        // Récupération de chaque nouveau message reçu :
+        socket.current.on('getMessage', (data) => {
+            setArrivalMessage({
+                userId: data.senderId,
+                content: data.text,
+                createdAt: Date.now(),
+            });
+        });
     }, []);
 
+    
+    useEffect ( () => {
+        if(arrivalMessage && chat?.users.includes(arrivalMessage.userId)) {
+            setMessages([...messages, arrivalMessage]);
+        }
+    }, [arrivalMessage, chat]);
+    
+
+    // 🦸 Fetch online friends :
     useEffect( () => {
         socket.current.emit("addUser", user._id); // Envoi de l'ID du user loggé au socket server
-        socket.current.on("getUsers", users => {
-            console.log(users);
+        socket.current.on("getUsers", (users) => {
+            setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);
 
-    // 📨 Post a new message :
+
+    // 📧 Post a new message :
     const handleSubmit = async (e) => {
         e.preventDefault();
         const message = {
@@ -77,6 +98,16 @@ function Messages() {
             content: newMessage,
             conversationId: chat._id
         };
+
+        
+        const receiverId = chat.users.find(memberId => memberId !== user._id);
+
+        socket.current.emit('sendMessage', {
+            senderId: user._id,
+            receiverId: receiverId,
+            text: newMessage,
+        });     
+
         try {
             const res = await axios.post("/messages", message);
             setMessages([...messages, res.data]);
@@ -108,9 +139,9 @@ function Messages() {
                         
                         <>
                             <BoxTop>
-                                {messages.map( m => (
+                                {messages.map( (message, i) => (
                                     <div ref={scrollRef}>
-                                        <Message message={m} own={m.userId === user._id}/>
+                                        <Message message={message} own={message.userId === user._id} key={`msg-${i}`}/>
                                     </div>
                                 ))}
                             </BoxTop>
@@ -130,10 +161,11 @@ function Messages() {
 
                 <Online>
                     <Wrapper>
-                        <ChatOnline/>
-                        <ChatOnline/>
-                        <ChatOnline/>
-                        <ChatOnline/>
+                        <ChatOnline 
+                            onlineUsers={onlineUsers}
+                            currentUserId={user._id}
+                            setChat={setChat} 
+                        />
                     </Wrapper>
                 </Online>
 
