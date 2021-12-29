@@ -28,7 +28,7 @@ function Conversation( { conversation }) {
 
     return (
         <Container>
-            <Image src={user?.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`}/>
+            <Image src={user?.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`}/>
             <Name>{user?.username}</Name>
         </Container>
     )

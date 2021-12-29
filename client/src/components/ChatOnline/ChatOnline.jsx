@@ -36,8 +36,8 @@ function ChatOnline({ onlineUsers, currentUserId, setChat }) {
                 <Friend onClick={() => handleClick(friend)}>
                     <Wrapper>
                         <Image 
-                            src={friend?.avatar ? `${MEDIA}/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`}
-                            alt={friend?.username}
+                            src={friend?.avatar ? `${MEDIA}/profile/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`}
+                            alt=""
                             title={friend?.username}
                             />
                         <Badge/>

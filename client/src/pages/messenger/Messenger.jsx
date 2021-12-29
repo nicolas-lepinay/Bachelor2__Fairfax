@@ -98,7 +98,6 @@ function Messages() {
             content: newMessage,
             conversationId: chat._id
         };
-
         
         const receiverId = chat.users.find(memberId => memberId !== user._id);
 

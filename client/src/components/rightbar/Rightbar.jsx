@@ -25,7 +25,7 @@ export default function Rightbar({user}) {
                 console.log(err)
             }
         }
-        getFriends();
+        user && getFriends();
     }, [user, currentUser.following]);
 
     const HomeRightbar = () => {
@@ -99,7 +99,7 @@ export default function Rightbar({user}) {
                     {friends.map( (friend) => (
                     <Link to={`/profile/${friend.username}`} style={{textDecoration: "none"}}>
                         <div className="rightbarFollowing">
-                            <img src={friend.avatar ? `${MEDIA}/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" className="rightbarFollowingImg" />
+                            <img src={friend.avatar ? `${MEDIA}/profile/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" className="rightbarFollowingImg" />
                             <span className="rightbarFollowingName">{friend.username}</span>
                         </div>
                     </Link>

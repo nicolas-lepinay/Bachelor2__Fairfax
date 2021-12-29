@@ -45,7 +45,7 @@ export default function Profile() {
                             <img className="profileCoverImg" src={`${MEDIA}/post/0.jpg`} alt="" />
                             <div className="avatar">
                                 <img className="frame" src={`${ASSETS}/golden_frame.webp`} alt="" />
-                                <img className="profileUserImg"src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
+                                <img className="profileUserImg"src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
                             </div>
                         </div>
                         <div className="profileInfo">
