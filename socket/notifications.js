@@ -22,10 +22,11 @@ exports.start = (io) => {
         });
 
         // 🔔 Envoi d'une notification :
-        socket.on("sendNotification", ({ senderId, receiverId, type }) => {
+        socket.on("sendNotification", ({ senderId, receiverId, postId, type }) => {
             const receiver = getUser(receiverId);
             io.to(receiver.socketId).emit('getNotification', {
                 senderId,
+                postId,
                 type,
             });
         });

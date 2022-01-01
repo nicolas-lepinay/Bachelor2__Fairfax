@@ -50,6 +50,7 @@
   color: white;
   display: flex;
   justify-content: space-around;
+  position: relative;
 }
 .topbarRight .topbarLink {
   cursor: pointer;
@@ -87,4 +88,19 @@
   width: 32px;
 }
 
-/*# sourceMappingURL=topbar.css.map */
+.notifications {
+  background: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+
+.notification {
+  padding: 5px;
+  font-size: 14px;
+  border-bottom: 1px solid grey;
+}

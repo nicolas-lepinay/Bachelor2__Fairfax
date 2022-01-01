@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 
 import "./post.css"
 import { MoreVert } from "@material-ui/icons"
 import { UserContext } from "../../context/UserContext"
 import { io } from "socket.io-client";
+import axios from "axios";
+import { format } from "timeago.js";
 
 export default function Post({post, socket}) {
 
@@ -48,13 +48,14 @@ export default function Post({post, socket}) {
         }
         setLike(isLiked ? like-1 : like+1);
         setIsLiked(!isLiked);
-        sendNotification('like');
+        !isLiked && sendNotification('like');
     }
 
     const sendNotification = (type) => {
         socket?.emit('sendNotification', {
             senderId: currentUser._id,
             receiverId: post.userId, // ou user._id
+            postId: post._id,
             type: type,
         });
     }
@@ -90,7 +91,7 @@ export default function Post({post, socket}) {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post.content}</span>
-                    <img className="postImg" src={`${MEDIA}/post/${post?.img}`} alt="" />
+                    {post.img && <img className="postImg" src={`${MEDIA}/post/${post?.img}`} alt="" /> }
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">

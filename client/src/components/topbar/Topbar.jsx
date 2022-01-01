@@ -4,32 +4,54 @@ import React, { useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 import { io } from "socket.io-client";
+import axios from "axios";
 
 export default function Topbar({ socket }) {
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
 
     const { user, setUser } = useContext(UserContext);
-    // const [socket, setSocket] = useState(null);
     const [notifications, setNotifications] = useState([]);
+    const [openNotifications, setOpenNotifications] = useState(false);
 
     const handleLogout = () => {
         setUser(null);
         localStorage.removeItem("user");
     }
 
-    // 🔌 Socket.io :
-    // useEffect(() => {
-    //     setSocket(io("ws://localhost:9000"));
-    // }, [])
-
     useEffect(() => {
         socket?.on('getNotification', data => {
-            setNotifications((prev) => [...prev, data])
+            setNotifications( (old) => [...old, data]);
         });
     }, [socket])
 
-    console.log('Notifications :')
-    console.log(notifications)
+    const DisplayNotification = ({ notification }) => {
+
+        const [action, setAction] = useState('');
+        const [postTitle, setPostTitle] = useState('');
+        const [username, setUsername] = useState('');
+        
+        useEffect(() => {
+            const fetchPost = async () => {
+                const res = await axios.get(`/posts/${notification.postId}`);
+                setPostTitle(res.data?.title);
+            }
+            const fetchUser = async () => {
+                const res = await axios.get(`/users?userId=${notification.senderId}`);
+                setUsername(res.data.username);
+            }
+
+            fetchPost();
+            fetchUser();
+            notification.type === 'like' && (setAction('liked'));
+            notification.type === 'comment' && (setAction('commented'));
+
+        }, [notification]);
+
+
+        return (
+            <span className="notification">{`${username} ${action} your post "${postTitle}".`}</span>
+        )
+    };
 
     return (
         <div className="topbarContainer">
@@ -67,10 +89,20 @@ export default function Topbar({ socket }) {
                         </div>
                     </Link>                    
 
-                    <div className="topbarIconItem">
+                    <div className="topbarIconItem" onClick={ () => setOpenNotifications(!openNotifications) }>
                         <Notifications/>
-                        <span className="topbarIconBadge">1</span>
+                        {notifications.length > 0 && 
+                        <span className="topbarIconBadge">{notifications.length}</span>
+                        }
                     </div>
+
+                    { openNotifications && notifications.length > 0 &&
+                    <div className="notifications">
+                        {notifications.map( (n, i) => <DisplayNotification notification={n} key={`dn-${i}`}/> ) }
+                    </div>
+                    }
+
+
                 </div>
                 { user &&          
                     <Link to={`/profile/${user.username}`}>

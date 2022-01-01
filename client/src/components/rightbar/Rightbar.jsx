@@ -35,7 +35,7 @@ export default function Rightbar({user}) {
                     <img className="birthdayImg" src={`${ASSETS}/gift.png`} alt="" />
                     <span className="birthdayText"><b>Giulio Favaro</b> and <b>2 other friends</b> celebrate their birthday today.</span>
                 </div>
-                <img src="/assets/ad.webp" alt="" className="rightbarAd" />
+                <img src={`${ASSETS}/ad.webp`} alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {Users.map(u => (
