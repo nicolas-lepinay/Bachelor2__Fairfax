@@ -10,7 +10,7 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-function Messages() {
+function Messenger() {
     // 🔌 WebSocket :
     const socket = useRef();
 
@@ -83,8 +83,8 @@ function Messages() {
 
     // 🦸 Fetch online friends :
     useEffect( () => {
-        socket.current.emit("addUser", user._id); // Envoi de l'ID du user loggé au socket server
-        socket.current.on("getUsers", (users) => {
+        socket.current.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
+        socket.current.on("MESSENGER_getUsers", (users) => {
             setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);
@@ -173,4 +173,4 @@ function Messages() {
     )
 }
 
-export default Messages
+export default Messenger

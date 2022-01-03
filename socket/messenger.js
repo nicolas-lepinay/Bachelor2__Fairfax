@@ -19,9 +19,9 @@ exports.start = (io) => {
         console.log("🔌 A user has connected to socket (Messenger).");
     
         // 🔴 Connexion à la socket :
-        socket.on("addUser", userId => {
+        socket.on("MESSENGER_addUser", userId => {
             addUser(userId, socket.id); // Récupération de tous les users loggés côté client
-            io.emit("getUsers", users); // Envoi des users loggés
+            io.emit("MESSENGER_getUsers", users); // Envoi des users loggés
         });
     
         // 📩 Envoi et récupération de messages :
@@ -33,7 +33,7 @@ exports.start = (io) => {
         // ❌ Déconnexion de la socket :
         socket.on("disconnect", () => {
             removeUser(socket.id); // Suppression des users hors-ligne
-            io.emit("getUsers", users); // Renvoi des users
+            io.emit("MESSENGER_getUsers", users); // Renvoi des users
             console.log("🔌 A user has disconnected from socket server (Messenger).");
         });
     })

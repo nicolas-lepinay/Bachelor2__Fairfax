@@ -21,7 +21,7 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
-        socket?.emit("newUser", user._id);
+        socket?.emit("NOTIFICATIONS_addUser", user._id);
       }, [socket, user]);
 
     return ( 

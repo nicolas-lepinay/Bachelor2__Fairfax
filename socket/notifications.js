@@ -17,7 +17,7 @@ exports.start = (io) => {
         console.log("🔌 A user has connected to socket (Notifications).");
     
         // 🔴 Connexion à la socket :
-        socket.on("newUser", userId => {
+        socket.on("NOTIFICATIONS_addUser", userId => {
             addUser(userId, socket.id); // Récupération de tous les users loggés côté client
         });
 

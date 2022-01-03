@@ -17,7 +17,6 @@ export default function Post({post, socket}) {
     const [user, setUser] = useState({});
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
-    // const [socket, setSocket] = useState(null);
 
     const [comme , setComm] = useState([]);
     
