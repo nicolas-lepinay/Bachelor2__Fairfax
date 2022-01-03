@@ -10,23 +10,23 @@ import { UserContext } from "../../context/UserContext"
 import { io } from "socket.io-client";
 
 
-export default function Home() {
+export default function Home({socket}) {
 
     const { user, setUser } = useContext(UserContext);
-    const [socket, setSocket] = useState(null);
+    // const [socket, setSocket] = useState(null);
 
     // 🔌 Socket.io :
-    useEffect(() => {
-        setSocket(io("ws://localhost:9000"));
-    }, [])
+    // useEffect(() => {
+    //     setSocket(io("ws://localhost:9000"));
+    // }, [])
 
-    useEffect(() => {
-        socket?.emit("NOTIFICATIONS_addUser", user._id);
-      }, [socket, user]);
+    // useEffect(() => {
+    //     socket?.emit("NOTIFICATIONS_addUser", user._id);
+    //   }, [socket, user]);
 
     return ( 
         <>
-            <Topbar socket={socket}/>
+            {/* <Topbar socket={socket}/> */}
             <div className="homeContainer">
                 <Sidebar/>
                 <Feed socket={socket}/>

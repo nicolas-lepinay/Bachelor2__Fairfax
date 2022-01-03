@@ -10,9 +10,9 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-function Messenger() {
+function Messenger({ socket }) {
     // 🔌 WebSocket :
-    const socket = useRef();
+    // const socket = useRef();
 
     // 🦸‍♀️ UseContext :
     const { user } = useContext(UserContext);
@@ -61,10 +61,10 @@ function Messenger() {
 
     // 🔌 Socket.io :
     useEffect( () => {
-        socket.current = io("ws://localhost:9000"); // Initialisation de la socket
+        // socket.current = io("ws://localhost:9000"); // Initialisation de la socket
         
         // Récupération de chaque nouveau message reçu :
-        socket.current.on('getMessage', (data) => {
+        socket.on('getMessage', (data) => {
             setArrivalMessage({
                 userId: data.senderId,
                 content: data.text,
@@ -83,8 +83,8 @@ function Messenger() {
 
     // 🦸 Fetch online friends :
     useEffect( () => {
-        socket.current.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
-        socket.current.on("MESSENGER_getUsers", (users) => {
+        socket.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
+        socket.on("MESSENGER_getUsers", (users) => {
             setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);
@@ -101,7 +101,7 @@ function Messenger() {
         
         const receiverId = chat.users.find(memberId => memberId !== user._id);
 
-        socket.current.emit('sendMessage', {
+        socket.emit('sendMessage', {
             senderId: user._id,
             receiverId: receiverId,
             text: newMessage,
@@ -118,7 +118,7 @@ function Messenger() {
         
     return (
         <>
-            <Topbar/>
+            {/* <Topbar/> */}
             <Container>
                 <Menu>
                     <Wrapper>

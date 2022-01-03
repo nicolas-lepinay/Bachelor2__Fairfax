@@ -1,12 +1,13 @@
 import LandingPage from "./pages/landingPage/LandingPage"
 import Home from "./pages/home/Home";
+import Topbar from './components/topbar/Topbar.jsx'
 import Profile from "./pages/profile/Profile";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
 import Messenger from "./pages/messenger/Messenger.jsx"
 
 import { UserContext } from "./context/UserContext"
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import {
     BrowserRouter as Router,
@@ -15,40 +16,64 @@ import {
     Redirect
 } from "react-router-dom";
 
+import { io } from "socket.io-client";
+
 function App() {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
     const currentUser = useMemo( () => ({user, setUser}), [user, setUser] );
 
-    return (
-    <Router>
-        <Switch>
+    const DefaultRoutes = () => {
+        const [socket, setSocket] = useState(null);
+    
+        // 🔌 Socket.io :
+        useEffect(() => {
+            setSocket(io("ws://localhost:9000"));
+        }, [])
+    
+        useEffect(() => {
+            // Envoi de l'ID du user loggé au socket server :
+            socket?.emit("NOTIFICATIONS_addUser", user._id);
+            socket?.emit("MESSENGER_addUser", user._id); 
+          }, [socket, user]);
 
-            <UserContext.Provider value={currentUser}>
-
-                {/*Toujours ajouter 'exact' pour la racine ! */}
-                <Route exact path="/" >
-                    {user ? <Redirect to="/home"/> : <LandingPage/>}
-                </Route>
-
+        return (
+          <>
+            <Topbar socket={socket} />
+            <Switch>
                 <Route path="/home" >
-                    {user ? <Home/> : <Redirect to="/"/>}
+                    {user ? <Home socket={socket}/> : <Redirect to="/"/>}
                 </Route>
 
-                <Route path="/profile/:username" component={Profile} />
+                <Route path="/profile/:username" >
+                    <Profile/>
+                </Route>
+
                 <Route path="/category/:categoryName" component={Category} />
                 <Route path="/post" component={PostDetails} />
 
                 <Route path="/messages">
-                    {user ? <Messenger/> : <Redirect to="/"/>}
+                    {user ? <Messenger socket={socket}/> : <Redirect to="/"/>}
                 </Route>
+            </Switch>
+          </>
+        );
+      };
 
-            </UserContext.Provider>
-
-        </Switch>
-    </Router>
-
-    )
+    return (
+        <Router>
+            <Switch>
+                <UserContext.Provider value={currentUser}>
+                    {/*Toujours ajouter 'exact' pour la racine ! */}
+                    <Route exact path="/">
+                        {user ? <Redirect to="/home"/> : <LandingPage/>}
+                    </Route>
+        
+                    <Route component={user ? DefaultRoutes : Landing} />
+                </UserContext.Provider>
+            </Switch>
+        </Router>
+      );
 }
 
 export default App;
