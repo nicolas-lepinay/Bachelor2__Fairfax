@@ -1,19 +1,14 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 
 import { Container, Wrapper, Menu, Box, Online, Searchbar, BoxTop, BoxBottom, TextArea, Button, NoChat } from "./Messenger.styled"
-import Topbar from "../../components/topbar/Topbar.jsx"
 import Conversation from '../../components/conversation/Conversation'
 import Message from "../../components/message/Message.jsx";
 import ChatOnline from '../../components/ChatOnline/ChatOnline';
 import { UserContext } from "../../context/UserContext";
 
 import axios from "axios";
-import { io } from "socket.io-client";
 
 function Messenger({ socket }) {
-    // 🔌 WebSocket :
-    // const socket = useRef();
-
     // 🦸‍♀️ UseContext :
     const { user } = useContext(UserContext);
     
@@ -60,9 +55,7 @@ function Messenger({ socket }) {
     }, [messages]);
 
     // 🔌 Socket.io :
-    useEffect( () => {
-        // socket.current = io("ws://localhost:9000"); // Initialisation de la socket
-        
+    useEffect( () => {        
         // Récupération de chaque nouveau message reçu :
         socket.on('getMessage', (data) => {
             setArrivalMessage({
@@ -73,7 +66,6 @@ function Messenger({ socket }) {
         });
     }, []);
 
-    
     useEffect ( () => {
         if(arrivalMessage && chat?.users.includes(arrivalMessage.userId)) {
             setMessages([...messages, arrivalMessage]);
@@ -118,7 +110,6 @@ function Messenger({ socket }) {
         
     return (
         <>
-            {/* <Topbar/> */}
             <Container>
                 <Menu>
                     <Wrapper>
