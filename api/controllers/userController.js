@@ -50,6 +50,7 @@ module.exports.update_PUT = async (req, res) => {
     } */
     console.log(req.body);
 
+    //Les données qu'on récupère via le front
     let userID = req.body.userId;
     let userName = req.body.username;
     let userAvatar = req.body.avatar;
@@ -68,7 +69,7 @@ module.exports.update_PUT = async (req, res) => {
 
     }
 
-    try {
+    /* try {
 
         if (userName === "" || userName === undefined) throw "UserName ne peut pas être vide!";
 
@@ -91,7 +92,7 @@ module.exports.update_PUT = async (req, res) => {
         
         return res.status(500).json(error);
 
-    }
+    } */
 
 }
 

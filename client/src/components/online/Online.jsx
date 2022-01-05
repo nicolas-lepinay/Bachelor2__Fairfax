@@ -7,7 +7,7 @@ export default function Online({user}) {
     return (
         <li className="rightbarFriend">
             <div className="rightbarProfileImgContainer">
-                <img src={`${MEDIA}/${user.avatar}`} alt="" className="rightbarProfileImg" />
+                <img src={user?.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" className="rightbarProfileImg" />
                 <span className="rightbarOnline"></span>
             </div>
             <span className="rightbarUsername">{user.username}</span>

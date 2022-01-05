@@ -27,12 +27,18 @@ export default function Account(){
 
     /* const [user, setUser] = useState({});
     const username = useParams().username; */
+    
+    //On récupère une liste d'un utilisateur
     const { user } = useContext(UserContext);
+
+    //Les références pour les ajouts dans la BDD
+    const avatarRef = useRef();
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const checkPasswordRef = useRef();
 
+    //Pour le champs username et email on rentre les valeurs qui existe déjà
     useEffect(() => {
 
         usernameRef.current.value = user.username;
@@ -40,14 +46,17 @@ export default function Account(){
 
     }, []);
 
+    //Action qui permet d'envoyer les données au serveur
     const handleSubmit = async (e) => {
 
+        //On annule l'envoie direct
         e.preventDefault();
 
         //console.log(document.getElementById('username').value);
-        let newUsername = usernameRef.current.value;
-        console.log(newUsername);
         console.log(emailRef.current.value);
+        console.log(usernameRef);
+
+        //Les données qu'on envera au serveur
         let data = {
 
             userId: user._id,
@@ -59,6 +68,7 @@ export default function Account(){
 
         };
 
+        //On fait un test pour vérifier si le serveur n'a pas eu de problème
         try {
 
             await axios.put(`/users/${user._id}`, data, {headers: { token: user.accessToken}});
@@ -102,7 +112,7 @@ export default function Account(){
                     <div className="label">Profile picture</div>
                     <label className="custom-file-upload">
                         <input type="file" name="image" accept="image/*" id="image_input"/>
-                        <img className="avatar-img" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture"/>
+                        <img className="avatar-img" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture" ref={avatarRef}/>
                     </label>
 
                     <div className="label">Username</div>

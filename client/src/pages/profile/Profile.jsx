@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 import Topbar from "../../components/topbar/Topbar";
@@ -16,11 +17,18 @@ export default function Profile() {
 
     const [user, setUser] = useState({});
     const username = useParams().username;
+    const history = useHistory();
 
     useEffect ( () => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?username=${username}`);
-            setUser(res.data);
+            try {
+                const res = await axios.get(`/users?username=${username}`);
+                setUser(res.data);
+
+            } catch(err) {
+                console.log(err);
+                history.push('/home');
+            }
         }
         fetchUser();
     }, [username])
@@ -37,7 +45,7 @@ export default function Profile() {
                             <img className="profileCoverImg" src={`${MEDIA}/post/0.jpg`} alt="" />
                             <div className="avatar">
                                 <img className="frame" src={`${ASSETS}/golden_frame.webp`} alt="" />
-                                <img className="profileUserImg"src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
+                                <img className="profileUserImg"src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
                             </div>
                         </div>
                         <div className="profileInfo">
