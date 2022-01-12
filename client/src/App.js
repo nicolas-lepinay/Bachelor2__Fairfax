@@ -69,7 +69,7 @@ function App() {
                         {user ? <Redirect to="/home"/> : <LandingPage/>}
                     </Route>
         
-                    <Route component={user ? DefaultRoutes : Landing} />
+                    <Route component={user ? DefaultRoutes : LandingPage} />
                 </UserContext.Provider>
             </Switch>
         </Router>
