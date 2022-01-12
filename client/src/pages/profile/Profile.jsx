@@ -36,7 +36,6 @@ export default function Profile() {
 
     return (
         <>
-            <Topbar/>
             <div className="profile">
                 <Sidebar/>
                 <div className="profileRight">
