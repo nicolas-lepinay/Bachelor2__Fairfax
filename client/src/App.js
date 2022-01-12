@@ -38,7 +38,6 @@ function App() {
                 <Route path="/category/:categoryName" component={Category} />
                 <Route path="/post" component={PostDetails} />
             </UserContext.Provider>
-
         </Switch>
     </Router>
 
