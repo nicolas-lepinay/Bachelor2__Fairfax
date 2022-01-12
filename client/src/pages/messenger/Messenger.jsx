@@ -28,7 +28,10 @@ function Messenger({ socket }) {
         const getConversations = async () => {
             try {
                 const res = await axios.get(`/conversations/${user._id}`);
-                setConversations(res.data)
+                //setConversations(res.data);
+                res.data.forEach( (conversation) => {
+                    conversation.messages.length > 0 && setConversations(old => [...old, conversation]); // Je n'affiche que les conversations non-vides (au moins 1 message)
+                })
             } catch (err) {
                 console.log(err)
             }
@@ -57,7 +60,7 @@ function Messenger({ socket }) {
     // 🔌 Socket.io :
     useEffect( () => {        
         // Récupération de chaque nouveau message reçu :
-        socket.on('getMessage', (data) => {
+        socket?.on('getMessage', (data) => {
             setArrivalMessage({
                 userId: data.senderId,
                 content: data.text,
@@ -75,8 +78,8 @@ function Messenger({ socket }) {
 
     // 🦸 Fetch online friends :
     useEffect( () => {
-        socket.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
-        socket.on("MESSENGER_getUsers", (users) => {
+        socket?.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
+        socket?.on("MESSENGER_getUsers", (users) => {
             setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);

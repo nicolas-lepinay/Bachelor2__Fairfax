@@ -24,7 +24,14 @@ function ChatOnline({ onlineUsers, currentUserId, setChat }) {
     const handleClick = async (friend) => {
         try {
             const res = await axios.get(`/conversations/find/${currentUserId}/${friend._id}`);
-            setChat(res.data);
+            // Si une conversation existe :
+            res.data && setChat(res.data);
+
+            // Si aucune conversation n'existe, j'en crée une :
+            if(!res.data) {
+                const response = await axios.post(`/conversations`, { senderId: currentUserId, receiverId: friend._id } );
+                setChat(response.data);
+            }
         } catch(err) {
             console.log(err);
         }
