@@ -23,13 +23,15 @@ export default function Share() {
         }
 
         if(file) {
-            const data = new FormData();
-            const fileName = Date.now() + "_" + file.name;
-            data.append("file", file);
-            data.append("name", fileName);
+            const formData = new FormData();
+            const date = new Date(Date.now()).toISOString().replaceAll(':', '-'); // 2022-12-25T18-30-00.000Z
+            
+            const fileName = date + "_" + file.name;
+            formData.append("name", fileName);
+            formData.append("file", file);
             newPost.img = fileName;
             try {
-                await axios.post("/upload", data)
+                await axios.post("/upload", formData)
             } catch (err) {
                 console.log(err)
             }
@@ -37,7 +39,7 @@ export default function Share() {
 
         try {
             await axios.post("/posts", newPost);
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
             console.log(err)
         }
@@ -47,7 +49,7 @@ export default function Share() {
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
+                    <img className="shareProfileImg" src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
                     <input placeholder={`What's in your mind, ${user.username}?`} className="shareInput" ref={content} />
                 </div>
 

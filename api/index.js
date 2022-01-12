@@ -10,6 +10,8 @@ const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts")
 const commentRoute = require("./routes/comments")
+const conversationRoute = require("./routes/chatConversations")
+const messageRoute = require("./routes/chatMessages")
 
 dotenv.config();
 
@@ -21,8 +23,12 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch((err) => console.log(err));
 
 //
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-app.use("/media", express.static(path.join(__dirname, "public/media")));
+// app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+// app.use("/media", express.static(path.join(__dirname, "public/media")));
+
+app.use(express.static('public')); 
+app.use('/assets', express.static('assets'));
+app.use('/media', express.static('media'));
 
 // Middleware :
 app.use(express.json()); // Body parser for POST requests
@@ -37,24 +43,26 @@ const storage = multer.diskStorage({
         cb(null, "public/media/post");
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "_" + file.originalname)
-    }
+        cb(null, req.body.name);
+      },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
+
 app.post("/api/upload", upload.single("file"), (req, res) => {
     try {
-        // Upload le fichier automatiquement !
-        return res.status(200).json("File successfully uploaded.")
+      return res.status(200).json("File uploded successfully");
     } catch (err) {
-        console.log(err)
+      console.error(err);
     }
-})
+  });
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 const port = 8000
 

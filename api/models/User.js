@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
         },
         avatar: {
             type: String,
-            default: ""
+            // default: "profile/defaultAvatar.jpg"
         },
         followers: {
             type: Array,
@@ -54,6 +54,10 @@ const UserSchema = new mongoose.Schema({
         role: {
             type: Number,
             default: 1
+        },
+        state: {
+            type: Number,
+            default: 0
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );
