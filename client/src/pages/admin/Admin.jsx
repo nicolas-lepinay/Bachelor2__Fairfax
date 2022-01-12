@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import Datatable from 'datatables';
+import Datatable from "datatables.net-searchpanes"; 
 import tinymce from 'tinymce/tinymce';
 import $ from 'jquery';
 import CountUp from '../../vendor/countUp.js';

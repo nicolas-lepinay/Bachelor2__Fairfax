@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails";
-import LandingPage from "./pages/landingPage/LandingPage";
+
 import LoginModal from "./modals/loginModal/LoginModal";
 import Admin from "./pages/admin/Admin";
 
