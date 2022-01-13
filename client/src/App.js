@@ -4,9 +4,11 @@ import Topbar from './components/topbar/Topbar.jsx'
 import Profile from "./pages/profile/Profile";
 import Category from "./pages/category/Category";
 import PostDetails from "./pages/postDetails/PostDetails"
+import Messenger from "./pages/messenger/Messenger.jsx"
+import Account from "./pages/account/Account";
 /* import LandingPage from "./pages/landingPage/LandingPage" */
-import Account from "./pages/account/Account"
-import LoginModal from "./modals/loginModal/LoginModal"
+/* import Account from "./pages/account/Account"
+import LoginModal from "./modals/loginModal/LoginModal" */
 
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo, useEffect } from "react";
@@ -52,12 +54,15 @@ function App() {
                 </Route>
 
                 <Route path="/category/:categoryName" component={Category} />
-                <Route path="/account/:username" component={Account}/>
+                {/* <Route path="/account/:username" component={Account}/> */}
                 <Route path="/post" component={PostDetails} />
 
                 <Route path="/messages">
                     {user ? <Messenger socket={socket}/> : <Redirect to="/"/>}
                 </Route>
+
+                <Route path="/account/:username" component={Account}/>
+
             </Switch>
           </>
         );
@@ -72,7 +77,7 @@ function App() {
                         {user ? <Redirect to="/home"/> : <LandingPage/>}
                     </Route>
         
-                    <Route component={user ? DefaultRoutes : Landing} />
+                    <Route component={user ? DefaultRoutes : LandingPage} />
                 </UserContext.Provider>
             </Switch>
         </Router>

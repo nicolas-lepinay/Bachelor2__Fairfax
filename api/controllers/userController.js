@@ -48,39 +48,39 @@ module.exports.update_PUT = async (req, res) => {
     } catch (err) {
         return res.status(500).json(err);
     } */
-    console.log(req.body);
+    console.log("ICI:")
+    //console.log(req);
+    console.log(req);
+    //console.log(res);
 
-    //Les données qu'on récupère via le front
-    let userID = req.body.userId;
-    let userName = req.body.username;
-    let userAvatar = req.body.avatar;
-    let userEmail = req.body.email;
-    let userPassword = req.body.password;
+    /* console.log(typeof userID);
+    console.log(typeof userName);
+    console.log(typeof userEmail);
+    console.log(typeof userPassword);
+    console.log(typeof userCheckPassword);
 
-    if (userAvatar) {
-        
-        console.log("oui");
+    console.log(userAvatar); */
 
-    }
-
-    if (userPassword) {
-        
-        console.log("oui!");
-
-    }
+    let regexUserName = /^[ a-zA-Z0-9._]{3,20}/;
+    let regexEmail = /([a-zA-Z0-9._\-]{1,20})+@([a-zA-Z\-]{5,25})+.([a-z]{2,5})/;
+    let regexPassword = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#?!_@.$\\-])/m;
 
     /* try {
 
-        if (userName === "" || userName === undefined) throw "UserName ne peut pas être vide!";
+        if (userName === "") throw "UserName ne peut pas être vide!";
 
-        //if (userEmail === "" || userEmail === undefined) throw "L'email ne peut pas être vide!";
+        if (userEmail === "") throw "L'email ne peut pas être vide!";
+
+        if (!regexUserName.test(userName)) throw "Test Ko!";
+        
+        if (!regexEmail.test(userEmail)) throw "Test Ko!";
         
         const updateUser = await User.findByIdAndUpdate(userID, {
 
             $set: {
 
                 username: userName,
-                //email: userEmail,
+                email: userEmail,
 
              }
 

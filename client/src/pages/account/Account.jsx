@@ -25,8 +25,7 @@ export default function Account(){
 
     };
 
-    /* const [user, setUser] = useState({});
-    const username = useParams().username; */
+    const [image, setImage] = useState('');
     
     //On récupère une liste d'un utilisateur
     const { user } = useContext(UserContext);
@@ -47,49 +46,71 @@ export default function Account(){
     }, []);
 
     //Action qui permet d'envoyer les données au serveur
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
 
         //On annule l'envoie direct
         e.preventDefault();
 
-        //console.log(document.getElementById('username').value);
-        console.log(emailRef.current.value);
-        console.log(usernameRef);
+        const form = document.getElementById('form-validation');
+        /* let formData = new FormData(form);
+        console.log(formData); */
+        let formData2 = new FormData();
+        //formData.append('avatar', image.data);
+        formData2.append('number', 15)
 
         //Les données qu'on envera au serveur
-        let data = {
+        /* let data = {
 
             userId: user._id,
-            avatar: user.avatar,
+            avatar: avatarRef.current.value,
             username: usernameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
             checkPassword: checkPasswordRef.current.value
 
+        }; */
+
+        const config = {
+
+            headers: {
+
+                //token: user.accessToken,
+                'content-type': 'multipart/formdata'
+
+            }
+
         };
 
         //On fait un test pour vérifier si le serveur n'a pas eu de problème
-        try {
+        /* try {
 
-            await axios.put(`/users/${user._id}`, data, {headers: { token: user.accessToken}});
+           await axios.put(`/users/${user._id}`, formData2, config);
 
         } catch (err) {
 
             console.log(err);
             alert("Echec: " + err);
 
-        }
+        } */
+
+        axios.put(`/users/${user._id}`, formData2, config);
 
     };
 
-    /* useEffect ( () => {
-        
-        username.current.value = user.username;
+    const handleImage = (e) => {
 
-    }, []) */
+        /* const img = e.target.files[0];
+        setImage(img); */
 
-    console.log(user);
-    console.log(user.accessToken);
+        const img = {
+
+            preview: URL.createObjectURL(e.target.files[0]),
+            data: e.target.files[0]
+
+        };
+        setImage(img);
+
+    }
 
     return (
 
@@ -105,36 +126,38 @@ export default function Account(){
                     <div id="fading-line-right"></div>
                 </div>
 
-                <form id="form-validation" onSubmit={handleSubmit} enctype="multipart/form-data">
+                <form id="form-validation" onSubmit={handleSubmit}>
 
                     <input type="hidden" id="userId" value={user._id} />
 
-                    <div className="label">Profile picture</div>
+                    {/* <div className="label">Profile picture</div>
                     <label className="custom-file-upload">
+                        Nouvelle image:
                         <input type="file" name="image" accept="image/*" id="image_input"/>
-                        <img className="avatar-img" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture" ref={avatarRef}/>
-                    </label>
+                        <img className="avatar-img" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture" ref={avatarRef} onChange={handleImage}/>
+                    </label> */}
 
                     <div className="label">Username</div>
                     <div className="inputWithIcon">
-                        <input id="username" type="text" name="username" placeholder="Change your username" pattern="^[ a-zA-Z0-9._]{3,20}" title="Only letters, numbers, spaces, dots and underscores. Length required: 3 ~ 20" ref={usernameRef}/>
+                        <input id="username" type="text" name="username" placeholder="Change your username" /* pattern="^[ a-zA-Z0-9._]{3,20}" */ title="Only letters, numbers, spaces, dots and underscores. Length required: 3 ~ 20" ref={usernameRef}/>
                         <FontAwesomeIcon icon={faUser} style={MATERIAL_STYLE}/>
                     </div>
 
                     <div className="label">Email address</div>
                     <div className="inputWithIcon">
-                        <input type="email" name="email" placeholder="Change your email address" maxlength="40" ref={emailRef}/>
+                        <input type="email" id="email" name="email" placeholder="Change your email address" /* maxlength="40" */ ref={emailRef}/>
                         <FontAwesomeIcon icon={faEnvelope} style={MATERIAL_STYLE} />
                     </div>
 
                     <div className="label">Password</div>
                     <div className="inputWithIcon">
-                        <input id="pwd-1" name="password" type="password" placeholder="Change your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}" ref={passwordRef}/>
+                        <input id="pwd-1" id="password" name="password" type="password" placeholder="Change your password" /* pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}" */ ref={passwordRef}/>
                         <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE} />
                     </div>
 
+                    <div className="label">CheckPassword</div>
                     <div class="inputWithIcon">
-                        <input id="pwd-2" name="password" type="password" placeholder="Confirm your new password" ref={checkPasswordRef}/>
+                        <input id="pwd-2" id="checkPassword" name="checkPassword" type="password" placeholder="Confirm your new password" ref={checkPasswordRef}/>
                         <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE} />
                     </div>
 
