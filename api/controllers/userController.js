@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt")
 
 // * GET A USER *
 module.exports.findOne_GET = async (req, res) => {
@@ -31,68 +32,121 @@ module.exports.findAll_GET = async (req, res) => {
 
 // * UPDATE A USER *
 module.exports.update_PUT = async (req, res) => {
-    // Si l'utilisateur veut modifier son mot de passe :
-    /* if (req.body.password) {
-        try {
-            req.body.password = bcrypt.hashSync(req.body.password, 10);
-        } catch (err) {
-            return res.status(500).json(err);
-        }
-    } */
-    // Sinon, on modifie les autres champs :
-    /* try {
-        const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
-            $set: req.body,
-        }, {new: true});
-        res.status(200).json(updatedUser);
-    } catch (err) {
-        return res.status(500).json(err);
-    } */
-    console.log("ICI:")
-    //console.log(req);
-    console.log(req);
-    //console.log(res);
 
-    /* console.log(typeof userID);
-    console.log(typeof userName);
-    console.log(typeof userEmail);
-    console.log(typeof userPassword);
-    console.log(typeof userCheckPassword);
-
-    console.log(userAvatar); */
-
+    let userId = req.body.userId;
+    let userName = req.body.username;
+    let email = req.body.email;
+    let password = req.body.password;
+    let checkPassword = req.body.checkPassword;
+    let avatar = req.body.avatar;
     let regexUserName = /^[ a-zA-Z0-9._]{3,20}/;
     let regexEmail = /([a-zA-Z0-9._\-]{1,20})+@([a-zA-Z\-]{5,25})+.([a-z]{2,5})/;
-    let regexPassword = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#?!_@.$\\-])/m;
+    let regexPassword = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#?!_@.$\\-]).{6,30}/m;
 
-    /* try {
+    if (password) {
 
-        if (userName === "") throw "UserName ne peut pas être vide!";
+        try {
 
-        if (userEmail === "") throw "L'email ne peut pas être vide!";
+            if (userName === "") throw "UserName ne peut pas être vide!";
 
-        if (!regexUserName.test(userName)) throw "Test Ko!";
+            if (email === "") throw "L'email ne peut pas être vide!";
+
+            if (!regexUserName.test(userName)) throw "Test Ko!";
+            
+            if (!regexEmail.test(email)) throw "Test Ko!";
+
+            if (!regexPassword.test(password)) throw "MDP pas assez fort ou pas assez long!";
+
+            if (!regexPassword.test(checkPassword)) throw "MDP pas assez fort ou pas assez long!";
+
+            if (!password === checkPassword) throw "Le MDP doit être identique";
+
+            password = bcrypt.hashSync(password, 10);
+
+            if (avatar === undefined) {
+                
+                const updateUser = await User.findByIdAndUpdate(userId, {
+
+                    $set: {
         
-        if (!regexEmail.test(userEmail)) throw "Test Ko!";
+                        username: userName,
+                        email: email,
+                        password: password
         
-        const updateUser = await User.findByIdAndUpdate(userID, {
+                    }
+        
+                }, {new: true});
+        
+                res.status(200).json(updateUser);
 
-            $set: {
+            } else {
 
-                username: userName,
-                email: userEmail,
+                const updateUser = await User.findByIdAndUpdate(userId, {
 
-             }
+                    $set: {
+        
+                        username: userName,
+                        email: email,
+                        avatar: avatar,
+                        password: password
+        
+                    }
+        
+                }, {new: true});
+        
+                res.status(200).json(updateUser);
 
-        }, {new: true});
+            }
 
-        res.status(200).json(updateUser);
+        } catch(err) {
+
+            return res.status(500).json(err);
+
+        }
+
+    } 
+
+    try {
+        
+        if (avatar === undefined) {
+            
+            const updateUser = await User.findByIdAndUpdate(userId, {
+
+                $set: {
+    
+                    username: userName,
+                    email: email,
+    
+                }
+    
+            }, {new: true});
+    
+            res.status(200).json(updateUser);
+
+        } else {
+
+            const updateUser = await User.findByIdAndUpdate(userId, {
+
+                $set: {
+    
+                    username: userName,
+                    email: email,
+                    avatar: avatar
+    
+                }
+    
+            }, {new: true});
+    
+            res.status(200).json(updateUser);
+
+        }
 
     } catch (error) {
         
         return res.status(500).json(error);
 
-    } */
+    }
+
 
 }
 

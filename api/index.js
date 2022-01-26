@@ -13,6 +13,8 @@ const commentRoute = require("./routes/comments")
 const conversationRoute = require("./routes/chatConversations")
 const messageRoute = require("./routes/chatMessages")
 
+const bodyParser = require('body-parser');
+
 dotenv.config();
 
 const app = express();
@@ -25,6 +27,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 //
 // app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 // app.use("/media", express.static(path.join(__dirname, "public/media")));
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.use(express.static('public')); 
 app.use('/assets', express.static('assets'));
@@ -55,7 +60,40 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     } catch (err) {
       console.error(err);
     }
-  });
+  }
+);
+
+const storageAvatar = multer.diskStorage({
+
+  destination: (req, file, cb) => {
+
+    cb(null, "public/media/profile");
+
+  },
+  
+  filename: (req, file, cb) => {
+
+    cb(null, req.body.name);
+
+  }
+
+});
+
+const uploadAvatar = multer({ storage: storageAvatar });
+
+app.post("/api/uploadAvatar", uploadAvatar.single("file"), (req, res) => {
+
+  try {
+
+    return res.status(200).json("File uplodedAvatar successfully");
+
+  } catch(err) {
+
+    console.error(err);
+
+  }
+
+});
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);

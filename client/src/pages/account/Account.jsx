@@ -25,13 +25,12 @@ export default function Account(){
 
     };
 
-    const [image, setImage] = useState('');
+    const [file, setFile] = useState({preview: '', data: ''});
     
     //On récupère une liste d'un utilisateur
     const { user } = useContext(UserContext);
 
     //Les références pour les ajouts dans la BDD
-    const avatarRef = useRef();
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -46,61 +45,74 @@ export default function Account(){
     }, []);
 
     //Action qui permet d'envoyer les données au serveur
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         //On annule l'envoie direct
         e.preventDefault();
 
+        console.log(file);
+
         const form = document.getElementById('form-validation');
-        /* let formData = new FormData(form);
-        console.log(formData); */
-        let formData2 = new FormData();
-        //formData.append('avatar', image.data);
-        formData2.append('number', 15)
+        let formData = new FormData(form);
 
-        //Les données qu'on envera au serveur
-        /* let data = {
+        formData.keys('file') ? formData.delete('file') : console.log("Non");
+        formData.append('userId', user._id);
 
-            userId: user._id,
-            avatar: avatarRef.current.value,
-            username: usernameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            checkPassword: checkPasswordRef.current.value
+        //formData.append('file', file.data);
 
-        }; */
+        if (file.data !== '') {
+            
+            let formDataImg = new FormData();
+            let date = new Date(Date.now()).toISOString().replaceAll(':', '-');
+            let fileName = `${date}_${file.data.name}`;
+            formDataImg.append('name', fileName);
+            formDataImg.append('file', file.data);
+            formData.append('avatar', fileName);
+
+            try {
+
+                await axios.post('/uploadAvatar', formDataImg);
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+        } else {
+
+            console.log("Image non modifier!");
+
+        }
 
         const config = {
 
             headers: {
 
                 //token: user.accessToken,
-                'content-type': 'multipart/formdata'
+                'content-type': 'application/form-data'
 
             }
 
         };
 
         //On fait un test pour vérifier si le serveur n'a pas eu de problème
-        /* try {
+        try {
 
-           await axios.put(`/users/${user._id}`, formData2, config);
+           await axios.put(`/users/${user._id}`, formData, config);
 
         } catch (err) {
 
             console.log(err);
             alert("Echec: " + err);
 
-        } */
+        }
 
-        axios.put(`/users/${user._id}`, formData2, config);
+        //axios.put(`/users/${user._id}`, formData2, config);
 
     };
 
     const handleImage = (e) => {
-
-        /* const img = e.target.files[0];
-        setImage(img); */
 
         const img = {
 
@@ -108,7 +120,7 @@ export default function Account(){
             data: e.target.files[0]
 
         };
-        setImage(img);
+        setFile(img);
 
     }
 
@@ -126,16 +138,18 @@ export default function Account(){
                     <div id="fading-line-right"></div>
                 </div>
 
-                <form id="form-validation" onSubmit={handleSubmit}>
+                <form id="form-validation" onSubmit={handleSubmit} encType="multipart/form-data">
 
                     <input type="hidden" id="userId" value={user._id} />
 
-                    {/* <div className="label">Profile picture</div>
+                    <div className="label">Profile picture</div>
                     <label className="custom-file-upload">
-                        Nouvelle image:
-                        <input type="file" name="image" accept="image/*" id="image_input"/>
-                        <img className="avatar-img" src={user.avatar ? `${MEDIA}/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture" ref={avatarRef} onChange={handleImage}/>
-                    </label> */}
+                        <input type="file" name="file" accept="image/*" onChange={handleImage}/>
+                        { file.preview 
+                            ? <img className="avatar-img" src={file.preview} alt="User Avatar" title="Change your profile picture"/>
+                            : <img className="avatar-img" src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture"/>
+                        }
+                    </label>
 
                     <div className="label">Username</div>
                     <div className="inputWithIcon">
