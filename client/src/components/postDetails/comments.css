@@ -1,5 +1,5 @@
 .comments-container { 
-    width: 55%;
+    width: 45%;
     height: 85vh;
     margin: 2%;
     padding: 2%;
@@ -14,7 +14,7 @@
 
 .comment-userInfo { 
     display: flex;
-    width: 22%;
+    width: 220px;
     justify-content: space-between;
     align-items: center;
 }
@@ -79,4 +79,15 @@ img#needInvert.comment-interaction:hover {
     display: flex;
     justify-content: space-around;
     width: 20%;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .comments-container {
+        width: 100%;
+        padding: 40px;
+    }
+    .interactions-right {
+        width: 60%;
+    }
 }
