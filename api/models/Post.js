@@ -1,11 +1,13 @@
 const mongoose = require("mongoose")
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug); // Initialize slugs
 
 const PostSchema = new mongoose.Schema({
         userId: {
             type: String,
             required: true
         },
-        category: {
+        categoryId: {
             type: String,
             required: true
         },
@@ -15,24 +17,38 @@ const PostSchema = new mongoose.Schema({
         },
         content: {
             type: String,
-            required: true,
-            max: 5000
+            required: true
         },
         img: {
             type: String
         },
-        likes: {
-            type: Array,
-            default: []
-        },
-        comments: {
-            type: Array,
-            default: []
-        },
+        likes: [
+            {
+                type: new mongoose.Schema(
+                    {
+                        userId: String,
+                    }, { timestamps: true }
+                )
+            }
+        ],
+        views: [
+            {
+                type: new mongoose.Schema(
+                    {
+                        userId: String,
+                    }, { timestamps: true }
+                )
+            }
+        ],
         state: {
             type: Number,
             default: 0
-        }
+        },
+        slug: { 
+            type: String, 
+            slug: "title",
+            unique: true
+        },
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );
 

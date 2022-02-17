@@ -1,5 +1,6 @@
 .feed {
-  background-color: #242633;
+  /* background-color: #242633; */
+  background-color: #f8f8fb;
   flex: 65;
   padding: 50px;
 }

@@ -22,13 +22,15 @@ exports.start = (io) => {
         });
 
         // 🔔 Envoi d'une notification :
-        socket.on("sendNotification", ({ senderId, receiverId, postId, type }) => {
-            const receiver = getUser(receiverId);
-            io.to(receiver.socketId).emit('getNotification', {
-                senderId,
-                postId,
-                type,
-            });
+        socket.on("sendNotification", ({ sender, receiverId, post, type }) => {
+            if(receiverId) {
+                const receiver = getUser(receiverId);
+                io.to(receiver?.socketId).emit('getNotification', {
+                    sender,
+                    post,
+                    type,
+                });
+            }
         });
         
         // ❌ Déconnexion de la socket :

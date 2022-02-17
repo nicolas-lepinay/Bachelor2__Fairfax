@@ -1,0 +1,35 @@
+.grid {
+    display:grid;
+    grid-auto-flow: dense; /* dont forget this to fill all the tracks */
+    grid-auto-rows: 300px; /* the height of one row */
+    grid-gap:5px;
+    max-width: 1000px;
+    margin:auto;
+    counter-reset:num;
+}
+
+.grid :nth-child(5n + 1),
+.grid :nth-child(5n + 4) {
+  grid-column:span 2; /* 1st and 4th need 2 columns */
+}
+.grid :nth-child(5n + 5) { 
+  grid-area: span 2/4; /* 5th at column 4 taking 2 rows */
+}
+.grid :nth-child(5n + 3) {
+  grid-column: 1; /* 3rd at column 1 */
+}
+
+
+
+.grid *{
+    border:2px solid;
+    font-size:30px;
+    box-sizing:border-box;
+    font-family:sans-serif;
+    display:grid;
+    place-content:center;
+  }
+  .grid *:before {
+    content:counter(num);
+    counter-increment:num;
+  }

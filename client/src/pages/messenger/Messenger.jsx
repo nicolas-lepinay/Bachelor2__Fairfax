@@ -1,11 +1,19 @@
+// React :
 import { useContext, useState, useEffect, useRef } from 'react'
 
+// Styled components :
 import { Container, Wrapper, Menu, Box, Online, Searchbar, BoxTop, BoxBottom, TextArea, Button, NoChat } from "./Messenger.styled"
+
+// React components :
+import Navbar from "../../components/navbar/Navbar";
 import Conversation from '../../components/conversation/Conversation'
 import Message from "../../components/message/Message.jsx";
 import ChatOnline from '../../components/ChatOnline/ChatOnline';
+
+// UserContext :
 import { UserContext } from "../../context/UserContext";
 
+// Axios :
 import axios from "axios";
 
 function Messenger({ socket }) {
@@ -74,7 +82,6 @@ function Messenger({ socket }) {
             setMessages([...messages, arrivalMessage]);
         }
     }, [arrivalMessage, chat]);
-    
 
     // 🦸 Fetch online friends :
     useEffect( () => {
@@ -83,7 +90,6 @@ function Messenger({ socket }) {
             setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);
-
 
     // 📧 Post a new message :
     const handleSubmit = async (e) => {
@@ -112,7 +118,8 @@ function Messenger({ socket }) {
     }
         
     return (
-        <>
+        <div style={{display: 'flex'}}>
+            <Navbar socket={socket} />
             <Container>
                 <Menu>
                     <Wrapper>
@@ -129,7 +136,6 @@ function Messenger({ socket }) {
                 <Box>
                     <Wrapper className="box__wrapper">
                         {chat ?
-                        
                         <>
                             <BoxTop>
                                 {messages.map( (message, i) => (
@@ -163,7 +169,7 @@ function Messenger({ socket }) {
                 </Online>
 
             </Container>
-        </>
+        </div>
     )
 }
 

@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import Share from "../share/Share"
-import Post from "../post/Post"
+import Post from "../post_old/Post"
 import { UserContext } from "../../context/UserContext";
 
 export default function Feed({username, socket}) {

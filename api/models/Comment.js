@@ -9,16 +9,28 @@ const CommentSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        commentId: {
+            type: String
+        },
         content: {
             type: String,
-            required: true,
-            max: 5000
+            required: true
         },
+        likes: [
+            {
+                type: new mongoose.Schema(
+                    {
+                        userId: String
+                    }, 
+                    { timestamps: true }
+                )
+            }
+        ],
         state: {
             type: Number,
             default: 0
         }
-    }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
+    }, { timestamps: true }
 );
 
 module.exports = mongoose.model("Comment", CommentSchema);
