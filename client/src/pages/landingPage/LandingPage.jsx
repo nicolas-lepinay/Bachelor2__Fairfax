@@ -35,7 +35,7 @@ function LandingPage() {
 
             <div className="header">
                 <span className="logo golden_text">Fairfax</span>
-                <a href="#" className="menu">Home</a>
+                <a href="/home" className="menu">Home</a>
                 <span className="menu" onClick={openModal}>Sign in</span>
             </div>
 
@@ -44,7 +44,7 @@ function LandingPage() {
                 <div className="description">Fairfax is a new, exciting social experience. Join a coven of wizards, explore a magical city full of mysterious characters and accomplish quests to collect items and uncover secrets.</div>
                 <div className="buttons">
                     <button className="signup__button button" onClick={openModal}>Sign up</button>
-                    <a href="#" className="enter__button button">Enter</a>
+                    <a href="/home" className="enter__button button">Enter</a>
                 </div>
             </div>
         </div>

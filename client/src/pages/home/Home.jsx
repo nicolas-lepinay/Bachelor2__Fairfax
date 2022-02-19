@@ -1,5 +1,5 @@
 // 🌌 React :
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 // 💅🏻 Styled components :
 import { Wrapper, Container, Banner, Image, Bottom, Background, Overlay, Logo, Introduction } from "./Home.styled"
@@ -18,17 +18,39 @@ export default function Home({ socket }) {
 
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
     const { user, setUser } = useContext(UserContext);
+    const [hideNavbar, setHideNavbar] = useState(true);
+
+    // 🖥️ Show navbar when below the logo :
+    useEffect(() => {
+        const logo = document.getElementById('title__logo');
+
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return rect.bottom > 0;
+        }
+        const onScroll = () => isInViewport(logo) ? setHideNavbar(true) : setHideNavbar(false);
+        // clean up code :
+        window.removeEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    // 🖥️ Scroll to top of the page :
+    useEffect( () => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     return ( 
         <>
             {/* <Topbar socket={socket}/> */}
             <Wrapper>
                 {/* <Sidebar/> */}
-                <Navbar socket={socket} hidden={false} />
+                <Navbar socket={socket} hidden={hideNavbar} />
 
                 <Container>
                     <Banner>
-                        <Logo src={`${ASSETS}/logo_gold.png`} />
+                        <Logo src={`${ASSETS}/logo_gold.png`} id="title__logo"/>
                         <Overlay src={`${ASSETS}/fog_lg.png`}/>
                         {/* <Background></Background> */}
                         <Image src={`${ASSETS}/home/banner_3.png`} />
@@ -43,9 +65,6 @@ export default function Home({ socket }) {
                         <br/>
                         <p>Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam. Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi vel erat non mauris convallis vehicula. Nulla et sapien. Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. Mauris ullamcorper felis vitae erat. Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.</p>
                     </Introduction>
-
-                    <h1>Test</h1>
-
 
                 </Container>
 

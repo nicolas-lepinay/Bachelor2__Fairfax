@@ -139,6 +139,7 @@ function Navbar({ socket, hidden }) {
                         { openNotifications && notifications.length > 0 &&
                             <div className="notifications">
                                 {notifications.map( (n, i) => <DisplayNotification notification={n} key={`display-notification-${i}`}/> ) }
+                                <button onClick={() => setNotifications([])}>Clear</button>
                             </div>
                         }
                     </Item>
@@ -172,12 +173,10 @@ function Navbar({ socket, hidden }) {
 
                 {/* 🐱 FRIENDS REQUESTS */}
                 { user ?
-                <Link to="/">
-                    <Item>
-                        <SVG src={`${ASSETS}/icons/navbar-friend.svg`} />
-                        <div className="tooltip">Friend requests</div>
-                    </Item>
-                </Link>
+                <Item>
+                    <SVG src={`${ASSETS}/icons/navbar-friend.svg`} />
+                    <div className="tooltip">Friend requests</div>
+                </Item>
                 :
                 <Item>
                     <SVG src={`${ASSETS}/icons/navbar-friend.svg`} />

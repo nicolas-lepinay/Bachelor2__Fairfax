@@ -42,7 +42,7 @@ function App() {
           <>
             <Switch>
                 <Route path="/home" >
-                    {user ? <Home socket={socket}/> : <Redirect to="/"/>}
+                    <Home socket={socket}/>
                 </Route>
 
                 <Route path="/profile/:username" >

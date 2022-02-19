@@ -27,7 +27,7 @@ export const Image = styled.img`
 `
 
 export const Bottom = styled.img`
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
     min-width: 1900px;
     position: absolute;
@@ -63,7 +63,7 @@ export const Logo = styled.img`
 `
 
 export const Introduction = styled.div`
-    margin: 100px auto;
+    margin: 100px auto 300px auto;
     min-width: 400px;
     width: 50%;
     text-align: center;

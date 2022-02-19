@@ -123,13 +123,14 @@ function PostPage({socket}) {
         <>
             <Wrapper>
                 <Navbar socket={socket} />
-
                 <Container className={fullWidth ? "full-width" : ""} >
                     <Post post={post} comments={comments} author={author} socket={socket} toggleReply={toggleReply} setToggleReply={setToggleReply} openLogin={openLogin} fullWidth={fullWidth} setFullWidth={setFullWidth} />
                     <Comments postId={post._id} comments={comments} socket={socket} toggleReply={toggleReply} setToggleReply={setToggleReply} setPost={setPost} openLogin={openLogin} />
                 </Container>
 
-                <Container><h1>TEST</h1></Container>
+                {/* <Container>
+                    <h1>TEST</h1>
+                </Container> */}
 
             </Wrapper>
 

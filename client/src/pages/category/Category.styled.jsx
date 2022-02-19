@@ -29,12 +29,74 @@ const device = {
 export const Wrapper = styled.div`
     background-color: #f8f8fb;
     display: flex;
+    min-height: 150vh;
     position: relative;
 `
-
 export const Container = styled.div`
+    /* background-color: #f8f8fb; */
+    overflow-x: hidden;
+    width: 100%;
+`
+
+export const Banner = styled.div`
+    height: 800px;
+    position: relative;
+    width: 100%;
+`
+
+export const Image = styled.img`
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+`
+
+export const Bottom = styled.img`
+    bottom: -2px;
+    left: 50%;
+    min-width: 1900px;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    filter: brightness(0) saturate(100%) invert(93%) sepia(3%) saturate(112%) hue-rotate(200deg) brightness(105%) contrast(98%);
+`
+
+export const Overlay = styled.img`
+    left: 50%;
+    min-width: 1900px;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+`
+
+export const Title = styled.h1`
+    color: white;
+    font-family: 'Tangerine', cursive;
+    font-size: 11rem;
+    left: 50%;
+    letter-spacing: 5px;
+    position: absolute;
+    text-shadow: 0 0 20px black;
+    top: 25%;
+    transform: translateX(-50%);
+    -webkit-text-stroke: 2px white;
+    z-index: 1;
+`
+
+export const Logo = styled.img`
+    left: 50%;
+    min-width: 500px;
+    position: absolute;
+    top: 17%;
+    transform: translateX(-50%);
+    width: 40%;
+    z-index: 1;
+`
+
+export const MainContent = styled.div`
     background-color: #f8f8fb;
-    margin: auto;
+    margin: 100px auto;
     width: min(75%, 900px);
 `
 
@@ -71,6 +133,7 @@ export const Button = styled.button`
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 2px;
+    margin: 2rem auto;
     padding: 15px 30px;
     text-align: center;
     text-decoration: none;
@@ -85,6 +148,7 @@ export const Button = styled.button`
 export const NewPostButton = styled.button`
     align-items: center;
     background-color: crimson;
+    bottom: 30px;
     border: none;
     border-radius: 50%;
     color: white;
@@ -93,14 +157,13 @@ export const NewPostButton = styled.button`
     font-size: 2rem;
     height: 60px;
     justify-content: center;
-    outline: none;
     position: fixed;
+    outline: none;
     right: 30px;
-    top: 90vh;
     width: 60px;
+    z-index: 10;
     transition: all 0.5s;
     &:hover {
         background-color: #c01134;
-
     }
 `

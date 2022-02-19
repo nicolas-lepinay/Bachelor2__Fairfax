@@ -69,7 +69,16 @@ function Post({ post, comments, author, socket, toggleReply, setToggleReply, ope
         }
         setLikeCounter(isLiked ? likeCounter-1 : likeCounter+1);
         setIsLiked(!isLiked);
-        // !isLiked && sendNotification('like');
+        !isLiked && sendNotification('like');
+    }
+
+    const sendNotification = (type) => {
+        socket?.emit('sendNotification', {
+            sender: user,
+            receiverId: post.userId, // ou author._id
+            post: post,
+            type: type,
+        });
     }
 
     return (

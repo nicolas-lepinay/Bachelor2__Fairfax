@@ -19,7 +19,7 @@ export const Nav = styled.div`
     max-width: 200px;
     z-index: 100;
     /* transition: all 0.5s ease-in-out; */
-    transition: 1s max-width ease-in-out, 1.5s padding ease-in-out, overflow 2s ease-in-out, opacity 1.5s ease-in-out;
+    transition: 0.8s max-width ease-in-out, 0.8s padding ease-in-out, overflow 0.8s ease-in-out, opacity 0.8s ease-in-out;
     &.hidden {
         max-width: 0px;
         padding: 0;
