@@ -2,9 +2,9 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import Datatable from "datatables.net-searchpanes"; 
+/*import Datatable from "datatables.net-searchpanes"; 
 import tinymce from 'tinymce/tinymce';
-import $ from 'jquery';
+import $ from 'jquery';*/
 import CountUp from '../../vendor/countUp.js';
 import Chart from 'chart.js/auto';
 import AdminMenu from '../../components/admin/menu/AdminMenu.jsx';
@@ -12,12 +12,12 @@ import AdminStyle from './admin.css';
 import AdminContent from '../../components/admin/content/AdminContent.jsx';
 
 // Theme
-import 'tinymce/themes/silver';
+/*import 'tinymce/themes/silver';*/
 
 function Admin() {
 
-    // Tableau utilisé pour créer dynamiquement les champs de la modal d'update
-const formInputs = {
+  // Tableau utilisé pour créer dynamiquement les champs de la modal d'update
+  const formInputs = {
     Post: {
       Title: {
         type: "text",
@@ -755,11 +755,11 @@ const formInputs = {
 
 
 
-    return (
-        <>
-            <AdminMenu/>
-        </>
-    )
+  return (
+    <>
+      <AdminMenu />
+    </>
+  )
 }
 
 export default Admin

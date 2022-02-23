@@ -3,10 +3,10 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import Share from "../share/Share"
-import Post from "../post/Post"
+import Post from "../post_old/Post"
 import { UserContext } from "../../context/UserContext";
 
-export default function Feed({username}) {
+export default function Feed({username, socket}) {
 
     const [posts, setPosts] = useState([]);
     const { user } = useContext(UserContext)
@@ -32,7 +32,7 @@ export default function Feed({username}) {
 
                 {/* Pour chaque post p de la data Posts, je return un <Post/> : */}
                 {posts.map((p) => (
-                    <Post key={p._id} post={p} />
+                    <Post key={p._id} post={p} socket={socket}/>
                 ))}
             </div>
         </div>

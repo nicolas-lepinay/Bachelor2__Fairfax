@@ -87,3 +87,20 @@
     object-fit: cover !important;
     width: 32px;
 }
+
+.notifications {
+    background: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    right: 0;
+  }
+  
+  .notification {
+    padding: 5px;
+    font-size: 14px;
+    border-bottom: 1px solid grey;
+  }

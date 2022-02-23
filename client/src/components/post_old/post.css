@@ -1,0 +1,93 @@
+.post {
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  color: black;
+  margin: 30px 0;
+  width: 100%;
+}
+.post .postWrapper {
+  padding: 10px;
+}
+.post .postWrapper .postTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post .postWrapper .postTop .postTopLeft {
+  display: flex;
+  align-items: center;
+}
+.post .postWrapper .postTop .postTopLeft .postProfileImg {
+  border-radius: 50%;
+  height: 32px;
+  object-fit: cover;
+  width: 32px;
+}
+.post .postWrapper .postTop .postTopLeft .postUsername {
+  font-size: 15px;
+  margin: 0 10px;
+}
+.post .postWrapper .postTop .postTopLeft .postDate {
+  font-size: 12px;
+}
+.post .postWrapper .postCenter {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.post .postWrapper .postCenter .postText {
+  margin-bottom: 20px;
+}
+.post .postWrapper .postCenter .postImg {
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-height: 500px;
+  object-fit: contain;
+  width: 60%;
+}
+
+.post .postWrapper .postBottom {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.post .postWrapper .postBottom .postBottomLeft {
+  align-items: center;
+  display: flex;
+}
+.post .postWrapper .postBottom .postBottomLeft .likeIcon {
+  cursor: pointer;
+  height: 24px;
+  margin-right: 5px;
+  width: 24px;
+}
+.post .postWrapper .postBottom .postBottomLeft .postLikeCounter {
+  font-size: 12px;
+}
+.post .postWrapper .postBottom .postBottomRight .postCommentText {
+  border-bottom: 1px dashed gray;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.comme {
+  display: flex;
+  margin-top: 6px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.commebtn {
+  background: #242633;
+  color: #f0b22bd6;
+  text-decoration: none;
+  border: none;
+  height: 40px;
+  width: 120px;
+}
+
+/*# sourceMappingURL=post.css.map */

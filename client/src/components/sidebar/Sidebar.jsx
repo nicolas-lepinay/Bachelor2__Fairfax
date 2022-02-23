@@ -18,6 +18,7 @@ export default function Sidebar() {
 
     const { user } = useContext(UserContext);
     const [friends, setFriends] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect( () => {
         const getFriends = async () => {
@@ -30,6 +31,18 @@ export default function Sidebar() {
         }
         getFriends();
     }, [user]);
+
+    useEffect( () => {
+        const getCategories = async () => {
+            try {
+                const categoryList = await axios.get("/categories/findAll");
+                setCategories(categoryList.data);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getCategories();
+    }, []);
 
     return (
         <div className="sidebar">
@@ -65,37 +78,20 @@ export default function Sidebar() {
                         <span className="sidebarListItemText">Inventory</span>
                     </li>
 
-                    <li className="sidebarListItem">
-                        <Link to="/category/Café" style={{textDecoration: "none"}}>
-                            <span className="sidebarListItemText">Café</span>
-                        </Link>
-                    </li>
-
-                    <li className="sidebarListItem">
-                        <Link to="/category/Theater" style={{textDecoration: "none"}}>
-                            <span className="sidebarListItemText">Theater</span>
-                        </Link>
-                    </li>
-
-                    <li className="sidebarListItem">
-                        <Link to="/category/Library" style={{textDecoration: "none"}}>
-                            <span className="sidebarListItemText">Library</span>
-                        </Link>
-                    </li>
-
-                    <li className="sidebarListItem">
-                        <Link to="/category/Arcade" style={{textDecoration: "none"}}>
-                            <span className="sidebarListItemText">Arcade</span>
-                        </Link>
-                    </li>
-
+                    {categories.map(category =>( 
+                        <li className="sidebarListItem" key={category._id}>
+                            <Link to={`/category/${category.slug}`} style={{textDecoration: "none"}}>
+                                <span className="sidebarListItemText">{category.name}</span>
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
 
                 <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr"/>
                 <ul className="sidebarFriendList">
                     {friends.map(friend =>( 
-                        <CloseFriend key={friend.id} user={friend}/>
+                        <CloseFriend key={`cf-${friend._id}`} user={friend}/>
                     ))}
                 </ul>
             </div>

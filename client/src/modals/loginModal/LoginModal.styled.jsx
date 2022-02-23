@@ -9,8 +9,8 @@ const theme = {
     inputColor: 'rgba(255, 253, 248, 0.3)',
     mainFontURL: 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
     mainFont: '"Poppins", sans-serif',
-    titleFontURL: 'https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet',
-    titleFont: '"Crimson Text", serif',
+    titleFontURL: 'https://fonts.googleapis.com/css2?family=Average&display=swap',
+    titleFont: '"Average", serif',
     gold : {
         color: 'rgb(172, 155, 108)',
         gradient: `radial-gradient(circle,rgba(222, 208,160,1) 0%,rgba(167,150,102,1) 100%)`
@@ -170,15 +170,16 @@ export const Description = styled.p`
 `
 
 export const Backdrop = styled(props => <motion.div {...props} />)`
-    background: transparent;
-    position: absolute;
-    display: flex;
     align-items: center;
+    background: transparent;
+    display: flex;
     justify-content: center;
-    top: 0;
-    left: 0;
     height: 100%;
+    left: 50%;
+    position: fixed;
+    top: 50%;
     width: 100%;
+    transform: translate(-50%, -50%);
 `
 
 export const ModalWrapper = styled.div`
@@ -253,8 +254,7 @@ export const Form = styled.form`
 `
 
 export const Title = styled.h1`
-    @import url(${theme.titleFontURL});
-    font-family: ${theme.titleFont};
+    font-family: "MasonSansRegular";
     font-size: 2.3rem;
     font-weight: 600;
     margin-bottom: 20px;

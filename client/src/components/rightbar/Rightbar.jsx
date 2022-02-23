@@ -1,5 +1,4 @@
 import "./rightbar.css"
-import { Users } from "../../dummyData"
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Online from "../online/Online"
@@ -25,7 +24,7 @@ export default function Rightbar({user}) {
                 console.log(err)
             }
         }
-        getFriends();
+        user && getFriends();
     }, [user, currentUser.following]);
 
     const HomeRightbar = () => {
@@ -35,13 +34,13 @@ export default function Rightbar({user}) {
                     <img className="birthdayImg" src={`${ASSETS}/gift.png`} alt="" />
                     <span className="birthdayText"><b>Giulio Favaro</b> and <b>2 other friends</b> celebrate their birthday today.</span>
                 </div>
-                <img src="/assets/ad.webp" alt="" className="rightbarAd" />
+                <img src={`${ASSETS}/ad.webp`} alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
-                <ul className="rightbarFriendList">
+                {/* <ul className="rightbarFriendList">
                     {Users.map(u => (
                         <Online key={u.id} user={u} />
                     ))}
-                </ul>
+                </ul> */}
             </>
         )
     }
@@ -55,11 +54,11 @@ export default function Rightbar({user}) {
                 await axios.put(`/users/${user._id}/follow`, {userId: currentUser._id});
                 const updatedUser = await axios.get(`/users?userId=${currentUser._id}`);
                 setCurrentUser(updatedUser.data);
+                setFollowed(!followed);
             } catch(err) {
                 console.log(err)
                 alert("Follow/Unfollow failed.")
             }
-            setFollowed(!followed);
         }
 
         useEffect ( () => {
@@ -99,7 +98,7 @@ export default function Rightbar({user}) {
                     {friends.map( (friend) => (
                     <Link to={`/profile/${friend.username}`} style={{textDecoration: "none"}}>
                         <div className="rightbarFollowing">
-                            <img src={friend.avatar ? `${MEDIA}/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" className="rightbarFollowingImg" />
+                            <img src={friend.avatar ? `${MEDIA}/profile/${friend.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" className="rightbarFollowingImg" />
                             <span className="rightbarFollowingName">{friend.username}</span>
                         </div>
                     </Link>
