@@ -1,68 +1,7 @@
-.profile {
-    //background-color: rgb(250, 246, 240);
-    background-color: rgba(36, 38, 51);
-    display: flex;
-    flex: 85; // 85 sur 100
-    .profileRight {
-        color: white;
-        flex: 85; // 85 sur 100
-        .profileRightTop {
-            .profileCover {
-                height: 320px;
-                position: relative;
-                .profileCoverImg {
-                    border-bottom: 1px solid rgb(255, 255, 255);
-                    height: 250px;
-                    object-fit: cover;
-                    width: 100%;
-                }
-                .avatar {
-                    position: absolute;
-                    left: 0;
-                    margin: auto;
-                    top: 30px;
-                    right: 0;
-                    height: 330px;
-                    width: 330px;
-                    .frame {
-                        height: 100%;
-                        left: 0;
-                        margin: auto;
-                        position: absolute;
-                        pointer-events: none;
-                        right: 0;
-                    }
-                    .profileUserImg {
-                        border-radius: 50%;
-                        border: 4px solid rgb(240, 178, 43);
-                        height: 200px;
-                        left: 0;
-                        margin: auto;
-                        object-fit: cover;
-                        position: absolute;
-                        top: 73px;
-                        bottom: 0;
-                        right: 0;
-                        width: 200px;
-                    }
-                }
-            }
-            .profileInfo {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                margin-top: 50px;
-                .profileInfoName {
-                    font-size: 24px;
-                }
-                .profileDesc {
-                    font-weight: 200;
-                }
-            }
-        }
-        .profileRightBottom {
-            display: flex;
-        }
+.container_profile {
+    & .cover_bg {
+        position: fixed;
+        width: 100%;
+        height: 100%;
     }
 }
