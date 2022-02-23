@@ -13,6 +13,7 @@ import LoginModal from "../../modals/loginModal/LoginModal.jsx";
 
 // World Map Modal :
 import WorldMap from "../../modals/worldMap/WorldMap.jsx";
+import WorldMap2 from "../../modals/worldMap2/WorldMap2.jsx";
 
 // Framer Motion :
 import { AnimatePresence } from 'framer-motion';
@@ -277,6 +278,7 @@ function Navbar({ socket, hidden }) {
             onExitComplete={() => null}
         >
             {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />}
+            {/* {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />} */}
         </AnimatePresence>
     </>
 
