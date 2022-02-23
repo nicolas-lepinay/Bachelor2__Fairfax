@@ -5,6 +5,7 @@ const postController = require("../controllers/postController");
 // todo: /!\ Add verifyTokenAndAuth middlewares
 router.get("/:id", postController.findById_GET);                 // GET A POST BY ID
 router.get("/", postController.findOne_GET);                     // GET A POST
+router.get("/all", postController.findAll_GET);                  // GET ALL POST
 router.post("/", postController.create_POST);                    // CREATE A POST
 router.put("/:id", postController.update_PUT);                   // UPDATE A POST
 router.delete("/:id", postController.delete_DELETE)              // DELETE A POST

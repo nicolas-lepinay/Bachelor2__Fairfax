@@ -31,6 +31,18 @@ module.exports.findOne_GET = async (req, res) => {
     }
 }
 
+// * GET ALL POST *
+module.exports.findAll_GET = async (req, res) => {
+
+    try {
+        posts = await Post.find()
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
 // * CREATE A POST *
 module.exports.create_POST = async (req, res) => {
     const newPost = new Post(req.body)

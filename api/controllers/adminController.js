@@ -6,17 +6,27 @@ const Comment = require("../models/Comment");
 
 // * GET CHARTS *
 module.exports.charts_GET = async (req, res) => {
-    // Query strings :
-    const postId = req.query.postId;        // .../comments?postId=61f1115d86f7e859e1e2f2c7
-    const commentId = req.query.commentId;  // .../comments?commentId=61f1115d86f7e859e1e2f2c7
 
     try {
-        const comments = postId ?
-        await Comment.find({ postId: postId }) // Je fetch les comments par leur postId
-        :
-        await Comment.find({ commentId : commentId }) // Je fetch les subcomments par leur commentId
+        var chart = {};
+        chart.comments = await Comment.count();
+        chart.categories = await Category.count();
+        chart.posts = await Post.count();
+        chart.users = await User.count();
         
-        res.status(200).json(comments);
+        res.status(200).json([chart]);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+// * GET ALL POST *
+module.exports.posts_GET = async (req, res) => {
+
+    try {
+        var posts = await Post.find()
+
+        res.status(200).json(posts);
     } catch (err) {
         res.status(500).json(err);
     }
