@@ -30,8 +30,8 @@ export const Badge = styled.div`
     border-radius: 50%;
     height: 10px;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 0px;
+    right: 0px;
     width: 10px;
 `
 

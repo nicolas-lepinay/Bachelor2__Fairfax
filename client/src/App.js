@@ -1,9 +1,10 @@
 import LandingPage from "./pages/landingPage/LandingPage"
 import Home from "./pages/home/Home";
-import Topbar from './components/topbar/Topbar.jsx'
+import Topbar from './components/topbar/Topbar.jsx';
+import Navbar from './components/navbar/Navbar.jsx'
 import Profile from "./pages/profile/Profile";
 import Category from "./pages/category/Category";
-import PostDetails from "./pages/postDetails/PostDetails"
+import PostPage from "./pages/postPage/PostPage"
 import Messenger from "./pages/messenger/Messenger.jsx"
 
 import { UserContext } from "./context/UserContext"
@@ -33,24 +34,32 @@ function App() {
     
         useEffect(() => {
             // Envoi de l'ID du user loggé au socket server :
-            socket?.emit("NOTIFICATIONS_addUser", user._id);
-            socket?.emit("MESSENGER_addUser", user._id); 
+            user && socket?.emit("NOTIFICATIONS_addUser", user?._id);
+            user && socket?.emit("MESSENGER_addUser", user?._id); 
           }, [socket, user]);
 
         return (
           <>
-            <Topbar socket={socket} />
             <Switch>
                 <Route path="/home" >
-                    {user ? <Home socket={socket}/> : <Redirect to="/"/>}
+                    <Home socket={socket}/>
                 </Route>
 
                 <Route path="/profile/:username" >
                     <Profile/>
                 </Route>
 
-                <Route path="/category/:categoryName" component={Category} />
-                <Route path="/post" component={PostDetails} />
+                {/* RESPECTER L'ORDRE DE CES 2 ROUTES */}
+                <Route path="/category/:categorySlug/:postSlug">
+                    <PostPage socket={socket}/>
+                </Route>
+
+                <Route path="/category/:slug">
+                    <Category socket={socket}/>
+                </Route>
+                {/* ~ FIN ~ */}
+
+                <Route path="/post" component={PostPage} />
 
                 <Route path="/messages">
                     {user ? <Messenger socket={socket}/> : <Redirect to="/"/>}
@@ -69,7 +78,9 @@ function App() {
                         {user ? <Redirect to="/home"/> : <LandingPage/>}
                     </Route>
         
-                    <Route component={user ? DefaultRoutes : LandingPage} />
+                    <Route>
+                       <DefaultRoutes/>
+                    </Route>                    
                 </UserContext.Provider>
             </Switch>
         </Router>

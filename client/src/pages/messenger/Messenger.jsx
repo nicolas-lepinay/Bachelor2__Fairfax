@@ -1,11 +1,19 @@
+// React :
 import { useContext, useState, useEffect, useRef } from 'react'
 
+// Styled components :
 import { Container, Wrapper, Menu, Box, Online, Searchbar, BoxTop, BoxBottom, TextArea, Button, NoChat } from "./Messenger.styled"
+
+// React components :
+import Navbar from "../../components/navbar/Navbar";
 import Conversation from '../../components/conversation/Conversation'
 import Message from "../../components/message/Message.jsx";
 import ChatOnline from '../../components/ChatOnline/ChatOnline';
+
+// UserContext :
 import { UserContext } from "../../context/UserContext";
 
+// Axios :
 import axios from "axios";
 
 function Messenger({ socket }) {
@@ -28,7 +36,10 @@ function Messenger({ socket }) {
         const getConversations = async () => {
             try {
                 const res = await axios.get(`/conversations/${user._id}`);
-                setConversations(res.data)
+                //setConversations(res.data);
+                res.data.forEach( (conversation) => {
+                    conversation.messages.length > 0 && setConversations(old => [...old, conversation]); // Je n'affiche que les conversations non-vides (au moins 1 message)
+                })
             } catch (err) {
                 console.log(err)
             }
@@ -57,7 +68,7 @@ function Messenger({ socket }) {
     // 🔌 Socket.io :
     useEffect( () => {        
         // Récupération de chaque nouveau message reçu :
-        socket.on('getMessage', (data) => {
+        socket?.on('getMessage', (data) => {
             setArrivalMessage({
                 userId: data.senderId,
                 content: data.text,
@@ -71,16 +82,14 @@ function Messenger({ socket }) {
             setMessages([...messages, arrivalMessage]);
         }
     }, [arrivalMessage, chat]);
-    
 
     // 🦸 Fetch online friends :
     useEffect( () => {
-        socket.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
-        socket.on("MESSENGER_getUsers", (users) => {
+        socket?.emit("MESSENGER_addUser", user._id); // Envoi de l'ID du user loggé au socket server
+        socket?.on("MESSENGER_getUsers", (users) => {
             setOnlineUsers(user.following.filter(friendId => users.some(u=>u.userId === friendId)));
         })
     }, [user]);
-
 
     // 📧 Post a new message :
     const handleSubmit = async (e) => {
@@ -109,7 +118,8 @@ function Messenger({ socket }) {
     }
         
     return (
-        <>
+        <div style={{display: 'flex'}}>
+            <Navbar socket={socket} />
             <Container>
                 <Menu>
                     <Wrapper>
@@ -126,7 +136,6 @@ function Messenger({ socket }) {
                 <Box>
                     <Wrapper className="box__wrapper">
                         {chat ?
-                        
                         <>
                             <BoxTop>
                                 {messages.map( (message, i) => (
@@ -160,7 +169,7 @@ function Messenger({ socket }) {
                 </Online>
 
             </Container>
-        </>
+        </div>
     )
 }
 

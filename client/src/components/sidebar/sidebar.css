@@ -1,5 +1,5 @@
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 1px;
 }
 
 ::-webkit-scrollbar-track {
@@ -16,10 +16,12 @@
   background-color: white;
   flex: 15;
   height: calc(100vh - 50px);
-  overflow-y: scroll;
   overflow-x: hidden;
+  overflow-y: scroll;
   position: sticky;
-  top: 50px;
+  top: 70px;
+  scrollbar-color: #f1f1f1 white;
+  scrollbar-width: thin;
 }
 .sidebar .sidebarWrapper {
   padding: 20px;

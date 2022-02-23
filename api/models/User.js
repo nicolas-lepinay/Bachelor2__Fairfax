@@ -3,6 +3,8 @@ const ADMIN = process.env.ADMIN;
 const NPC = process.env.NPC;
 
 const mongoose = require("mongoose")
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug); // Initialize slugs
 
 const UserSchema = new mongoose.Schema({
         username: {
@@ -26,7 +28,7 @@ const UserSchema = new mongoose.Schema({
         },
         avatar: {
             type: String,
-            // default: "profile/defaultAvatar.jpg"
+            // default: "defaultAvatar.jpg"
         },
         followers: {
             type: Array,
@@ -57,7 +59,12 @@ const UserSchema = new mongoose.Schema({
         },
         state: {
             type: Number,
-            default: 0
+            default: 0,
+        },
+        slug: {
+            type: String,
+            slug: "username",
+            unique: true
         }
     }, { timestamps: true } // Pour ajouter des champs 'createdAt' et 'updatedAt' mis à jour automatiquement par Mongo
 );

@@ -1,5 +1,4 @@
 import "./rightbar.css"
-import { Users } from "../../dummyData"
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Online from "../online/Online"
@@ -37,11 +36,11 @@ export default function Rightbar({user}) {
                 </div>
                 <img src={`${ASSETS}/ad.webp`} alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
-                <ul className="rightbarFriendList">
+                {/* <ul className="rightbarFriendList">
                     {Users.map(u => (
                         <Online key={u.id} user={u} />
                     ))}
-                </ul>
+                </ul> */}
             </>
         )
     }

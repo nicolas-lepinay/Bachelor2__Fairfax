@@ -49,7 +49,6 @@ module.exports.login_POST = async (req, res) => {
     // ✔️ Requête valide :
     const { password, ...rest } = user._doc;
     res.status(200).json({...rest, accessToken}); // On renvoit tous les champs sauf le mot de passe (par sécurité)
-
   } catch (err) {
     res.status(500).json(err);
     }
