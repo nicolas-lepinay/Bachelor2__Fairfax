@@ -12,6 +12,7 @@ const postRoute = require("./routes/posts")
 const commentRoute = require("./routes/comments")
 const conversationRoute = require("./routes/chatConversations")
 const messageRoute = require("./routes/chatMessages")
+const categoryRoute = require("./routes/categories")
 
 const bodyParser = require('body-parser');
 
@@ -101,6 +102,7 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/api/categories", categoryRoute);
 
 const port = 8000
 

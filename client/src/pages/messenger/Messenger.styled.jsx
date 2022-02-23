@@ -21,7 +21,9 @@ const theme = {
 
 export const Container = styled.div`
     display: flex;
-    height: calc(100vh - 70px);
+    height: 100vh;
+    margin: auto;
+    width: min(75%, 1200px);
 `
 
 export const Wrapper = styled.div`

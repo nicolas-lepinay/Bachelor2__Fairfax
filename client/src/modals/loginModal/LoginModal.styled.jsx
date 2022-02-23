@@ -170,15 +170,16 @@ export const Description = styled.p`
 `
 
 export const Backdrop = styled(props => <motion.div {...props} />)`
-    background: transparent;
-    position: absolute;
-    display: flex;
     align-items: center;
+    background: transparent;
+    display: flex;
     justify-content: center;
-    top: 0;
-    left: 0;
     height: 100%;
+    left: 50%;
+    position: fixed;
+    top: 50%;
     width: 100%;
+    transform: translate(-50%, -50%);
 `
 
 export const ModalWrapper = styled.div`
@@ -253,8 +254,7 @@ export const Form = styled.form`
 `
 
 export const Title = styled.h1`
-    @import url(${theme.titleFontURL});
-    font-family: ${theme.titleFont};
+    font-family: "MasonSansRegular";
     font-size: 2.3rem;
     font-weight: 600;
     margin-bottom: 20px;

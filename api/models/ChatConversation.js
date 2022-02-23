@@ -9,10 +9,12 @@ const ChatConversationSchema = new mongoose.Schema({
             type: Array,
             default: []
         },
-        state: {
-            type: Number,
-            default: 0
-        }
+        states:[
+            {
+                userId: {type: String},
+                state: {type: Number, default: 0}
+            }
+        ],
     }, { timestamps: true }
 );
 

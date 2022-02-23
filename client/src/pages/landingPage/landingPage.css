@@ -1,7 +1,7 @@
 /* =====  🧙  I M P O R T S  ===== */
 /* @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet'); */
-@import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Average&display=swap'); */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap"); */
 
 .golden_text {
   background: #ac9b6c;
@@ -49,9 +49,10 @@
   text-decoration: none;
 }
 .landing__page .header .logo {
-  font-family: "Average", serif;
+  font-family: "FairyTaleJF";
   font-size: 2rem;
   font-weight: 900;
+  letter-spacing: 1px;
   margin-right: 150px;
   pointer-events: none;
 }
@@ -101,7 +102,7 @@
 .landing__page .text .title {
   color: #2e2e2e;
   cursor: default;
-  font-family: "Average", serif;
+  font-family: "Bluu Next";
   font-size: 4.5rem;
   font-weight: 900;
   margin-bottom: 2rem;

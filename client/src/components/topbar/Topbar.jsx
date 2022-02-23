@@ -105,7 +105,6 @@ export default function Topbar({ socket }) {
                     </div>
                     }
 
-
                 </div>
                 { user &&          
                     <Link to={`/profile/${user.username}`}>
