@@ -21,6 +21,7 @@ function Category({socket}) {
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
     const slug = useParams().slug;
+    const history = useHistory();
 
     const [category, setCategory] = useState({});
     const [posts, setPosts] = useState([]);

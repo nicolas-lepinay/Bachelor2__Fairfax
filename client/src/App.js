@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Topbar from './components/topbar/Topbar.jsx';
 import Navbar from './components/navbar/Navbar.jsx'
 import Profile from "./pages/profile/Profile";
+import Settings from "./pages/settings/Settings.jsx";
 import Category from "./pages/category/Category";
 import PostPage from "./pages/postPage/PostPage"
 import Messenger from "./pages/messenger/Messenger.jsx"
@@ -47,6 +48,11 @@ function App() {
 
                 <Route path="/profile/:username" >
                     <Profile/>
+                </Route>
+
+                <Route path="/settings">
+                    {/* {user ? <Settings socket={socket}/> : <Redirect to="/"/>} */}
+                    <Settings socket={socket}/>
                 </Route>
 
                 {/* RESPECTER L'ORDRE DE CES 2 ROUTES */}
