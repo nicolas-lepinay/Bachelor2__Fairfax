@@ -1,0 +1,326 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap'); */
+
+.account_page {
+	/* AJOUT SPECIFIQUE A LA PAGE EDIT-ACCOUNT (et non plus Register) */
+	/* .logout {
+		 text-decoration: none;
+		 padding: 7px 25px;
+		 background: #6b63b5;
+		 color: #ffffff;
+		 text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+		 text-transform: uppercase;
+		 font-size: 70%;
+		 border-radius: 3px;
+		 transition: 0.3s ease-in-out;
+	}
+	 .logout:hover {
+		 background: #514a92;
+	}
+	 */
+	/* .delete-btn {
+		 background: #7269c0;
+		 text-decoration: none;
+		 padding: 8px 45px;
+		 color: white;
+		 text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+		 text-transform: uppercase;
+		 font-size: 70%;
+		 border-radius: 3px;
+		 transition: 0.3s ease-in-out;
+		 border: none;
+		 outline: none;
+		 cursor: pointer;
+	}
+	 .delete-btn:hover {
+		 background: #57509b;
+	}
+	 */
+
+     position: absolute;
+	 width: 100%;
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	 align-items: center;
+	 color: white;
+	 background: #232323;
+	 min-height: 100vh;
+	 overflow-x: hidden;
+}
+ .account_page ::-webkit-scrollbar {
+	 width: 5px;
+}
+ .account_page ::-webkit-scrollbar-track {
+	 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+	 box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+ .account_page ::-webkit-scrollbar-thumb {
+	 background-color: darkgrey;
+	 outline: 1px solid #907070;
+}
+/*  .account_page * {
+	 font-family: 'Poppins', sans-serif;
+	 margin: 0;
+	 padding: 0;
+	 scroll-behavior: smooth;
+} */
+ .account_page #arrow, .account_page #cross {
+	 position: absolute;
+	 text-decoration: none;
+	 opacity: 0.9;
+}
+ .account_page #cross {
+	 top: 40px;
+	 right: 50px;
+	 width: 16px;
+	/* Make it white: */
+	 -webkit-filter: invert(1);
+	 filter: invert(1);
+}
+ .account_page #arrow {
+	 top: 30px;
+	 left: 50px;
+	 font-size: 200%;
+	 color: white;
+	 text-shadow: 0 0 4px white;
+	 animation: float 6s ease-in-out infinite;
+}
+ @keyframes float {
+	 0% {
+		 transform: translatey(0px);
+	}
+	 50% {
+		 transform: translatey(-8px);
+	}
+	 100% {
+		 transform: translatey(0px);
+	}
+}
+ .account_page .container {
+	 justify-content: center;
+	 align-items: center;
+}
+ .account_page #create-your-account {
+	 font-family: 'Cormorant Garamond', serif;
+	 font-size: 40px;
+	 text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+	 margin-top: 40px;
+}
+ .account_page #ornament {
+	 display: grid;
+	 opacity: 0.3;
+	 padding-top: 35px;
+	 padding-bottom: 8px;
+}
+ .account_page #diamond-shape {
+	 position: absolute;
+	 background: #fff;
+	 height: 7px;
+	 width: 7px;
+	 align-items: center;
+	 transform: rotate(45deg);
+	 margin-left: 155px;
+	 margin-top: -2px;
+}
+ .account_page #fading-line-left, .account_page #fading-line-right {
+	 position: absolute;
+	 height: 1px;
+	 width: 146px;
+}
+ .account_page #fading-line-left {
+	 background: linear-gradient(90deg, transparent 0%, #fff 100%);
+}
+ .account_page #fading-line-right {
+	 background: linear-gradient(90deg, white 0%, transparent 100%);
+	 margin-left: 170px;
+}
+ .account_page form {
+	 display: flex;
+	 flex-direction: column;
+	/* justify-content: center;
+	 align-items: center;
+	 */
+}
+ .account_page .label {
+	 text-transform: uppercase;
+	 font-weight: 700;
+	 font-size: 12px;
+	 letter-spacing: 2px;
+	 padding-top: 20px;
+	 text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+ .account_page .inputWithIcon {
+	 position: relative;
+}
+ .account_page .inputWithIcon i {
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 padding: 30px 16px;
+	 color: rgba(255, 255, 255, 0.15);
+}
+ .account_page input {
+	 padding-top: 18px;
+	 padding-bottom: 18px;
+	 padding-left: 55px;
+	 font-size: 80%;
+	 color: white;
+	 text-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+	 background-color: #2d2d2d;
+	 outline: none;
+	 border-color: transparent;
+	 border-top: 1px solid rgba(66, 66, 66, );
+	 border-bottom: 1px solid rgba(66, 66, 66, );
+	 border-left: 1px solid rgba(66, 66, 66, );
+	 border-right: 1px solid rgba(66, 66, 66, );
+	 border-radius: 3px;
+	 margin: 10px 0px;
+	 min-width: 250px;
+}
+ .account_page input::placeholder {
+	 text-transform: uppercase;
+	 font-size: 85%;
+	 text-shadow: none;
+}
+ .account_page .invalid-username, .account_page #invalid-password, .account_page .http-error {
+	 text-decoration: none;
+	 justify-content: center;
+	 font-size: 80%;
+	 text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+	 color: #da001d;
+	 padding-top: 5px;
+}
+ .account_page .http-valid {
+	 text-decoration: none;
+	 justify-content: center;
+	 font-size: 80%;
+	 text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+	 color: #009e15;
+	 padding-top: 5px;
+}
+ .account_page .identifiers-taken {
+	 font-size: 90%;
+}
+ .account_page .identifiers-taken:hover, .account_page .http-error:hover {
+	 text-decoration: underline;
+}
+ .account_page .info {
+	 justify-content: center;
+	 font-size: 80%;
+	 text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+	 padding-top: 20px;
+}
+ .account_page .text {
+	 padding-left: 50px;
+	/* margin-top: -17px;
+	 */
+}
+ .account_page svg {
+	 position: absolute;
+	 margin-top: 3px;
+}
+ .account_page .btn {
+	 text-decoration: none;
+	 display: inline-block;
+	 padding: 14px 10px;
+	 border: none;
+	 border-radius: 40px;
+	 background: rgba(238, 209, 149, );
+	 color: black;
+	 font-size: 80%;
+	 letter-spacing: 2px;
+	 font-weight: 700;
+	 text-transform: uppercase;
+	 transition: 0.3s ease-in-out;
+	 cursor: pointer;
+	 margin: 40px 0px;
+	 transition: 0.2s ease-in-out;
+}
+ .account_page .btn:hover {
+	 background: #ffe4af;
+	 box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+ .account_page .linkWithIcon {
+	 padding-left: 30px;
+	 margin-top: -20px;
+}
+ .account_page .linkWithIcon a {
+	 text-decoration: none;
+	 color: rgba(153, 144, 234, );
+	 font-size: 85%;
+}
+ .account_page .linkWithIcon a:hover {
+	 text-decoration: underline;
+}
+ .account_page .linkWithIcon i {
+	 opacity: 0.8;
+}
+ @media only screen and (max-height: 840px) and (max-width: 680px) {
+	 .account_page .container {
+		 padding-top: 60px;
+	}
+	 .account_page #cross {
+		 width: 11px;
+		 top: 20px;
+	}
+	 .account_page #arrow {
+		 font-size: 140%;
+		 top: 10px;
+	}
+}
+ .account_page .avatar-img {
+	 width: 150px;
+	 border-radius: 200px;
+	 margin-left: -20px;
+}
+ .account_page .custom-file-upload {
+	 display: inline-flex;
+	 padding-top: 10px;
+	 padding-bottom: 15px;
+	 cursor: pointer;
+	 border: none;
+	 outline: none;
+	 justify-content: center;
+	 align-items: center;
+}
+ .account_page input[type="file"] {
+	 display: none;
+}
+ .account_page .buttons {
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	/* align-items: center;
+	 */
+	/* width: 70%;
+	 */
+	 margin: 10px 0 60px 60px;
+}
+ .account_page .delete, .account_page .logout {
+	 display: flex;
+	 flex-direction: row;
+	 margin: 8px 0 8px 0;
+	 cursor: pointer;
+}
+ .account_page .logout {
+	 text-decoration: none;
+	 color: white;
+}
+ .account_page .delete i, .account_page .logout i {
+	 margin: 1px 15px 0 0;
+	 text-shadow: 0 0 6px #fff;
+}
+ .account_page .delete p, .account_page .logout p {
+	 text-shadow: 0 0 6px #fff;
+	 text-transform: uppercase;
+	 font-family: 'Poppins', sans-serif;
+	 font-size: 12px;
+	 letter-spacing: 1px;
+}
+ .account_page .delete p:hover, .account_page .logout p:hover {
+	 text-decoration: underline dotted;
+}
