@@ -27,7 +27,7 @@ function AdminMenu(props) {
                     <li className="catBtn" data-table="Charts" onClick={() => setContentType("chart")}><FontAwesomeIcon icon={faChartBar} />
                         <p>Charts</p>
                     </li>
-                    <li className="catBtn" data-table="Post" onClick={() => setContentType("post")}><FontAwesomeIcon icon={faNewspaper} />
+                    <li className="catBtn" data-table="Post" onClick={() => setContentType("posts")}><FontAwesomeIcon icon={faNewspaper} />
                         <p>post</p>
                     </li>
                     <li className="catBtn" data-table="Comment" onClick={() => setContentType("comment")}><FontAwesomeIcon icon={faComment} />

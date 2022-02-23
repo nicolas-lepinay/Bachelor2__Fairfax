@@ -9,33 +9,45 @@ import CountUp from '../../../vendor/countUp.js';
 import Chart from 'chart.js/auto';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes } from "@fortawesome/free-solid-svg-icons";
+/*import { Content } from '../../post/SingleComment.styled.jsx';*/
 
 
 function AdminContent(props) {
 
     const type = props.type;
-    const [data, setData] = useState(type);
+    const [data, setData] = useState([{}]);
 
-    const getData = async () => {
-        try {
-            const res = await axios.get(`/admin/${data}`);
-            setData(res.data);
-        } catch (err) {
-            console.log(err);
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const res = await axios.get(`/admin/${type}`);
+                setData(res.data);
+                console.log(res.data);
+            } catch (err) {
+                console.log(err);
+            }
         }
-    }
+        getData();
+    }, [type]);
 
     function GeneratedContent(props) {
         if (type === "chart") {
+            /*
+                        function countElements(response) {
+            
+                            data.forEach((element) =>
+                                new CountUp(element[0], 0, element[1], 0, 2.5).start()
+                            );
+                        }*/
             return <div>
                 <div id="cardsContainer">
                     <div id="topCont">
-                        <div className="card" data-chart="post">
+                        <div className="card" data-chart="posts">
                             <div className="rounded-icon">
                                 <FontAwesomeIcon icon={faNewspaper} />
                             </div>
                             <div>
-                                <p id="postCount"></p>
+                                <p id="postCount">{data[0].posts}</p>
                                 <p>published articles</p>
                             </div>
                         </div>
@@ -44,7 +56,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faListUl} />
                             </div>
                             <div>
-                                <p id="categoryCount"></p>
+                                <p id="categoryCount">{data[0].categories}</p>
                                 <p>category created</p>
                             </div>
                         </div>
@@ -53,7 +65,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faUsers} />
                             </div>
                             <div>
-                                <p id="usersCount"></p>
+                                <p id="usersCount">{data[0].users}</p>
                                 <p>registered users</p>
                             </div>
                         </div>
@@ -62,7 +74,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
                             <div>
-                                <p id="commentCount"></p>
+                                <p id="commentCount">{data[0].comments}</p>
                                 <p>comment posted</p>
                             </div>
                         </div>
@@ -74,9 +86,33 @@ function AdminContent(props) {
                 </div>
             </div>;
         } else {
-            return <DataTable><div className="card hidden" id="table">
+
+            const columnsList = [
+                {
+                    name: 'title',
+                    selector: row => row.title,
+                },
+                {
+                    name: 'content',
+                    selector: row => row.content,
+                }];
+            const columnsToExclude = ['comments', 'likes', 'views']
+            /*
+                        Object.entries(data[0]).forEach(([key, value]) => {
+                            var column = {};
+                            if (!columnsToExclude.includes(key)) {
+                                column.name = key;
+                                column.selector = (row, value) => row.value;//row.value;//key;//row => row.key;
+                                column.sortable = true;
+                                columnsList.push(column);
+                            }
+                        })
+                        console.log(columnsList);
+                        console.log(data);*/
+            return <><DataTable columns={columnsList} data={data} /></> /* <div className="card" id="table">
+               
                 <table id="tableAdmin" className="table" style={{ minWidth: 100 + '%' }}></table>
-            </div></DataTable>;
+            </div></DataTable>*/;
         }
 
     }
