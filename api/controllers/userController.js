@@ -3,13 +3,16 @@ const User = require("../models/User");
 // * GET A USER *
 module.exports.findOne_GET = async (req, res) => {
     // Query strings :
-    const userId = req.query.userId; // .../users?userId=616ef78085e9a2...
-    const username = req.query.username; // .../users?username="John"
+    const userId = req.query.userId;        // .../users?userId=616ef78085e9a2...
+    const username = req.query.username;    // .../users?username="John"
+    const slug = req.query.slug;            // .../users?slug="john"
+
     try {
         const user = userId ?
-            await User.findById(userId) // Je fetch le user soit par son ID...
-            :
-            await User.findOne({ username: username }); // ...soit par son username.
+            await User.findById(userId)                 // Je fetch le user soit par son ID...
+            : username ?
+            await User.findOne({ username: username }) // ...soit par son username...
+            : await User.findOne({ slug: slug });      // ...soit par son slug.
 
         !user && res.status(404).json("No user was found."); // Si la requête ne renvoit aucun utilisateur
         const { password, updatedAt, ...rest } = user._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
@@ -98,11 +101,13 @@ module.exports.findFollowings_GET = async (req, res) => {
                 return User.findById(friendId)
             })
         );
-        // On ne garde que l'ID, l'avatar et le nom :
+        // // On ne garde que l'ID, le username, le slug et l'avatar :
         let friendList = [];
         friends.map(friend => {
-            const { _id, username, avatar } = friend;
-            friendList.push( { _id, username, avatar } )
+            // const { _id, username, slug, avatar } = friend;
+            // friendList.push( { _id, username, avatar } )
+            const { password, updatedAt, ...rest } = friend._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
+            friendList.push(rest);
         });
         res.status(200).json(friendList);
         

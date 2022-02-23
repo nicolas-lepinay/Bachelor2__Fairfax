@@ -46,8 +46,8 @@ function App() {
                     <Home socket={socket}/>
                 </Route>
 
-                <Route path="/profile/:username" >
-                    <Profile/>
+                <Route path="/profile/:slug" >
+                    <Profile socket={socket}/>
                 </Route>
 
                 <Route path="/settings">

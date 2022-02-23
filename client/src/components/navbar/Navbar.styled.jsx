@@ -32,8 +32,9 @@ export const List = styled.ul`
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 1.2rem;
     list-style: none;
+    max-height: 100%;
     & > .link {
         color: inherit;
         text-decoration: none;
@@ -145,7 +146,7 @@ export const Logo = styled.img`
 export const HR = styled.hr`
     color: black;
     opacity: 0.2;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 45px;
 `
 

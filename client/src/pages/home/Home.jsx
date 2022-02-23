@@ -18,7 +18,9 @@ export default function Home({ socket }) {
 
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
     const { user, setUser } = useContext(UserContext);
-    const [hideNavbar, setHideNavbar] = useState(true);
+
+    const [showNavbar, setShowNavbar] = useState(false);
+    const [mousePosition, setMousePosition] = useState({left: 100});
 
     // 🖥️ Show navbar when below the logo :
     useEffect(() => {
@@ -28,7 +30,7 @@ export default function Home({ socket }) {
             const rect = element.getBoundingClientRect();
             return rect.bottom > 0;
         }
-        const onScroll = () => isInViewport(logo) ? setHideNavbar(true) : setHideNavbar(false);
+        const onScroll = () => isInViewport(logo) ? setShowNavbar(false) : setShowNavbar(true);
         // clean up code :
         window.removeEventListener('scroll', onScroll);
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -40,13 +42,16 @@ export default function Home({ socket }) {
         window.scrollTo(0, 0);
     }, []);
 
+    // Show nav bar when cursor goes to left :
+    const handleMouseMove = (event) => { 
+        setMousePosition({left: event.pageX});
+    }
 
     return ( 
         <>
             {/* <Topbar socket={socket}/> */}
-            <Wrapper>
-                {/* <Sidebar/> */}
-                <Navbar socket={socket} hidden={hideNavbar} />
+            <Wrapper onMouseMove={ (event) => handleMouseMove(event) }>
+                <Navbar socket={socket} visible={showNavbar || mousePosition.left < 90} />
 
                 <Container>
                     <Banner>
