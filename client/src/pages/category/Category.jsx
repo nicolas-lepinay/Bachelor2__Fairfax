@@ -28,7 +28,9 @@ function Category({socket}) {
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(5);
     const [end, setEnd] = useState(false);
-    const [hideNavbar, setHideNavbar] = useState(true);
+
+    const [showNavbar, setShowNavbar] = useState(false);
+    const [mousePosition, setMousePosition] = useState({left: 100});
 
     const scrollRef = useRef(null);
 
@@ -87,7 +89,7 @@ function Category({socket}) {
             const rect = element.getBoundingClientRect();
             return rect.bottom > 0;
         }
-        const onScroll = () => isInViewport(title) ? setHideNavbar(true) : setHideNavbar(false);
+        const onScroll = () => isInViewport(title) ? setShowNavbar(false) : setShowNavbar(true);
         // clean up code :
         window.removeEventListener('scroll', onScroll);
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -107,11 +109,16 @@ function Category({socket}) {
         document.getElementById('root').style.filter = 'blur(0px) brightness(1)';
     }
 
+    // Show nav bar when cursor goes to left :
+    const handleMouseMove = (event) => { 
+        setMousePosition({left: event.pageX});
+    }
+
     return (
         <>
             <NewPostButton onClick={openModal}>+</NewPostButton>
-            <Wrapper>
-                <Navbar socket={socket} hidden={hideNavbar}/>
+            <Wrapper onMouseMove={ (event) => handleMouseMove(event) }>
+                <Navbar socket={socket} visible={showNavbar || mousePosition.left < 90} />
                 <Container>
                     <Banner>
                         {/* <Logo src={`${ASSETS}/logo_gold.png`} id="title__logo"/> */}

@@ -24,7 +24,7 @@ import axios from "axios";
 // MaterialUI Icons :
 import { Lock, AccessTime } from '@material-ui/icons';
 
-function Navbar({ socket, hidden }) {
+function Navbar({ socket, visible=true }) {
 
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
@@ -95,7 +95,7 @@ function Navbar({ socket, hidden }) {
 
   return (
     <>
-        <Nav className={hidden ? "hidden" : ""}>
+        <Nav className={visible ? "" : "hidden"}>
             <List>
                 {/* 🏰 LOGO */}
                 <Link to="/home" className="link">
