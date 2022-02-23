@@ -28,7 +28,8 @@ export default function Account(){
     const [file, setFile] = useState({preview: '', data: ''});
     
     //On récupère une liste d'un utilisateur
-    const { user } = useContext(UserContext);
+    //const { user, setUser } = useContext(UserContext);
+    const { user: curentUser, setUser: setCurrentUser } = useContext(UserContext);
 
     //Les références pour les ajouts dans la BDD
     const usernameRef = useRef();
@@ -39,10 +40,10 @@ export default function Account(){
     //Pour le champs username et email on rentre les valeurs qui existe déjà
     useEffect(() => {
 
-        usernameRef.current.value = user.username;
-        emailRef.current.value = user.email;
+        usernameRef.current.value = curentUser.username;
+        emailRef.current.value = curentUser.email;
 
-    }, []);
+    }, [curentUser.username]);
 
     //Action qui permet d'envoyer les données au serveur
     const handleSubmit = async (e) => {
@@ -56,7 +57,7 @@ export default function Account(){
         let formData = new FormData(form);
 
         formData.keys('file') ? formData.delete('file') : console.log("Non");
-        formData.append('userId', user._id);
+        formData.append('userId', curentUser._id);
 
         //formData.append('file', file.data);
 
@@ -99,7 +100,13 @@ export default function Account(){
         //On fait un test pour vérifier si le serveur n'a pas eu de problème
         try {
 
-           await axios.put(`/users/${user._id}`, formData, config);
+           await axios.put(`/users/${curentUser._id}`, formData, config);
+           //console.log(await axios.get(`/users?userId=${user._id}`));
+           let updateUser = await axios.get(`/users?userId=${curentUser._id}`);
+           /* setCurrentUser(updateUser.data);
+           console.log(updateUser.data);
+           console.log(curentUser); */
+           setCurrentUser(updateUser.data);
 
         } catch (err) {
 
@@ -107,8 +114,6 @@ export default function Account(){
             alert("Echec: " + err);
 
         }
-
-        //axios.put(`/users/${user._id}`, formData2, config);
 
     };
 
@@ -140,14 +145,14 @@ export default function Account(){
 
                 <form id="form-validation" onSubmit={handleSubmit} encType="multipart/form-data">
 
-                    <input type="hidden" id="userId" value={user._id} />
+                    <input type="hidden" id="userId" value={curentUser._id} />
 
                     <div className="label">Profile picture</div>
                     <label className="custom-file-upload">
                         <input type="file" name="file" accept="image/*" onChange={handleImage}/>
                         { file.preview 
                             ? <img className="avatar-img" src={file.preview} alt="User Avatar" title="Change your profile picture"/>
-                            : <img className="avatar-img" src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture"/>
+                            : <img className="avatar-img" src={curentUser.avatar ? `${MEDIA}/profile/${curentUser.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="User Avatar" title="Change your profile picture"/>
                         }
                     </label>
 
