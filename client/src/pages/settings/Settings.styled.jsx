@@ -124,11 +124,6 @@ export const Avatar = styled.label`
 export const InputWrapper = styled.div`
     margin: -5px 0 1.2rem 0;
     position: relative;
-    & > .error {
-        color: crimson;
-        font-size: 0.9rem;
-        text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
-    }
 `
 
 export const Input = styled.input`
@@ -176,4 +171,5 @@ export const ErrorMessage = styled.p`
     font-size: 0.9rem;
     margin: -1.3rem auto 1.3rem auto;
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+    text-align: center;
 `
