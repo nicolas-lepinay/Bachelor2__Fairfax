@@ -4,7 +4,8 @@ const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
 const colors = {
     grey: 'rgb(72, 85, 106)',
-    purple: 'rgb(117, 65, 200)',
+    // purple: 'rgb(117, 65, 200)',
+    purple: '#6b63b5',
     coal: 'rgb(25, 33, 46)',
 }
 

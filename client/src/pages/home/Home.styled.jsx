@@ -56,7 +56,7 @@ export const Logo = styled.img`
     left: 50%;
     min-width: 500px;
     position: absolute;
-    top: 17%;
+    top: 15%;
     transform: translateX(-50%);
     width: 40%;
     z-index: 1;

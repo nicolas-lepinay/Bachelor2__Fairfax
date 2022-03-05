@@ -1,70 +1,57 @@
 // 🌌 React :
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { useHistory } from 'react-router-dom';
 
 // 🚧 React Component :
-import Topbar from "../../components/topbar/Topbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Feed from "../../components/feed/Feed";
-import Rightbar from "../../components/rightbar/Rightbar";
-import Navbar from "../../components/navbar/Navbar.jsx";
+import NavbarNude from '../../components/navbar/NavbarNude.jsx';
+import ProfileOverview from '../../components/profile/ProfileOverview';
+import ProfileActivity from '../../components/profile/ProfileActivity';
+
+// 💅🏻 Styled Components :
+import { Slidershow, Slides, InputRadio, Slide, Navigation, Label } from './Profile.styled';
 
 // 🅰️ Axios :
 import axios from "axios";
 
-import "./profile.css"
-
-export default function Profile({ socket }) {
-
+function Profile() {
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
 
-    const [user, setUser] = useState({});
-    const username = useParams().username;
-    const slug = useParams().slug;
-    const history = useHistory();
+    const [profileUser, setProfileUser] = useState({});
+    const slug = useParams().slug.toLowerCase();
 
     useEffect ( () => {
-        const fetchUser = async () => {
-            try {
-                const res = await axios.get(`/users?slug=${slug}`);
-                setUser(res.data);
-            } catch(err) {
-                console.log(err);
-                history.push('/home');
-            }
+        const fetchProfileUser = async () => {
+            const res = await axios.get(`/users?slug=${slug}`);
+            setProfileUser(res.data);
         }
-        fetchUser();
-    }, [slug])
+        fetchProfileUser();
+    }, [slug]);
 
+  return (
+    <>
+        <NavbarNude/>
+        <Slidershow>
+            <Slides>
+                <InputRadio type="radio" name="r" id="r1" checked />
+                <InputRadio type="radio" name="r" id="r2" />
 
-    return (
-        <>
-            <div className="profile">
-                {/* <Sidebar/> */}
-                <Navbar socket={socket} />
-                <div className="profileRight">
-                    <div className="profileRightTop">
-                        <div className="profileCover">
-                            <img className="profileCoverImg" src={`${MEDIA}/post/0.jpg`} alt="" />
-                            <div className="avatar">
-                                <img className="frame" src={`${ASSETS}/golden_frame.webp`} alt="" />
-                                <img className="profileUserImg"src={user.avatar ? `${MEDIA}/profile/${user.avatar}` : `${MEDIA}/profile/defaultAvatar.jpg`} alt="" />
-                            </div>
-                        </div>
-                        <div className="profileInfo">
-                            <h4 className="profileInfoName">{user.username}</h4>
-                            <span className="profileInfoDesc">Description</span>
-                        </div>
-                    </div>
-                    <div className="profileRightBottom">
-                        {/* <Feed username={user.username} /> */}
-                        <div style={{flex: '50', height: '100vh'}}></div>
-                        <Rightbar user={user}/>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+                <Slide className="slide-1">
+                    <ProfileOverview profileUser={profileUser} />
+                </Slide>
+
+                <Slides className="slide-2">
+                    <ProfileActivity profileUser={profileUser} />
+                </Slides>
+
+                <Navigation>
+                    <Label htmlFor="r1" className="bar" id="bar1"></Label>
+                    <Label htmlFor="r2" className="bar" id="bar2"></Label>
+                </Navigation>
+            </Slides>
+        </Slidershow>
+    </>
+  )
 }
+
+export default Profile

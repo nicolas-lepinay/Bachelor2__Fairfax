@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // * GET A USER *
 module.exports.findOne_GET = async (req, res) => {
@@ -6,13 +8,17 @@ module.exports.findOne_GET = async (req, res) => {
     const userId = req.query.userId;        // .../users?userId=616ef78085e9a2...
     const username = req.query.username;    // .../users?username="John"
     const slug = req.query.slug;            // .../users?slug="john"
+    const email = req.query.email;          // .../users?email="john@gmail.com"
 
     try {
         const user = userId ?
             await User.findById(userId)                 // Je fetch le user soit par son ID...
             : username ?
-            await User.findOne({ username: username }) // ...soit par son username...
-            : await User.findOne({ slug: slug });      // ...soit par son slug.
+            await User.findOne({ username: username })  // ...soit par son username...
+            : slug ?
+            await User.findOne({ slug: slug })          // ...soit par son slug.
+            : 
+            await User.findOne({ email: email })       // ...soit par son email.
 
         !user && res.status(404).json("No user was found."); // Si la requête ne renvoit aucun utilisateur
         const { password, updatedAt, ...rest } = user._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
@@ -34,12 +40,26 @@ module.exports.findAll_GET = async (req, res) => {
 
 // * UPDATE A USER *
 module.exports.update_PUT = async (req, res) => {
+
+    const user = await User.findById(req.body.userId);
+
+    // console.log("**************")
+    // console.log(req.body)
+    // console.log("**************")
+    // Remove null properties from req.body :
+    Object.keys(req.body).forEach( (key) => req.body[key] == null && delete req.body[key]);
+
     // Si l'utilisateur veut modifier son mot de passe :
-    if (req.body.password) {
+    if (req.body.password && req.body.currentPassword) {
         try {
+            // Comparaison du mot de passe saisi avec le mot de passe hashé stocké dans la DB :
+            const passwordIsValid = bcrypt.compareSync(req.body.currentPassword, user.password);
+            // Si le mot de passe est incorrect...
+            !passwordIsValid && res.status(401).json("The password you entered is incorrect.");
+            // Si le mot de passe est correct, on hâche le nouveau mot de passe :
             req.body.password = bcrypt.hashSync(req.body.password, 10);
-        } catch (err) {
-            return res.status(500).json(err);
+        } catch(err) {
+            console.log(err)
         }
     }
     // Sinon, on modifie les autres champs :
@@ -47,7 +67,15 @@ module.exports.update_PUT = async (req, res) => {
         const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
             $set: req.body,
         }, {new: true});
-        res.status(200).json(updatedUser);
+
+        // Génération d'un nouvel accessToken :
+        const accessToken = jwt.sign({
+            id: user._id, 
+            role: user.role,
+        }, process.env.JWT_SECRET)
+
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json({accessToken, ...rest}); // On renvoit tous les champs (+ l'accesToken) sauf le mot de passe (par sécurité)
     } catch (err) {
         return res.status(500).json(err);
     }

@@ -37,7 +37,7 @@ module.exports.login_POST = async (req, res) => {
     const validPassword = bcrypt.compareSync(req.body.password, user.password);
 
     // Si le mot de passe saisi est faux :
-    !validPassword && res.status(400).json("Password is incorrect.");
+    !validPassword && res.status(401).json("Password is incorrect.");
 
     const accessToken = jwt.sign({
         id: user._id, 
