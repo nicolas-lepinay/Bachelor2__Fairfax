@@ -7,13 +7,10 @@ export const MATERIAL_STYLE = {
 }
 
 export const Nav = styled.div`
-    background-color: white;
-    box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.1);
-    /* height: calc(100vh - 70px); */
+    background-color: transparent;
     height: 100vh;
-    padding: 20px 10px 20px 15px;
-    position: sticky;
-    /* top: 70px; */
+    padding: 40px 10px 20px 15px;
+    position: fixed;
     top: 0px;
     width: 90px;
     max-width: 200px;
@@ -42,15 +39,18 @@ export const List = styled.ul`
 `
 
 export const SVG = styled.img`
-    filter: invert(69%) sepia(9%) saturate(572%) hue-rotate(198deg) brightness(102%) contrast(88%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(13%) saturate(400%) hue-rotate(262deg) brightness(116%) contrast(100%);
     object-fit: cover;
+    opacity: 0.7;
     width: 50%;
     transition: all 0.3s ease-in-out 0s;
+    &.castle {
+        width: 32px;
+    }
 `
 
 export const Item = styled.li`
     align-items: center;
-    background-color: white;
 	border-radius: 12px;
     cursor: pointer;
 	display: flex;
@@ -62,9 +62,12 @@ export const Item = styled.li`
 	position: relative;
     width: 48px;
 	transition: all .3s ease-in-out;
+    &.home {
+        margin-bottom: 1rem;
+    }
     & .tooltip {
-        background-color: #3e3f5e;
-        border-radius: 200px;
+        /* background-color: #3e3f5e; */
+        /* border-radius: 200px; */
         color: #fff;
         font-size: 0.65rem;
         font-weight: 100;
@@ -113,12 +116,10 @@ export const Item = styled.li`
         }
     }
     &:hover {
-        /* box-shadow: 0 0 20px 0 rgba(94, 92, 154, 0.15); */
         & ${SVG} {
-            /* filter: invert(39%) sepia(91%) saturate(300%) hue-rotate(206deg) brightness(90%) contrast(96%); */
-            filter: invert(47%) sepia(58%) saturate(7080%) hue-rotate(231deg) brightness(102%) contrast(96%);
-            transform: scale(1.05);
-            transition: all .2s ease-in-out;
+            transform: scale(1.1);
+            opacity: 1;
+            transition: all .3s ease-in-out;
         }
         & .tooltip {
             opacity: 1;
@@ -136,18 +137,6 @@ export const Avatar = styled.img`
     height: 35px;
     object-fit: cover !important;
     width: 35px;
-`
-
-export const Logo = styled.img`
-    object-fit: cover !important;
-    width: 35px;
-`
-
-export const HR = styled.hr`
-    color: black;
-    opacity: 0.2;
-    margin-bottom: 10px;
-    width: 45px;
 `
 
 export const Alert = styled.span`

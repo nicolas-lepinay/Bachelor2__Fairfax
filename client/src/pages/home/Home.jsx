@@ -55,7 +55,7 @@ export default function Home({ socket }) {
 
                 <Container>
                     <Banner>
-                        <Logo src={`${ASSETS}/logo_gold.png`} id="title__logo"/>
+                        <Logo src={`${ASSETS}/logos/logo-gold.png`} id="title__logo"/>
                         <Overlay src={`${ASSETS}/fog_lg.png`}/>
                         {/* <Background></Background> */}
                         <Image src={`${ASSETS}/home/banner_3.png`} />

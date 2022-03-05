@@ -1,11 +1,11 @@
-// 🌌 React :
+// React :
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-// 💅🏻 Styled Components :
-import { MATERIAL_STYLE, Nav, List, Item, Avatar, SVG, Logo, HR, Alert } from './Navbar.styled';
+// Styled components :
+import { MATERIAL_STYLE, Nav, List, Item, Avatar, SVG, Alert } from './NavbarNude.styled';
 
-// 🦸 UserContext :
+// UserContext :
 import { UserContext } from "../../context/UserContext";
 
 // Login Modal :
@@ -15,16 +15,16 @@ import LoginModal from "../../modals/loginModal/LoginModal.jsx";
 import WorldMap from "../../modals/worldMap/WorldMap.jsx";
 import WorldMap2 from "../../modals/worldMap2/WorldMap2.jsx";
 
-// 🎬 Framer Motion :
+// Framer Motion :
 import { AnimatePresence } from 'framer-motion';
 
-// 🅰️ Axios :
-// import axios from "axios";
+// Axios :
+import axios from "axios";
 
 // MaterialUI Icons :
 import { Lock, AccessTime } from '@material-ui/icons';
 
-function Navbar({ socket, visible=true }) {
+function NavbarNude({ socket, visible=true }) {
 
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
@@ -99,9 +99,10 @@ function Navbar({ socket, visible=true }) {
             <List>
                 {/* 🏰 LOGO */}
                 <Link to="/home" className="link">
-                    <Item className="no-shadow">
-                        <Logo
-                            src={`${ASSETS}/icons/icon-castle.svg`}
+                    <Item className="home">
+                        <SVG
+                            src={`${ASSETS}/icons/icon-castle-outline-2.png`}
+                            className="castle"
                             alt="Home"
                             title="Home"
                         />
@@ -109,18 +110,16 @@ function Navbar({ socket, visible=true }) {
                     </Item>
                 </Link>
 
-                <HR/>
-
                 {/* 🦸 PROFILE */}
                 { user ?
                 <Link to={`/profile/${user.slug || user.username}`} className="link">
-                    <Item className="no-shadow">
+                    <Item>
                         <Avatar
                             src={`${MEDIA}/profile/${user.avatar || 'defaultAvatar.jpg'}`}
                             alt={user.username}
                             title="My account"
                         />
-                        <div className="tooltip" style={{textTransform: 'capitalize', fontStyle: 'italic'}}>Hello, {user.username}</div>
+                        <div className="tooltip">My account</div>
                     </Item>
                 </Link>
                 :
@@ -285,4 +284,4 @@ function Navbar({ socket, visible=true }) {
   );
 }
 
-export default Navbar;
+export default NavbarNude;

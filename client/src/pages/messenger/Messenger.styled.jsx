@@ -23,7 +23,8 @@ export const Container = styled.div`
     display: flex;
     height: 100vh;
     margin: auto;
-    width: min(75%, 1200px);
+    width: 90%;
+    max-width: 1400px;
 `
 
 export const Wrapper = styled.div`

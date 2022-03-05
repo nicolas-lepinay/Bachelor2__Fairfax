@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAuth = (req, res, next) => {
     verifyToken(req, res, () => {
-        if(req.body.userId === req.params.id || req.body.role > 1) {
+        if(req.body.userId === req.params.userId || req.body.role > 1) {
             next();
         } else {
             res.status(403).json("You are not allowed to perform this action.")

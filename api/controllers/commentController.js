@@ -29,6 +29,16 @@ module.exports.findByParent_GET = async (req, res) => {
     }
 }
 
+// * GET ALL OF A USER'S COMMENTS (all comments written by a user) *
+module.exports.findByUser_GET = async (req, res) => {
+    try {
+        const comments = await Comment.find({ userId: req.params.userId }) // Je fetch les comments publiés par l'utilisateur dont l'id est userId
+        res.status(200).json(comments);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
 // * LIKE OR UNLIKE A COMMENT *
 module.exports.like_PUT = async (req, res) => {
     try {
