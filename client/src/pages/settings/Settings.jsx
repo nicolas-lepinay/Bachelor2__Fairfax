@@ -42,6 +42,69 @@ export default function Settings(){
     // Input refs (for shaking animation):
     const emailInput = useRef();
     const currentPasswordInput = useRef();
+    const newPasswordInput = useRef();
+
+    // Check if email already exists or not :
+    const emailExists = async () => {
+        try {
+            const res = await axios.get(`/users?email=${email}`);
+            setError('email');
+            shakeInput(emailInput);
+            return true;
+        } catch(err) {
+            setError(null);
+            return false;
+        }
+    }
+
+    // Check if current password is correct :
+    const passwordIsCorrect = async () => {  
+        // If either current pwd or new pwd is empty, return false :
+        if(!currentPassword || !newPassword) return false;  
+           
+        try {
+            const res = await axios.post("/auth/login", { identifier: user.username, password: currentPassword });
+            setError(null);
+            return true;
+        } catch(err) {
+            shakeInput(currentPasswordInput);
+            setError('currentPassword')
+            return false;
+        }
+    }
+
+    // Check if new password is valid :
+    const newPasswordIsValid = (pwd) => {
+        const minLength = (str) => str.length >= 5
+        const lowerCase = (str) => /[a-z]/g.test(str)
+        const upperCase = (str) => /[A-Z]/g.test(str)
+        const digit = (str) => /\d+/g.test(str)
+
+        return minLength(pwd) && lowerCase(pwd) && upperCase(pwd) && digit(pwd);
+    }
+
+    // [EMAIL] : Set email on change and set error if new password has invalid pattern :
+    const handleEmailChange = (email) => {
+        setEmail(email);
+        error === 'email' && setError(null);
+    }
+
+    // [CURRENT PASSWORD] : Set current password on change and set error if new password has invalid pattern :
+    const handleCurrentPasswordChange = (pwd) => {
+        setCurrentPassword(pwd);
+        error === 'currentPassword' && setError(null);
+    }
+
+    // [NEW PASSWORD] : Set new password on change and set error if new password has invalid pattern :
+    const handleNewPasswordChange = (pwd) => {
+        setNewPassword(pwd);
+        if(newPasswordIsValid(pwd) || !pwd) {
+            setError(null)
+        } else {
+            setError('newPassword')
+            shakeInput(newPasswordInput)
+        }
+    }
 
     // Set avatar preview when user uploads a new avatar :
     const handleImageUpload = (e) => {
@@ -56,10 +119,17 @@ export default function Settings(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // If email input was filled, check if email already exists or not :
         if(email && await emailExists()) return;
-        if(currentPassword && newPassword && await passwordIsCorrect() == false) return;
+        // If currentPwd or newPwd was filled, check if current pwd is correct :
+        if((newPassword || currentPassword) && await passwordIsCorrect() == false) return;
 
-        let data = { userId: user._id, email, currentPassword, password: newPassword }
+        let data = { userId: user._id }
+
+        data = { ...data, 
+            ...email && { email }, 
+            ...currentPassword && { currentPassword },
+            ...newPassword && { password: newPassword } };
 
         // Upload new avatar :
         if(file) {
@@ -77,8 +147,6 @@ export default function Settings(){
             // Add new avatar's filename to data :
             data.avatar = fileName;
         }
-        // Remove null properties from data object :
-        Object.keys(data).forEach( (key) => data[key] == null && delete data[key]);
         // Send data to server :
         const headers = {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -96,34 +164,7 @@ export default function Settings(){
             history.push(`/profile/${user.slug}`);
         } catch (err) {
             console.log(err)
-            setError('currentPassword');
-            shakeInput(currentPasswordInput);
-        }
-    }
-
-    // Check if email already exists or not :
-    const emailExists = async () => {
-        try {
-            const res = await axios.get(`/users?email=${email}`);
-            setError('email');
-            shakeInput(emailInput);
-            return true;
-        } catch(err) {
-            setError(null);
-            return false;
-        }
-    }
-
-    // Check if email already exists or not :
-    const passwordIsCorrect = async () => {
-        try {
-            const res = await axios.post("/auth/login", { identifier: user.username, password: currentPassword });
-            setError(null);
-            return true;
-        } catch(err) {
-            shakeInput(currentPasswordInput);
-            setError('currentPassword')
-            return false;
+            alert('Oops! We encountered an error trying to update your account.\n\nError: ' + err);
         }
     }
 
@@ -169,7 +210,7 @@ export default function Settings(){
                         <Subheading>Username</Subheading>
                         <InputWrapper>
                             <FontAwesomeIcon icon={faUser} style={MATERIAL_STYLE}/>
-                            <Input value={user.username} disabled />
+                            <Input value={user.username} style={{pointerEvents: 'none'}} disabled />
                         </InputWrapper>
                         <Subheading>Email address</Subheading>
                         <InputWrapper>
@@ -177,36 +218,46 @@ export default function Settings(){
                             <Input
                                 placeholder={user.email}
                                 type="email"
-                                onChange={ (e) => { setEmail(e.target.value); error === 'email' && setError(null) } }
+                                onChange={ (e) => handleEmailChange(e.target.value) }
                                 className={error === 'email' ? 'error' : ''}
                                 innerRef={emailInput}
                             />
                         </InputWrapper>
             
                         {error === 'email' && <ErrorMessage className="error">This email address is already in use.</ErrorMessage>}
-                        <Subheading>Current password</Subheading>
-                        <InputWrapper>
-                            <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE}/>
-                            <Input
-                                placeholder="Type your current password..."
-                                type="password"
-                                onChange={ (e) => { setCurrentPassword(e.target.value); error === 'currentPassword' && setError(null) }}
-                                className={error === 'currentPassword' ? 'error' : ''}
-                                innerRef={currentPasswordInput}
-                            />
-                        </InputWrapper>
-                        {error === 'currentPassword' && <ErrorMessage className="error">Oops! Password is incorrect.</ErrorMessage>}
+
                         <Subheading>New password</Subheading>
                         <InputWrapper>
                             <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE}/>
                             <Input
                                 placeholder="Choose a new password..."
                                 type="password"
-                                name="new-password"
-                                onChange={ (e) => setNewPassword(e.target.value)}
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}" 
+                                title="At least 6 characters, including a number, an uppercase letter and a lowercase letter." 
+                                className={error === 'newPassword' ? 'error' : ''}
+                                onChange={ (e) => handleNewPasswordChange(e.target.value) }
+                                innerRef={newPasswordInput}
                             />
                         </InputWrapper>
-                        <Button disabled={!email && !currentPassword && !newPassword}>Apply changes</Button>
+
+                        {error === 'newPassword' && <ErrorMessage className="error">Password must have at least 6 characters, an uppercase, a lowercase and a digit.</ErrorMessage>}
+
+                        <Subheading>Current password</Subheading>
+                        <InputWrapper>
+                            <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE}/>
+                            <Input
+                                placeholder="Type your current password..."
+                                type="password"
+                                onChange={ (e) => handleCurrentPasswordChange(e.target.value) }
+                                className={error === 'currentPassword' ? 'error' : ''}
+                                innerRef={currentPasswordInput}
+                                disabled={!newPassword}
+                            />
+                        </InputWrapper>
+
+                        {error === 'currentPassword' && <ErrorMessage className="error">Oops! Password is incorrect.</ErrorMessage>}
+
+                        <Button disabled={(!email && !currentPassword && !newPassword) || error || (newPassword && !currentPassword) || (!newPassword && currentPassword)}>Apply changes</Button>
                     </Form>
                 </Wrapper>
             </Container>
