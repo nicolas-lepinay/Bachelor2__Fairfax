@@ -3,6 +3,7 @@ import styled from "styled-components";
 const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
 export const Container = styled.div`
+    background-color: rgb(10, 16, 34);
     background-image: url('${ASSETS}/profile/profile-overview.webp');
     background-size: cover;
     display: flex;

@@ -8,10 +8,10 @@ import { MATERIAL_STYLE, Nav, List, Item, Avatar, SVG, Logo, HR, Alert } from '.
 // 🦸 UserContext :
 import { UserContext } from "../../context/UserContext";
 
-// Login Modal :
+// 🗝️ Login Modal :
 import LoginModal from "../../modals/loginModal/LoginModal.jsx";
 
-// World Map Modal :
+// 🌎 World Map Modal :
 import WorldMap from "../../modals/worldMap/WorldMap.jsx";
 import WorldMap2 from "../../modals/worldMap2/WorldMap2.jsx";
 
@@ -248,7 +248,7 @@ function Navbar({ socket, visible=true }) {
                 {/* 🗺️ CARTE DU MONDE */}
                 <Item onClick={() => openModal('world-map')} >
                     <SVG src={`${ASSETS}/icons/navbar-map.svg`} />
-                    <div className="tooltip">World Map</div>
+                    <div className="tooltip">City Map</div>
                 </Item>
 
                 {/* 🛑 LOGOUT */}
@@ -277,8 +277,8 @@ function Navbar({ socket, visible=true }) {
             exitBeforeEnter={true} 
             onExitComplete={() => null}
         >
-            {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />}
-            {/* {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {/* {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />}
         </AnimatePresence>
     </>
 
