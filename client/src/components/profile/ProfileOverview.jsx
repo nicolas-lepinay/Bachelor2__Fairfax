@@ -22,8 +22,8 @@ function ProfileOverview({ profileUser }) {
 
     const followHandler = async () => {
         try {
-            await axios.put(`/users/${profileUser._id}/follow`, {userId: user._id});
-            const updatedUser = await axios.get(`/users?userId=${user._id}`);
+            await axios.put(`/users/${profileUser._id}/follow`, {userId: user?._id});
+            const updatedUser = await axios.get(`/users?userId=${user?._id}`);
             setUser(updatedUser.data);
             setFollowed(!followed);
         } catch(err) {
@@ -33,8 +33,8 @@ function ProfileOverview({ profileUser }) {
     }
 
     useEffect ( () => {
-        setFollowed(user.following.includes(profileUser._id))
-    }, [profileUser, user.following])
+        setFollowed(user?.following.includes(profileUser._id))
+    }, [profileUser, user?.following])
 
     return (
         <Container>

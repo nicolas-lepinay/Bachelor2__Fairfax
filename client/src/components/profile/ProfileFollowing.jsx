@@ -39,8 +39,8 @@ function ProfileFollowing({ profileUser }) {
                 console.log(err)
             }
         }
-        user && getFollowing();
-        user && getFollowers();
+        getFollowing();
+        getFollowers();
     }, [profileUser]);
 
     return (
