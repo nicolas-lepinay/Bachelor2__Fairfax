@@ -51,6 +51,7 @@ export const Online = styled.div`
 `
 
 export const Searchbar = styled.input`
+    background-color: transparent;
     border: none;
     border-bottom: 1px solid grey;
     padding: 10px 0;

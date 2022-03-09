@@ -143,3 +143,28 @@ module.exports.findFollowings_GET = async (req, res) => {
         res.status(500).json(err);
     }
 }
+
+// * GET FOLLOWERS LIST *
+module.exports.findFollowers_GET = async (req, res) => {
+    try {
+        // Utilisateur dont on cherche les amis :
+        const user = await User.findById(req.params.userId);
+        
+        // Amis de l'utilisateur :
+        const followers = await Promise.all(
+            user.followers.map(friendId => {
+                return User.findById(friendId)
+            })
+        );
+        let friendList = [];
+        followers.map(friend => {
+            if(friend) {
+                const { password, updatedAt, ...rest } = friend._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
+                friendList.push(rest);
+            }
+        });
+        res.status(200).json(friendList);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}

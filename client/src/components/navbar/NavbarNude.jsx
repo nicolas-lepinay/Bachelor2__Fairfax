@@ -247,7 +247,7 @@ function NavbarNude({ socket, visible=true }) {
                 {/* 🗺️ CARTE DU MONDE */}
                 <Item onClick={() => openModal('world-map')} >
                     <SVG src={`${ASSETS}/icons/navbar-map.svg`} />
-                    <div className="tooltip">World Map</div>
+                    <div className="tooltip">City Map</div>
                 </Item>
 
                 {/* 🛑 LOGOUT */}
@@ -276,8 +276,8 @@ function NavbarNude({ socket, visible=true }) {
             exitBeforeEnter={true} 
             onExitComplete={() => null}
         >
-            {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />}
-            {/* {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {/* {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />}
         </AnimatePresence>
     </>
 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
 export const Container = styled.div`
+    background-color: rgb(10, 16, 34);
     background-image: url('${ASSETS}/profile/profile-overview.webp');
     background-size: cover;
     display: flex;
@@ -113,6 +114,27 @@ export const Avatar = styled.div`
         bottom: -20px;
         text-transform: capitalize;
         text-shadow: 0px 0px 10px black;
+    }
+    & > button {
+        align-items: center;
+        background-color: rgba(107, 99, 181, 1);
+        border: none;
+        border-radius: 100px;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        left: calc(50% + 2rem);
+        padding: 6px 20px;
+        position: absolute;
+        text-transform: uppercase;
+        top: 1rem;
+        right: 0;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            background-color: #5c53a7;
+        }
     }
 `
 
