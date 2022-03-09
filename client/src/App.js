@@ -1,8 +1,7 @@
 import LandingPage from "./pages/landingPage/LandingPage"
 import Home from "./pages/home/Home";
-import Topbar from './components/topbar/Topbar.jsx';
-import Navbar from './components/navbar/Navbar.jsx'
 import Profile from "./pages/profile/Profile";
+
 import Settings from "./pages/settings/Settings.jsx";
 import Category from "./pages/category/Category";
 import PostPage from "./pages/postPage/PostPage"
@@ -26,7 +25,7 @@ import { io } from "socket.io-client";
 
 function App() {
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("fairfax_user")) || null);
     const currentUser = useMemo( () => ({user, setUser}), [user, setUser] );
 
     const DefaultRoutes = () => {
@@ -50,13 +49,12 @@ function App() {
                     <Home socket={socket}/>
                 </Route>
 
-                <Route path="/profile/:username" >
-                    <Profile/>
+                <Route path="/profile/:slug" >
+                    <Profile socket={socket}/>
                 </Route>
 
                 <Route path="/settings">
-                    {/* {user ? <Settings socket={socket}/> : <Redirect to="/"/>} */}
-                    <Settings socket={socket}/>
+                    {user ? <Settings socket={socket}/> : <Redirect to="/"/>}
                 </Route>
 
                 {/* RESPECTER L'ORDRE DE CES 2 ROUTES */}

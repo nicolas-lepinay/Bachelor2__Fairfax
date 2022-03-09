@@ -138,6 +138,28 @@ module.exports.findByUser_GET = async (req, res) => {
     }
 }
 
+// * GET A USER'S POSTS * (tous les posts d'un utilisateur)
+module.exports.findByUserId_GET = async (req, res) => {
+    try {
+        const posts = await Post.find({ userId: req.params.userId }); // Trouve les posts dont le userId est l'ID passé en paramètre
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+        console.log(err)
+    }
+}
+
+// * GET A USER'S FAVOURITE POSTS * (tous les posts likés par un utilisateur)
+module.exports.findLikedPosts_GET = async (req, res) => {
+    try {
+        const posts = await Post.find({ "likes.userId": req.params.userId }); // Trouve les posts likés par l'utilisateur dont l'ID est userId
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+        console.log(err)
+    }
+}
+
 // * GET POSTS BY CATEGORY * (tous les posts dans une catégorie)
 module.exports.findByCategory_GET = async (req, res) => {
     try {

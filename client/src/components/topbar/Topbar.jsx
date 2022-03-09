@@ -15,7 +15,7 @@ export default function Topbar({ socket }) {
 
     const handleLogout = () => {
         setUser(null);
-        localStorage.removeItem("user");
+        localStorage.removeItem("fairfax_user");
     }
 
     useEffect(() => {

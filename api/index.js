@@ -13,6 +13,7 @@ const commentRoute = require("./routes/comments")
 const conversationRoute = require("./routes/chatConversations")
 const messageRoute = require("./routes/chatMessages")
 const categoryRoute = require("./routes/categories")
+const uploadRoute = require("./routes/upload")
 
 const bodyParser = require('body-parser');
 
@@ -41,9 +42,10 @@ app.use(express.json()); // Body parser for POST requests
 app.use(helmet());
 app.use(morgan("common"));
 
-// File uploading :
+// Image uploading :
 // (more info 👉 https://www.npmjs.com/package/multer) 
 
+/*
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/media/post");
@@ -57,44 +59,34 @@ const upload = multer({ storage: storage });
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
     try {
-      return res.status(200).json("File uploded successfully");
+      return res.status(200).json("File uploaded successfully");
     } catch (err) {
       console.error(err);
     }
-  }
-);
+});
+*/
 
-const storageAvatar = multer.diskStorage({
-
+// Avatar uploading :
+/*
+const avatarStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-
-    cb(null, "public/media/profile");
-
+      cb(null, "public/media/profile");
   },
-  
   filename: (req, file, cb) => {
-
-    cb(null, req.body.name);
-
-  }
-
+      cb(null, req.body.name);
+    },
 });
 
-const uploadAvatar = multer({ storage: storageAvatar });
+const avatarUpload = multer({ storage: avatarStorage });
 
-app.post("/api/uploadAvatar", uploadAvatar.single("file"), (req, res) => {
-
-  try {
-
-    return res.status(200).json("File uplodedAvatar successfully");
-
-  } catch(err) {
-
-    console.error(err);
-
-  }
-
-});
+app.post("/api/upload/avatar", avatarUpload.single("file"), (req, res) => {
+    try {
+      return res.status(200).json("File uploaded successfully");
+    } catch (err) {
+      console.error(err);
+    }
+  });
+*/
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
@@ -103,6 +95,7 @@ app.use("/api/comments", commentRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/categories", categoryRoute);
+app.use("/api/upload", uploadRoute);
 
 const port = 8000
 

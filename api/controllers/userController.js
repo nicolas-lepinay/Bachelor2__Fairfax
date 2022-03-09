@@ -1,16 +1,24 @@
 const User = require("../models/User");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // * GET A USER *
 module.exports.findOne_GET = async (req, res) => {
     // Query strings :
-    const userId = req.query.userId; // .../users?userId=616ef78085e9a2...
-    const username = req.query.username; // .../users?username="John"
+    const userId = req.query.userId;        // .../users?userId=616ef78085e9a2...
+    const username = req.query.username;    // .../users?username="John"
+    const slug = req.query.slug;            // .../users?slug="john"
+    const email = req.query.email;          // .../users?email="john@gmail.com"
+
     try {
         const user = userId ?
-            await User.findById(userId) // Je fetch le user soit par son ID...
-            :
-            await User.findOne({ username: username }); // ...soit par son username.
+            await User.findById(userId)                 // Je fetch le user soit par son ID...
+            : username ?
+            await User.findOne({ username: username })  // ...soit par son username...
+            : slug ?
+            await User.findOne({ slug: slug })          // ...soit par son slug.
+            : 
+            await User.findOne({ email: email })       // ...soit par son email.
 
         !user && res.status(404).json("No user was found."); // Si la requête ne renvoit aucun utilisateur
         const { password, updatedAt, ...rest } = user._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
@@ -33,118 +41,44 @@ module.exports.findAll_GET = async (req, res) => {
 // * UPDATE A USER *
 module.exports.update_PUT = async (req, res) => {
 
-    let userId = req.body.userId;
-    let userName = req.body.username;
-    let email = req.body.email;
-    let password = req.body.password;
-    let checkPassword = req.body.checkPassword;
-    let avatar = req.body.avatar;
-    let regexUserName = /^[ a-zA-Z0-9._]{3,20}/;
-    let regexEmail = /([a-zA-Z0-9._\-]{1,20})+@([a-zA-Z\-]{5,25})+.([a-z]{2,5})/;
-    let regexPassword = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#?!_@.$\\-]).{6,30}/m;
+    const user = await User.findById(req.body.userId);
 
-    if (password) {
+    // console.log("**************")
+    // console.log(req.body)
+    // console.log("**************")
+    // Remove null properties from req.body :
+    Object.keys(req.body).forEach( (key) => req.body[key] == null && delete req.body[key]);
 
+    // Si l'utilisateur veut modifier son mot de passe :
+    if (req.body.password && req.body.currentPassword) {
         try {
-
-            if (userName === "") throw "UserName ne peut pas être vide!";
-
-            if (email === "") throw "L'email ne peut pas être vide!";
-
-            if (!regexUserName.test(userName)) throw "Test Ko!";
-            
-            if (!regexEmail.test(email)) throw "Test Ko!";
-
-            if (!regexPassword.test(password)) throw "MDP pas assez fort ou pas assez long!";
-
-            if (!regexPassword.test(checkPassword)) throw "MDP pas assez fort ou pas assez long!";
-
-            if (!password === checkPassword) throw "Le MDP doit être identique";
-
-            password = bcrypt.hashSync(password, 10);
-
-            if (avatar === undefined) {
-                
-                const updateUser = await User.findByIdAndUpdate(userId, {
-
-                    $set: {
-        
-                        username: userName,
-                        email: email,
-                        password: password
-        
-                    }
-        
-                }, {new: true});
-        
-                res.status(200).json(updateUser);
-
-            } else {
-
-                const updateUser = await User.findByIdAndUpdate(userId, {
-
-                    $set: {
-        
-                        username: userName,
-                        email: email,
-                        avatar: avatar,
-                        password: password
-        
-                    }
-        
-                }, {new: true});
-        
-                res.status(200).json(updateUser);
-
-            }
-
+            // Comparaison du mot de passe saisi avec le mot de passe hashé stocké dans la DB :
+            const passwordIsValid = bcrypt.compareSync(req.body.currentPassword, user.password);
+            // Si le mot de passe est incorrect...
+            !passwordIsValid && res.status(401).json("The password you entered is incorrect.");
+            // Si le mot de passe est correct, on hâche le nouveau mot de passe :
+            req.body.password = bcrypt.hashSync(req.body.password, 10);
         } catch(err) {
-
-            return res.status(500).json(err);
-
+            console.log(err)
         }
 
     } 
 
     try {
-        
-        if (avatar === undefined) {
-            
-            const updateUser = await User.findByIdAndUpdate(userId, {
+        const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
+            $set: req.body,
+        }, {new: true});
 
-                $set: {
-    
-                    username: userName,
-                    email: email,
-    
-                }
-    
-            }, {new: true});
-    
-            res.status(200).json(updateUser);
+        // Génération d'un nouvel accessToken :
+        const accessToken = jwt.sign({
+            id: user._id, 
+            role: user.role,
+        }, process.env.JWT_SECRET)
 
-        } else {
-
-            const updateUser = await User.findByIdAndUpdate(userId, {
-
-                $set: {
-    
-                    username: userName,
-                    email: email,
-                    avatar: avatar
-    
-                }
-    
-            }, {new: true});
-    
-            res.status(200).json(updateUser);
-
-        }
-
-    } catch (error) {
-        
-        return res.status(500).json(error);
-
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json({accessToken, ...rest}); // On renvoit tous les champs (+ l'accesToken) sauf le mot de passe (par sécurité)
+    } catch (err) {
+        return res.status(500).json(err);
     }
 
 
@@ -198,11 +132,13 @@ module.exports.findFollowings_GET = async (req, res) => {
                 return User.findById(friendId)
             })
         );
-        // On ne garde que l'ID, l'avatar et le nom :
+        // // On ne garde que l'ID, le username, le slug et l'avatar :
         let friendList = [];
         friends.map(friend => {
-            const { _id, username, avatar } = friend;
-            friendList.push( { _id, username, avatar } )
+            // const { _id, username, slug, avatar } = friend;
+            // friendList.push( { _id, username, avatar } )
+            const { password, updatedAt, ...rest } = friend._doc; // On ne récupère pas le mot de passe ou la date de mise à jour
+            friendList.push(rest);
         });
         res.status(200).json(friendList);
         
