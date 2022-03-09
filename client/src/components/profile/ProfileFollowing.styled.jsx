@@ -3,7 +3,8 @@ import styled from "styled-components";
 const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
 export const Container = styled.div`
-    background-image: url('${ASSETS}/profile/profile-activity.webp');
+    background-color: rgb(10, 16, 34);
+    background-image: url('${ASSETS}/profile/profile-following.webp');
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -16,8 +17,7 @@ export const Header = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     & >  button {
         background-color: rgba(107, 99, 181, 1);
         border: none;
@@ -53,7 +53,60 @@ export const Header = styled.div`
     }
 `
 
-export const NoContent = styled.h1`
+export const Wrapper = styled.div`
+    margin: auto;
+    overflow-y: auto;
+    padding-top: 1rem;
+    padding-bottom: 40vh; // 50vh to be able to scroll all the way down
+    width: 100%;
+    // Clipping mask :
+    -webkit-mask-image: linear-gradient(180deg, #ffffff 40%, transparent);
+    // Invisible scrollbar :
+    -ms-overflow-style: none;   // Edge
+    scrollbar-width: none;      // Firefox
+    &::-webkit-scrollbar {      // Chrome, Safari
+        display: none;
+    }
+`
+
+export const FriendList = styled.div`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+`
+
+export const Friend = styled.div`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        transform: scale(1.1);
+    }
+    &:hover > .username {
+        text-shadow: 0px 0px 8px rgba(255, 255, 255, 1);
+    }
+    & > img {
+        border-radius: 50%;
+        width: 120px;
+        margin: auto;
+    }
+    & > .username {
+        color: white;
+        font-family: 'Bluu Next';
+        font-size: 26px;
+        position: absolute;
+        bottom: -12px;
+        text-transform: capitalize;
+        text-shadow: 0px 0px 10px black;
+        transition: all 0.4s ease-in-out;
+    }
+`
+
+export const NoFriend = styled.h1`
     color: white;
     font-family: 'Bluu Next';
     font-size: 2.2rem;

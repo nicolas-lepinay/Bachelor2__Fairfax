@@ -1,5 +1,5 @@
 // 🌌 React :
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 // 💅🏻 Styled Components :

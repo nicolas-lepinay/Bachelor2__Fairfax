@@ -8,12 +8,33 @@ import { Container, Header, Logo, Settings, Main, Top, Avatar, House, Bottom } f
 // 🦸 UserContext :
 import { UserContext } from "../../context/UserContext";
 
+// 🅰️ Axios :
+import axios from "axios";
+
 function ProfileOverview({ profileUser }) {
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
 
     // 🦸 User Context :
     const { user, setUser } = useContext(UserContext);
+
+    const [followed, setFollowed] = useState(false);
+
+    const followHandler = async () => {
+        try {
+            await axios.put(`/users/${profileUser._id}/follow`, {userId: user._id});
+            const updatedUser = await axios.get(`/users?userId=${user._id}`);
+            setUser(updatedUser.data);
+            setFollowed(!followed);
+        } catch(err) {
+            console.log(err)
+            alert("An error occured while trying to follow or unfollow the user.")
+        }
+    }
+
+    useEffect ( () => {
+        setFollowed(user.following.includes(profileUser._id))
+    }, [profileUser, user.following])
 
     return (
         <Container>
@@ -40,6 +61,11 @@ function ProfileOverview({ profileUser }) {
                 </Top>
 
                 <Avatar>
+                    { user && profileUser._id !== user?._id && (
+                        <button onClick={followHandler}>
+                            {followed ? "- Unfollow" : "+ Follow"} 
+                        </button>
+                    )}
                     <img src={`${MEDIA}/profile/${profileUser?.avatar || 'defaultAvatar.jpg'}`} />
                     <h1 className='username'>{profileUser.username}</h1>
                 </Avatar>

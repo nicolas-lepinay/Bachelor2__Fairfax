@@ -39,6 +39,9 @@ export const Slides = styled.div`
     & > #r2:checked ~ .slide-1 {
         margin-top: -100vh;
     }
+    & > #r3:checked ~ .slide-1 {
+        margin-top: -200vh;
+    }
 `
 
 export const InputRadio = styled.input`
@@ -47,7 +50,8 @@ export const InputRadio = styled.input`
         visibility: hidden;
     }
     &#r1:checked ~ ${Navigation} > #bar1,
-    &#r2:checked ~ ${Navigation} > #bar2 {
+    &#r2:checked ~ ${Navigation} > #bar2,
+    &#r3:checked ~ ${Navigation} > #bar3 {
         background: white;
     }
     &#r1:checked ~ .slide-1 {
@@ -55,6 +59,9 @@ export const InputRadio = styled.input`
     }
     &#r2:checked ~ .slide-1 {
         margin-top: -100vh;
+    }
+    &#r3:checked ~ .slide-1 {
+        margin-top: -200vh;
     }
 `
 
