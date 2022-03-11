@@ -124,7 +124,7 @@ function Category({socket}) {
                         {/* <Logo src={`${ASSETS}/logo_gold.png`} id="title__logo"/> */}
                         <Title id="title__category">The {category?.name}</Title>
                         <Overlay src={`${ASSETS}/fog_lg.png`}/>
-                        <Image src={category?.images ? `${ASSETS}/categories/${category?.images[0]}` : `${ASSETS}/home/banner_3.png`} />
+                        <Image src={category?.images && category?.images[0] ? `${ASSETS}/categories/${category?.images[0]}` : `${ASSETS}/home/banner_3.png`} />
                         <Bottom src={`${ASSETS}/wave_white.png`} />
                     </Banner>
                     

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ReactDom from 'react-dom';
 
 // 💅🏻 Styled Components :
-import { Backdrop, ModalWrapper, MainContent, ScrollName, Footsteps, Foot, MapBase, MapFlap, MapSide } from "./WorldMap.styled"
+import { Backdrop, ModalWrapper, MainContent, ScrollName, Footsteps, Foot, MapBase, MapFlap, MapSide, Octopus, Category, Ribbon, Icon } from "./WorldMap.styled"
 
 // 🎬 Framer Motion :
 import { motion } from 'framer-motion';
@@ -14,10 +14,9 @@ import { motion } from 'framer-motion';
 // 🅰️ Axios :
 import axios from "axios";
 
-// CSS :
-import './worldMap.css';
-
 function WorldMap2({ handleClose }) {
+
+    const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
 
     const [categories, setCategories] = useState([]);
     const [toggleMap, setToggleMap] = useState(false);
@@ -75,14 +74,38 @@ function WorldMap2({ handleClose }) {
                     <ModalWrapper innerRef={modalWrapper} className={toggleMap ? "active" : ""}>
                         <MainContent>
                             <MapBase className={toggleMap ? "active" : ""}>
-                                <Footsteps className="footsteps-1">
-                                    <Foot className="left"></Foot>
-                                    <Foot className="right"></Foot>
-                                    <ScrollName>
-                                        <p>Ipsum</p>
-                                    </ScrollName>
-                                </Footsteps>
 
+                                
+                                {categories.map( (category, i) => (
+                                    i < 10 &&
+                                    <Category className={category.slug === 'parliament' ? 'locked' : ''} key={`category-${category._id}`} onClick={handleClose}>
+                                        <Link 
+                                            to={`/category/${category.slug}`} 
+                                            style={{textDecoration: "none"}} >
+                                            <Icon src={`${ASSETS}/map/${category?.icons[0]}`} alt="" key={`icon-${category._id}`} />
+                                            <Ribbon key={`ribbon-${category._id}`}>
+                                                <p><span>{category.name}</span></p>
+                                            </Ribbon>
+                                        </Link>
+                                    </Category>
+                                    ))
+                                }
+
+                                <Octopus src={`${ASSETS}/map/squid-icon.png`} alt="" />
+
+                                {/* {categories.map( (category, i) => (
+                                    i < 2 &&
+                                    <Category key={`cat-${category._id}`}>
+                                        <ScrollName>
+                                            <img src={`${ASSETS}/map/ribbon.png`} alt="" />
+                                            <p>{category.name}</p>
+                                        </ScrollName>
+                                        <Icon src={`${ASSETS}/map/${category?.icons[0]}`} alt="" />
+                                    </Category>
+                                    ))
+                                } */}
+
+                                {/* 
                                 <Footsteps className="footsteps-2">
                                     <Foot className="left"></Foot>
                                     <Foot className="right"></Foot>
@@ -90,16 +113,7 @@ function WorldMap2({ handleClose }) {
                                         <p>Lorem</p>
                                     </ScrollName>
                                 </Footsteps>
-
-                                {/* <MapFlap className="flap--1">
-                                    <div className="front"></div>
-                                    <div className="back"></div>
-                                </MapFlap>
-                                
-                                <MapFlap className="flap--2">
-                                    <div className="front"></div>
-                                    <div className="back"></div>
-                                </MapFlap> */}
+                                */}
 
                                 <MapSide className="side-1">
                                     <div className="front"></div>

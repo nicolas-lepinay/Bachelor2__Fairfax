@@ -23,7 +23,7 @@ const device = {
     mobile_M: `(max-width: ${size.mobile_M})`
 };
 
-const footsteps1 = keyframes`
+const footsteps0 = keyframes`
     10% { transform: translate(8px, -15px) rotate(30deg); }
     20% { transform: translate(30px, -45px) rotate(30deg); }
     30% { transform: translate(40px, -75px) rotate(20deg); }
@@ -33,7 +33,7 @@ const footsteps1 = keyframes`
     100% { transform: translate(50px, -135px) rotate(20deg); }
 `
 
-const footsteps2 = keyframes`
+const footsteps1 = keyframes`
     80% { transform: translate(-170px, -25px) rotate(-90deg); }
     100% { transform: translate(-180px, -25px) rotate(-90deg); }
 `
@@ -103,29 +103,253 @@ export const MainContent = styled.div`
     text-align: center;
 `
 
+export const Octopus = styled.img`
+    position: absolute;
+    left: ${width * 1.700}px;
+    opacity: 0;
+    top: ${height * 0.120}px;
+    visibility: hidden;
+    width: 90px;
+    z-index: 10;
+    @media (max-width: 800px) { 
+        left: ${width * 1.700 * 0.75}px;
+        top: ${height * 0.120 * 0.75}px;   
+        width: 65px; 
+    }
+`
+
+export const Icon = styled.img`
+    background: url('${ASSETS}/map/cafe.png') center center / cover;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 80px;
+    @media (max-width: 800px) { 
+        width: 60px;
+    }
+`
+
+export const Ribbon = styled.div`
+    position: absolute;
+    background: url('${ASSETS}/map/ribbon.png') center center / cover;
+    height: 62px;
+    left: 50%;
+    top: 62px;
+    transform: translateX(-50%) rotate(-6deg);
+    width: 130px;
+    & > p {
+        color: white;
+        display: inline-block;
+        font-size: 0.7rem;
+        padding-top: 30px;
+        text-align: center;
+    }
+    @media (max-width: 800px) { 
+        top: 40px;
+    }
+`
+
+export const Category = styled.div`
+    cursor: pointer;
+    opacity: 0;
+    position: relative;
+    visibility: hidden;
+    z-index: 10;
+    // ✨ CAFE :
+    &:nth-child(1) {
+        top: ${height * 0.250}px;
+        left: 0;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+            
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.250 * 0.75}px;
+        }
+    }
+    // ✨ LIBRARY :
+    &:nth-child(2) {
+        top: ${height * 0.025}px;
+        left: -${width * 0.250}px;
+        @media (max-width: 800px) { 
+            top: ${height * 0.030 * 0.75}px;
+            left: -${width * 0.250 * 0.75}px;        
+        }
+    }
+    // ✨ THEATER :
+    &:nth-child(3) {
+    top: ${height * 0.475}px;
+    left: -${width * 0.375}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.475 * 0.75}px;
+            left: -${width * 0.325 * 0.75}px;
+        }
+    }
+    // ✨ ACADEMY :
+    &:nth-child(4) {
+    top: ${height * 0.730}px;
+    left: ${width * 1.050}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.730 * 0.75}px;
+            left: ${width * 1.050 * 0.75}px;
+        }
+    }
+    // ✨ VINYL SHOP :
+    &:nth-child(5) {
+    top: ${height * 0.400}px;
+    left: -${width * 1.370}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.400 * 0.75}px;
+            left: -${width * 1.370 * 0.75}px;
+        }
+    }
+    // ✨ MUSEUM :
+    &:nth-child(6) {
+    top: ${height * 0.750}px;
+    left: -${width * 0.200}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.750 * 0.75}px;
+            left: -${width * 0.200 * 0.75}px;
+        }
+    }
+    // ✨ STADIUM :
+    &:nth-child(7) {
+    top: ${height * 0.120}px;
+    left: -${width * 1.100}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+            filter: invert(100%) brightness(120%) contrast(96%);        
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.120 * 0.75}px;
+            left: -${width * 1.100 * 0.75}px;
+        }
+    }
+    // ✨ PARLIAMENT :
+    &:nth-child(8) {
+    top: ${height * 0.460}px;
+    left: ${width * 0.650}px;
+        & ${Icon} {
+                    
+        }
+        & ${Ribbon} {
+        
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.460 * 0.75}px;
+            left: ${width * 0.650 * 0.75}px;
+        }
+    }
+    // ✨ WITCHES CLUB :
+    &:nth-child(9) {
+    top: ${height * 0.750}px;
+    left: -${width * 1.700}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.750 * 0.75}px;
+            left: -${width * 1.700 * 0.75}px;
+        }
+    }
+    // ✨ WIZARDS CLUB :
+    &:nth-child(10) {
+    top: ${height * 0.620}px;
+    left: -${width * 1.050}px;
+        & ${Icon} {
+            
+        }
+        & ${Ribbon} {
+
+        }
+        @media (max-width: 800px) { 
+            top: ${height * 0.620 * 0.75}px;
+            left: -${width * 1.050 * 0.75}px;
+        }
+    }
+    &.locked {
+        pointer-events: none;
+        & ${Icon} {
+            filter: brightness(20%);        
+        }
+        & ${Ribbon} {
+            & span {
+                display: none;
+            }
+            & p:after {
+                content: '???';
+            }
+        }
+    }
+`
+
 export const ScrollName = styled.div`
-    background: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/scroll.svg') center center / cover;
+    /* background: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/scroll.svg') center center / cover; */
+    background: url('${ASSETS}/map/ribbon.png') center center / cover;
     bottom: 105px;
-    color: #615349;
+    /* color: #615349; */
+    color: white;
     cursor: default;
     left: -60px;
-    height: 30px;
-    /* font: 15px Satisfy, cursive; */
+    /* height: 30px; */
+    /* height: 70px; */
     opacity: 0;
     position: absolute;
     text-align: center;
+    /* transform: rotate(-10deg); */
     width: 150px;
-    z-index: 10;
+    /* z-index: 10; */
     & p {
         display: inline-block;
-        margin: 4px 0 0 15px;
+        font-size: 0.8rem;
+        padding-top: 33px;
+        text-transform: uppercase;
+    }
+    & img {
+        position: absolute;
+        transform: rotate(10deg);
+        bottom: 0;
+        left: 0;
+        width: 120px;
+        z-index: -10;
     }
 `
 
 export const Foot = styled.div`
     background: #615349;
     border-radius: 80% 80% 70% 70%/130% 130% 25% 25%;
-    height: 12px;
+    /* height: 12px; */
     position: absolute;
     opacity: 0;
     width: 6px;
@@ -149,7 +373,10 @@ export const Foot = styled.div`
 `
 
 export const Footsteps = styled.div`
-    &.footsteps-1 > ${Foot} {
+    & img {
+        width: 100px;
+    }
+    &.footsteps-0 > ${Foot} {
         &.left {
             bottom: 150px;
             left: 18px;
@@ -161,7 +388,7 @@ export const Footsteps = styled.div`
             transform: rotate(30deg);
         }
     }
-    &.footsteps-2 > ${Foot} {
+    &.footsteps-1 > ${Foot} {
         &.left {
             bottom: 285px;
             left: 280px;
@@ -173,7 +400,7 @@ export const Footsteps = styled.div`
             transform: rotate(-85deg);
         }
     }
-    &.footsteps-2 > ${ScrollName} {
+    &.footsteps-1 > ${ScrollName} {
         bottom: 300px;
         left: 220px;
     }
@@ -410,24 +637,27 @@ export const MapBase = styled.div`
                 }
             }
         }
-        & ${Footsteps}, & ${ScrollName} {
+        & ${Footsteps}, & ${ScrollName}, & ${Category}, & ${Octopus} {
             opacity: 1;
-            transition: 0.5s opacity 2.5s;
+            visibility: visible;
+            transition: 0.6s opacity 1.2s;
         }
+        /*
         & ${Footsteps} {
-            &.footsteps-1 ${Foot} {
-                animation: 15s ${footsteps1} ease 3s forwards;
+            &.footsteps-0 ${Foot} {
+                animation: 15s ${footsteps0} ease 3s forwards;
             }
-            &.footsteps-1 ${ScrollName} {
+            &.footsteps-0 ${ScrollName} {
                 animation: 15s ${scroll1} ease 3s forwards;
             }
-            &.footsteps-2 ${Foot} {
-                animation: 15s ${footsteps2} ease 3.2s forwards;
+            &.footsteps-1 ${Foot} {
+                animation: 15s ${footsteps1} ease 3.2s forwards;
             }
-            &.footsteps-2 ${ScrollName} {
+            &.footsteps-1 ${ScrollName} {
                 animation: 15s ${scroll2} ease 3.2s forwards;
             }
         }
+        */
     }
     @media (max-width: 800px) { 
         height: ${height*0.75}px;
