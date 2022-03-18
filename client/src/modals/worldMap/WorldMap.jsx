@@ -1,22 +1,25 @@
-// React :
+// 🌌 React :
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-// Portal :
+// 🌁 Portal :
 import ReactDom from 'react-dom';
 
-// Framer Motion :
+// 💅🏻 Styled Components :
+import { Backdrop, ModalWrapper, MainContent, ScrollName, Footsteps, Foot, MapBase, MapFlap, MapSide, Octopus, Category, Ribbon, Icon } from "./WorldMap.styled"
+
+// 🎬 Framer Motion :
 import { motion } from 'framer-motion';
 
-// Styled components :
-import { Backdrop, ModalWrapper, ModalContainer } from "./WorldMap.styled"
-
-// Axios :
+// 🅰️ Axios :
 import axios from "axios";
 
 function WorldMap({ handleClose }) {
 
+    const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
+
     const [categories, setCategories] = useState([]);
+    const [toggleMap, setToggleMap] = useState(false);
 
     useEffect( () => {
         const getCategories = async () => {
@@ -68,21 +71,91 @@ function WorldMap({ handleClose }) {
                     animate="visible"
                     exit="exit"
                 >
-                    <ModalWrapper innerRef={modalWrapper}>
-                        <ModalContainer>
-                            <div style={{display:'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'center'}}>
-                            <h2>World Map</h2>
-                                {categories.map(category =>(
-                                <p className="sidebarListItem" key={category._id}>
-                                    <Link 
-                                        to={`/category/${category.slug}`} style={{textDecoration: "none"}} 
-                                        onClick={handleClose}>
-                                        <span className="sidebarListItemText">{category.name}</span>
-                                    </Link>
-                                </p>
-                                ))}
-                            </div>
-                        </ModalContainer>
+                    <ModalWrapper innerRef={modalWrapper} className={toggleMap ? "active" : ""}>
+                        <MainContent>
+                            <MapBase className={toggleMap ? "active" : ""}>
+
+                                
+                                {categories.map( (category, i) => (
+                                    i < 10 &&
+                                    <Category className={category.slug === 'parliament' ? 'locked' : ''} key={`category-${category._id}`} onClick={handleClose}>
+                                        <Link 
+                                            to={`/category/${category.slug}`} 
+                                            style={{textDecoration: "none"}} >
+                                            <Icon src={`${ASSETS}/map/${category?.icons[0]}`} alt="" key={`icon-${category._id}`} />
+                                            <Ribbon key={`ribbon-${category._id}`}>
+                                                <p><span>{category.name}</span></p>
+                                            </Ribbon>
+                                        </Link>
+                                    </Category>
+                                    ))
+                                }
+
+                                <Octopus src={`${ASSETS}/map/squid-icon.png`} alt="" />
+
+                                {/* {categories.map( (category, i) => (
+                                    i < 2 &&
+                                    <Category key={`cat-${category._id}`}>
+                                        <ScrollName>
+                                            <img src={`${ASSETS}/map/ribbon.png`} alt="" />
+                                            <p>{category.name}</p>
+                                        </ScrollName>
+                                        <Icon src={`${ASSETS}/map/${category?.icons[0]}`} alt="" />
+                                    </Category>
+                                    ))
+                                } */}
+
+                                {/* 
+                                <Footsteps className="footsteps-2">
+                                    <Foot className="left"></Foot>
+                                    <Foot className="right"></Foot>
+                                    <ScrollName>
+                                        <p>Lorem</p>
+                                    </ScrollName>
+                                </Footsteps>
+                                */}
+
+                                <MapSide className="side-1">
+                                    <div className="front"></div>
+                                    <div className="back"></div>
+                                </MapSide>
+
+                                <MapSide className="side-2">
+                                    <div className="front"></div>
+                                    <div className="back"></div>
+                                </MapSide>
+
+                                <MapSide className="side-3">
+                                    <div className="front"></div>
+                                    <div className="back"></div>
+                                </MapSide>
+
+                                <MapSide className="side-4">
+                                    <div className="front"></div>
+                                </MapSide>
+
+                                <MapSide className="side-5">
+                                    <div className="front"></div>
+                                    <div className="back" onClick={() => setToggleMap(!toggleMap)}></div>
+                                </MapSide>
+
+                                <MapSide className="side-6">
+                                    <div className="front"></div>
+                                    <div className="back" onClick={() => setToggleMap(!toggleMap)}></div>
+
+                                    <svg 
+                                        width="20px" 
+                                        height="20px" 
+                                        viewBox="0 0 24 24" 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        onClick={() => setToggleMap(false)}
+                                        className={toggleMap ? "active" : ""}
+                                        >
+                                        <path fill="none" stroke="#ffffff" strokeWidth={2} d="M3,3 L21,21 M3,21 L21,3"/>
+                                    </svg>
+                                </MapSide>
+                            </MapBase>
+                        </MainContent>
                     </ModalWrapper>
                 </motion.div>
             </Backdrop>,
