@@ -36,12 +36,6 @@ export const Bottom = styled.img`
     filter: brightness(0) saturate(100%) invert(93%) sepia(3%) saturate(112%) hue-rotate(200deg) brightness(105%) contrast(98%);
 `
 
-export const Background = styled.div`
-    background-image: linear-gradient(to top right,#450b7c,#563cc9,#49e9fb);
-    height: 100%;
-    width: 100%;
-`
-
 export const Overlay = styled.img`
     left: 50%;
     min-width: 1900px;
@@ -63,13 +57,13 @@ export const Logo = styled.img`
 `
 
 export const Introduction = styled.div`
-    margin: 100px auto 300px auto;
+    margin: 100px auto 150px auto;
     min-width: 400px;
     width: 50%;
     text-align: center;
     & h1 {
-        font-family: 'Crimson Text', serif;
-        font-size: 4rem;
+        font-family: 'Bluu Next', serif;
+        font-size: 3.9rem;
         font-weight: 200;
     }
     & h4 {
@@ -88,7 +82,65 @@ export const Introduction = styled.div`
         /* font-family: 'Poppins', sans-serif;
         font-size: 1rem; */
         font-family: 'Crimson Text', serif;
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         font-weight: 200;
+    }
+`
+
+export const Trivia = styled.div`
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 200px;
+    padding-left: 160px;
+    width: 100%;
+    & .text {
+        margin-right: -70px;
+        & h1 {
+            background-image: radial-gradient(circle, #ded0a0 0%, #a79666 100%);
+            background-clip: text;
+            color: transparent;
+            font-family: 'Bluu Next', serif;
+            font-size: 3.9rem;
+            font-weight: 200;
+            margin-bottom: 30px;
+        }
+        & p {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.4rem;
+            font-weight: 200;
+        }
+    }
+    & img {
+        height: 900px;
+        transform: translateX(220px);
+    }
+    @media (max-width: 1200px) {
+        padding-left: 100px;
+        & .text {
+            margin-right: -180px;
+            & h1 {
+                font-size: 3rem;
+            }
+            & p {
+                font-size: 1.2rem;
+            }
+        }
+        & img {
+            height: 700px;
+        };
+    }
+    @media (max-width: 800px) {
+        align-items: center;
+        gap: 4rem;
+        flex-direction: column-reverse;
+        padding: 0 50px;
+        & img {
+            height: 500px;
+            transform: translateX(0);
+        };
+        & .text {
+            margin: 0;
+        }
     }
 `
