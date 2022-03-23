@@ -5,7 +5,6 @@ import axios from "axios";
 /*import Datatable from "datatables.net-searchpanes"; 
 import tinymce from 'tinymce/tinymce';
 import $ from 'jquery';*/
-import CountUp from '../../vendor/countUp.js';
 import Chart from 'chart.js/auto';
 import AdminMenu from '../../components/admin/menu/AdminMenu.jsx';
 import AdminStyle from './admin.css';

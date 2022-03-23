@@ -23,7 +23,8 @@ export const Container = styled.div`
     display: flex;
     height: 100vh;
     margin: auto;
-    width: min(75%, 1200px);
+    width: 90%;
+    max-width: 1400px;
 `
 
 export const Wrapper = styled.div`
@@ -50,6 +51,7 @@ export const Online = styled.div`
 `
 
 export const Searchbar = styled.input`
+    background-color: transparent;
     border: none;
     border-bottom: 1px solid grey;
     padding: 10px 0;

@@ -20,6 +20,39 @@ module.exports.charts_GET = async (req, res) => {
     }
 }
 
+//Get Comment Number By Number of Day
+
+module.exports.comment_Date_GET = async (req, res) => {
+    const day = parseInt(req.query.day); // /day=1
+    try {
+        var comments = await Comment.count({
+            createdAt: {
+                $gte: new Date(new Date() - day * 60 * 60 * 24 * 1000)
+            }
+        })
+
+        res.status(200).json(comments);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Get Post Number By Number of Day
+module.exports.postDate_GET = async (req, res) => {
+    const day = parseInt(req.query.day); // /day=1
+    try {
+        var posts = await Post.count({
+            createdAt: {
+                $gte: new Date(new Date() - day * 60 * 60 * 24 * 1000)
+            }
+        })
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
 // * GET ALL POST *
 module.exports.posts_GET = async (req, res) => {
 
