@@ -118,7 +118,7 @@ function Messenger({ socket }) {
     }
         
     return (
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', backgroundColor: '#f8f8fb' }}>
             <Navbar socket={socket} />
             <Container>
                 <Menu>

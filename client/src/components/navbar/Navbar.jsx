@@ -1,30 +1,30 @@
-// React :
+// 🌌 React :
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-// Styled components :
+// 💅🏻 Styled Components :
 import { MATERIAL_STYLE, Nav, List, Item, Avatar, SVG, Logo, HR, Alert } from './Navbar.styled';
 
-// UserContext :
+// 🦸 UserContext :
 import { UserContext } from "../../context/UserContext";
 
-// Login Modal :
+// 🗝️ Login Modal :
 import LoginModal from "../../modals/loginModal/LoginModal.jsx";
 
-// World Map Modal :
+// 🌎 World Map Modal :
 import WorldMap from "../../modals/worldMap/WorldMap.jsx";
 import WorldMap2 from "../../modals/worldMap2/WorldMap2.jsx";
 
-// Framer Motion :
+// 🎬 Framer Motion :
 import { AnimatePresence } from 'framer-motion';
 
-// Axios :
-import axios from "axios";
+// 🅰️ Axios :
+// import axios from "axios";
 
 // MaterialUI Icons :
 import { Lock, AccessTime } from '@material-ui/icons';
 
-function Navbar({ socket, hidden }) {
+function Navbar({ socket, visible=true }) {
 
     const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
     const ASSETS = process.env.REACT_APP_PUBLIC_ASSETS_FOLDER;
@@ -66,7 +66,7 @@ function Navbar({ socket, hidden }) {
     // Log out user :
     const logout = () => {
         setUser(null);
-        localStorage.removeItem("user");
+        localStorage.removeItem("fairfax_user");
     }
 
     // Display notification widget :
@@ -95,7 +95,7 @@ function Navbar({ socket, hidden }) {
 
   return (
     <>
-        <Nav className={hidden ? "hidden" : ""}>
+        <Nav className={visible ? "" : "hidden"}>
             <List>
                 {/* 🏰 LOGO */}
                 <Link to="/home" className="link">
@@ -248,7 +248,7 @@ function Navbar({ socket, hidden }) {
                 {/* 🗺️ CARTE DU MONDE */}
                 <Item onClick={() => openModal('world-map')} >
                     <SVG src={`${ASSETS}/icons/navbar-map.svg`} />
-                    <div className="tooltip">World Map</div>
+                    <div className="tooltip">City Map</div>
                 </Item>
 
                 {/* 🛑 LOGOUT */}
@@ -277,8 +277,8 @@ function Navbar({ socket, hidden }) {
             exitBeforeEnter={true} 
             onExitComplete={() => null}
         >
-            {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />}
-            {/* {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {/* {worldMapOpen && <WorldMap isOpen={worldMapOpen} handleClose={closeModal} />} */}
+            {worldMapOpen && <WorldMap2 isOpen={worldMapOpen} handleClose={closeModal} />}
         </AnimatePresence>
     </>
 

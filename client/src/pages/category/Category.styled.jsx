@@ -74,13 +74,16 @@ export const Title = styled.h1`
     color: white;
     font-family: 'Tangerine', cursive;
     font-size: 11rem;
-    left: 50%;
+    /* left: 50%; */
     letter-spacing: 5px;
+    padding: 0 5rem;
     position: absolute;
+    text-align: center;
     text-shadow: 0 0 20px black;
     top: 25%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     -webkit-text-stroke: 2px white;
+    width: 100%;
     z-index: 1;
 `
 

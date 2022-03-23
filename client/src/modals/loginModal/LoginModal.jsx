@@ -32,9 +32,6 @@ function LoginModal({ handleClose }) {
     // Password has valid length :
     const [validLength, setValidLength] = useState(false);
 
-    // Shaking for incorrect submitions:
-    const [isShaking, setIsShaking] = useState("");
-
     // Login data :
     const identifier = useRef();
     const password = useRef();
@@ -110,7 +107,7 @@ function LoginModal({ handleClose }) {
         try {
             const res = await axios.post("/auth/login", { identifier: identifier.current.value, password: password.current.value })
             setCurrentUser(res.data);
-            localStorage.setItem("user", JSON.stringify(res.data))
+            localStorage.setItem("fairfax_user", JSON.stringify(res.data))
             document.getElementById('root').style.filter = 'blur(0px)'; // J'enlève le fond flouté
         } catch (err) {
             shakeModal();

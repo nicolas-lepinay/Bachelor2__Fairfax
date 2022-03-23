@@ -32,8 +32,9 @@ export const List = styled.ul`
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 1.2rem;
     list-style: none;
+    max-height: 100%;
     & > .link {
         color: inherit;
         text-decoration: none;
@@ -112,7 +113,7 @@ export const Item = styled.li`
         }
     }
     &:hover {
-        box-shadow: 0 0 20px 0 rgba(94, 92, 154, 0.15);
+        /* box-shadow: 0 0 20px 0 rgba(94, 92, 154, 0.15); */
         & ${SVG} {
             /* filter: invert(39%) sepia(91%) saturate(300%) hue-rotate(206deg) brightness(90%) contrast(96%); */
             filter: invert(47%) sepia(58%) saturate(7080%) hue-rotate(231deg) brightness(102%) contrast(96%);
@@ -132,9 +133,9 @@ export const Item = styled.li`
 
 export const Avatar = styled.img`
     border-radius: 50%;
-    height: 40px;
+    height: 35px;
     object-fit: cover !important;
-    width: 40px;
+    width: 35px;
 `
 
 export const Logo = styled.img`
@@ -145,7 +146,7 @@ export const Logo = styled.img`
 export const HR = styled.hr`
     color: black;
     opacity: 0.2;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 45px;
 `
 

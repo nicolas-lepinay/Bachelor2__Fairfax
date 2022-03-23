@@ -11,7 +11,11 @@ router.put("/:id", postController.update_PUT);                   // UPDATE A POS
 router.delete("/:id", postController.delete_DELETE)              // DELETE A POST
 router.put("/:id/like", postController.like_PUT);                // LIKE OR UNLIKE A POST
 router.put("/:id/views", postController.views_PUT);              // INCREASE POST'S VIEWS COUNTER
-router.get("/profile/:username", postController.findByUser_GET); // GET A USER'S POSTS (all posts from a user)
+// Identiques :
+router.get("/profile/:username", postController.findByUser_GET);   // GET A USER'S POSTS (all posts from a user)
+router.get("/userId/:userId", postController.findByUserId_GET);    // GET A USER'S POSTS (all posts from a user)
+// ---------------
+router.get("/like/:userId", postController.findLikedPosts_GET);    // GET A USER'S FAVOURITE POSTS (all posts liked by a user)
 router.get("/category/:categoryId", postController.findByCategory_GET); // GET A CATEGORY'S POSTS (all posts in a category)
 router.get("/timeline/:userId", postController.timeline_GET);    // GET TIMELINE POSTS (user's posts + followings' posts)
 router.get("/:id/comments", postController.findComments_GET);    // GET A POST'S COMMENTS

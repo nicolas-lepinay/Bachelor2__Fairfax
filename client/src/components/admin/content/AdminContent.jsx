@@ -5,12 +5,15 @@ import axios from "axios";
 import DataTable from 'react-data-table-component'
 /*import tinymce from 'tinymce/tinymce';
 import $ from 'jquery';*/
-import CountUp from '../../../vendor/countUp.js';
+import CountUp from 'react-countup';
 import Chart from 'chart.js/auto';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes } from "@fortawesome/free-solid-svg-icons";
 /*import { Content } from '../../post/SingleComment.styled.jsx';*/
 import Modal from 'react-modal';
+import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import adminContent from './adminContent.css';
+import DisplayedText from './DisplayedText.jsx';
 
 const customStyles = {
     content: {
@@ -32,6 +35,9 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
+const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
+const ASSETS = "http://localhost:3000/assets/categories";
+
 function AdminContent(props) {
 
     const type = props.type;
@@ -41,6 +47,7 @@ function AdminContent(props) {
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [title, setTitle] = useState('')
     const [date, setDate] = useState('')
+
 
     useEffect(() => {
         const getData = async () => {
@@ -93,15 +100,13 @@ function AdminContent(props) {
     }
 
 
+    function deleteRow(id) {
+        console.log("Suppression de l'ID ", id);
+    }
+
     function GeneratedContent(props) {
         if (type === "chart") {
-            /*
-                        function countElements(response) {
-            
-                            data.forEach((element) =>
-                                new CountUp(element[0], 0, element[1], 0, 2.5).start()
-                            );
-                        }*/
+
             return <div>
                 <div id="cardsContainer">
                     <div id="topCont">
@@ -110,7 +115,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faNewspaper} />
                             </div>
                             <div>
-                                <p id="postCount">{data[0].posts}</p>
+                                <CountUp end={data[0].posts} duration={1.5} id="postCount" />
                                 <p>published articles</p>
                             </div>
                         </div>
@@ -119,7 +124,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faListUl} />
                             </div>
                             <div>
-                                <p id="categoryCount">{data[0].categories}</p>
+                                <CountUp end={data[0].categories} duration={1.5} id="categoryCount" />
                                 <p>category created</p>
                             </div>
                         </div>
@@ -128,7 +133,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faUsers} />
                             </div>
                             <div>
-                                <p id="usersCount">{data[0].users}</p>
+                                <CountUp end={data[0].users} duration={1.5} id="usersCount" />
                                 <p>registered users</p>
                             </div>
                         </div>
@@ -137,7 +142,7 @@ function AdminContent(props) {
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
                             <div>
-                                <p id="commentCount">{data[0].comments}</p>
+                                <CountUp end={data[0].comments} duration={1.5} id="commentCount" />
                                 <p>comment posted</p>
                             </div>
                         </div>
@@ -173,6 +178,7 @@ function AdminContent(props) {
                                     </button>
                                 </div>
 
+                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
                             </>
                         ),
                     }
@@ -180,8 +186,12 @@ function AdminContent(props) {
                 "category": [
                     {
                         name: 'Image',
-                        selector: row => row.images,
-
+                        selector: row => row.icons,
+                        cell: (row) => (
+                            <>
+                                <div style={{ backgroundImage: `URL(${ASSETS}/${row.icons})` }} className="tableCategory"></div>
+                            </>
+                        ),
                     },
                     {
                         name: 'Name',
@@ -191,8 +201,7 @@ function AdminContent(props) {
                         name: "Action",
                         cell: (row) => (
                             <>
-                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-primary'></span>
-                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-danger'></span>
+                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
                             </>
                         ),
 
@@ -204,11 +213,16 @@ function AdminContent(props) {
                 "user": [
                     {
                         name: 'Avatar',
-                        selector: row => row.title,
+                        selector: row => row.avatar,
+                        cell: (row) => (
+                            <>
+                                <div style={{ backgroundImage: `URL(${MEDIA}/profile/${row.avatar ? row.avatar : 'defaultAvatar.jpg'})` }} className="tableAvatar"></div>
+                            </>
+                        ),
                     },
                     {
                         name: 'Username',
-                        selector: row => row.createdAt,
+                        selector: row => row.username,
                     },
                     {
                         name: 'Role',
@@ -220,11 +234,41 @@ function AdminContent(props) {
                     },
                     {
                         name: 'Action',
+                        cell: (row) => (
+                            <>
+                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                            </>
+                        ),
                     }
                 ],
                 "comment": [
                     {
+                        name: 'Post',
+                        selector: row => row.postId,
 
+                    },
+                    {
+                        name: 'User',
+                        selector: row => row.userId,
+                    },
+                    {
+                        name: 'Comment',
+                        selector: row => row.content,
+                        cell: (row) => (
+                            <DisplayedText content={row.content}></DisplayedText>
+                        ),
+                    },
+                    {
+                        name: "Action",
+                        cell: (row) => (
+                            <>
+                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                            </>
+                        ),
+
+                        ignoreRowClick: true,
+                        allowOverflow: true,
+                        button: true,
                     }
                 ]
             };
