@@ -89,13 +89,18 @@ function AdminContent(props) {
 
             const columnsList = [
                 {
-                    name: 'title',
+                    name: 'Title',
                     selector: row => row.title,
                 },
                 {
-                    name: 'content',
-                    selector: row => row.content,
-                }];
+                    name: 'Creation date',
+                    selector: row => row.createdAt,
+                },
+                {
+                    name: 'Action',
+                }
+            ];
+            console.log("ColumnsList : ", columnsList);
             const columnsToExclude = ['comments', 'likes', 'views']
             /*
                         Object.entries(data[0]).forEach(([key, value]) => {

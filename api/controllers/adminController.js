@@ -32,6 +32,18 @@ module.exports.posts_GET = async (req, res) => {
     }
 }
 
+// * GET ALL CATEGORY *
+module.exports.categories_GET = async (req, res) => {
+
+    try {
+        var categories = await Category.find()
+
+        res.status(200).json(categories);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
 // * LIKE OR UNLIKE A COMMENT *
 module.exports.like_PUT = async (req, res) => {
     try {
