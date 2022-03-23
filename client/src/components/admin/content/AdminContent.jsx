@@ -29,6 +29,7 @@ function AdminContent(props) {
         }
         getData();
     }, [type]);
+    console.log(type);
 
     function GeneratedContent(props) {
         if (type === "chart") {
@@ -87,19 +88,71 @@ function AdminContent(props) {
             </div>;
         } else {
 
-            const columnsList = [
-                {
-                    name: 'Title',
-                    selector: row => row.title,
-                },
-                {
-                    name: 'Creation date',
-                    selector: row => row.createdAt,
-                },
-                {
-                    name: 'Action',
-                }
-            ];
+            const columnsList = {
+                "posts": [
+                    {
+                        name: 'Title',
+                        selector: row => row.title,
+                    },
+                    {
+                        name: 'Creation date',
+                        selector: row => row.createdAt,
+                    },
+                    {
+                        name: 'Action',
+                    }
+                ],
+                "category": [
+                    {
+                        name: 'Image',
+                        selector: row => row.images,
+
+                    },
+                    {
+                        name: 'Name',
+                        selector: row => row.name,
+                    },
+                    {
+                        name: "Action",
+                        cell: (row) => (
+                            <>
+                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-primary'></span>
+                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-danger'></span>
+                            </>
+                        ),
+
+                        ignoreRowClick: true,
+                        allowOverflow: true,
+                        button: true,
+                    }
+                ],
+                "user": [
+                    {
+                        name: 'Avatar',
+                        selector: row => row.title,
+                    },
+                    {
+                        name: 'Username',
+                        selector: row => row.createdAt,
+                    },
+                    {
+                        name: 'Role',
+                        selector: row => row.role,
+                    },
+                    {
+                        name: 'Email',
+                        selector: row => row.email,
+                    },
+                    {
+                        name: 'Action',
+                    }
+                ],
+                "comment": [
+                    {
+
+                    }
+                ]
+            };
             console.log("ColumnsList : ", columnsList);
             const columnsToExclude = ['comments', 'likes', 'views']
             /*
@@ -114,7 +167,7 @@ function AdminContent(props) {
                         })
                         console.log(columnsList);
                         console.log(data);*/
-            return <><DataTable columns={columnsList} data={data} /></> /* <div className="card" id="table">
+            return <><DataTable columns={columnsList[type]} data={data} /></> /* <div className="card" id="table">
                
                 <table id="tableAdmin" className="table" style={{ minWidth: 100 + '%' }}></table>
             </div></DataTable>*/;
