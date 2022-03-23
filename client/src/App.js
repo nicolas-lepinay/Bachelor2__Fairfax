@@ -47,7 +47,9 @@ function App() {
                 </Route>
 
                 <Route path="/admin" >
+                   
                     <Admin socket={socket}/>
+                 
                 </Route>
 
                 <Route path="/profile/:username" >

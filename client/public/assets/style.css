@@ -98,3 +98,22 @@
     --button-primary-hover: rgba(40, 40, 40, 1);
     --text-primary: white;
 } */
+.edit{
+    border: none;
+    background: none;
+}
+.editsvg:hover{
+    color: #00f3ff;
+}
+
+.close{
+    border: none;
+    background: none;
+
+    margin-left: 90%;
+   
+    top: -1%;
+}
+.close:hover{
+    color: rgb(90, 5, 5);
+}

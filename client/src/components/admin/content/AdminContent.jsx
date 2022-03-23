@@ -10,12 +10,37 @@ import Chart from 'chart.js/auto';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes } from "@fortawesome/free-solid-svg-icons";
 /*import { Content } from '../../post/SingleComment.styled.jsx';*/
+import Modal from 'react-modal';
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        display: 'flex',
+        flexDirection: 'column',
+        width:'30%',
+        height:'30%',
+
+    },
+
+};
+
+
+Modal.setAppElement('#root');
 
 function AdminContent(props) {
 
     const type = props.type;
     const [data, setData] = useState([{}]);
+    const [datatwo, setDatatwo] = useState([{}]);
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [title, setTitle] = useState('')
+    const [date, setDate] = useState('')
 
     useEffect(() => {
         const getData = async () => {
@@ -29,7 +54,44 @@ function AdminContent(props) {
         }
         getData();
     }, [type]);
-    console.log(type);
+
+    function openModal(id) {
+
+        setIsOpen(true);
+
+        const getData = async () => {
+            try {
+                const res = await axios.get(`/posts/${id}`);
+                setDatatwo(res.data);
+                console.log(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getData();
+        console.log(datatwo);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+    function update(id ){
+
+        console.log(title +"   "+ date);
+         const posts = { title:title ,createdAt:date };
+        axios.put(`/posts/${id}`, posts)
+        .then(response => this.setState({ updatedAt: response.data.updatedAt }))
+        .catch(error => {
+            this.setState({ errorMessage: error.message });
+            console.error('There was an error!', error);
+        });
+    }
+
 
     function GeneratedContent(props) {
         if (type === "chart") {
@@ -100,6 +162,19 @@ function AdminContent(props) {
                     },
                     {
                         name: 'Action',
+                        cell: (row) => (
+                            <>
+                                {/* <p>test</p> */}
+                                <div>
+
+                                    <button onClick={() => openModal(row._id)} className="edit"><svg className='editsvg' width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    </button>
+                                </div>
+
+                            </>
+                        ),
                     }
                 ],
                 "category": [
@@ -177,8 +252,27 @@ function AdminContent(props) {
 
     return (
         <>
-            <div>
+            <div  >
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+
+
+                >
+                    <button onClick={closeModal} className="close"><svg width="24" height="24" stroke-width="1.5" color='red' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </button>
+                    <label htmlFor="titel">Title</label>
+                    <input type="text"  onChange={event => setTitle(event.target.value)} placeholder={datatwo.title} />
+                    <label htmlFor="titel">Creation date</label>
+                    <input type="datetime-local" onChange={event => setDate(event.target.value)}  placeholder={datatwo.createdAt} />
+                    <button onClick={() => update(datatwo._id)}>update</button>
+                </Modal>
                 <GeneratedContent />
+
             </div>
             {/*
 <div id="topCont">
