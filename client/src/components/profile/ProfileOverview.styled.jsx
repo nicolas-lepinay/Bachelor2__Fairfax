@@ -103,8 +103,10 @@ export const Avatar = styled.div`
     width: 100%;
     & > img {
         border-radius: 50%;
-        width: 250px;
+        height: 250px;
         margin: auto;
+        object-fit: cover;
+        width: 250px;
     }
     & > .username {
         color: white;
@@ -116,13 +118,11 @@ export const Avatar = styled.div`
         text-shadow: 0px 0px 10px black;
     }
     & > button {
-        align-items: center;
         background-color: rgba(107, 99, 181, 1);
         border: none;
         border-radius: 100px;
         color: white;
         cursor: pointer;
-        display: flex;
         font-size: 0.7rem;
         letter-spacing: 1px;
         left: calc(50% + 2rem);
@@ -131,6 +131,7 @@ export const Avatar = styled.div`
         text-transform: uppercase;
         top: 1rem;
         right: 0;
+        width: fit-content;
         transition: all 0.3s ease-in-out;
         &:hover {
             background-color: #5c53a7;

@@ -6,6 +6,8 @@ import Settings from "./pages/settings/Settings.jsx";
 import Category from "./pages/category/Category";
 import PostPage from "./pages/postPage/PostPage"
 import Messenger from "./pages/messenger/Messenger.jsx"
+import PasswordForgot from "./pages/passwordForgot/PasswordForgot";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
 
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo, useEffect } from "react";
@@ -68,6 +70,15 @@ function App() {
                 <Route path="/messages">
                     {user ? <Messenger socket={socket}/> : <Redirect to="/"/>}
                 </Route>
+
+                <Route path="/password-forgotten">
+                    {user ? <Redirect to="/home"/> : <PasswordForgot/>}
+                </Route>
+
+                <Route path="/resetPassword/:id">
+                    {user ? <Redirect to="/home"/> : <ResetPassword/>}
+                </Route>
+
             </Switch>
           </>
         );
