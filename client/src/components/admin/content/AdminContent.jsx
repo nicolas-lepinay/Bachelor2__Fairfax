@@ -9,13 +9,22 @@ import CountUp from '../../../vendor/countUp.js';
 import Chart from 'chart.js/auto';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes } from "@fortawesome/free-solid-svg-icons";
-/*import { Content } from '../../post/SingleComment.styled.jsx';*/
+import adminContent from './adminContent.css';
 
+// 📝 Draft.js EditorState :
+import { EditorState, convertFromRaw } from 'draft-js';
+
+// 📋 React-Draft-Wysiwyg Text Editor and Styles :
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+const MEDIA = process.env.REACT_APP_PUBLIC_MEDIA_FOLDER;
 
 function AdminContent(props) {
 
     const type = props.type;
     const [data, setData] = useState([{}]);
+    const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
 
     useEffect(() => {
         const getData = async () => {
@@ -106,7 +115,11 @@ function AdminContent(props) {
                     {
                         name: 'Image',
                         selector: row => row.images,
-
+                        cell: (row) => (
+                            <>
+                                <div style={{ backgroundImage: `URL(${MEDIA}/profile/${row.images})` }} className="tableCategory"></div>
+                            </>
+                        ),
                     },
                     {
                         name: 'Name',
@@ -129,11 +142,16 @@ function AdminContent(props) {
                 "user": [
                     {
                         name: 'Avatar',
-                        selector: row => row.title,
+                        selector: row => row.avatar,
+                        cell: (row) => (
+                            <>
+                                <div style={{ backgroundImage: `URL(${MEDIA}/profile/${row.avatar})` }} className="tableAvatar"></div>
+                            </>
+                        ),
                     },
                     {
                         name: 'Username',
-                        selector: row => row.createdAt,
+                        selector: row => row.username,
                     },
                     {
                         name: 'Role',
@@ -149,7 +167,41 @@ function AdminContent(props) {
                 ],
                 "comment": [
                     {
+                        name: 'Post',
+                        selector: row => row.postId,
 
+                    },
+                    {
+                        name: 'User',
+                        selector: row => row.userId,
+                    },
+                    {
+                        name: 'Comment',
+                        selector: row => row.content,
+                        cell: (row) => (
+                            <>
+                                <Editor
+                                    editorState={editorState}
+                                    editorContent={row.content}
+                                    readOnly={true}
+                                    editorClassName="editor-class first-letter"
+                                    toolbarStyle={{ display: 'none' }}
+                                />
+                            </>
+                        ),
+                    },
+                    {
+                        name: "Action",
+                        cell: (row) => (
+                            <>
+                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-primary'></span>
+                                <span /*onClick={() => handleButtonClick(row._id)}*/ className='btn btn-danger'></span>
+                            </>
+                        ),
+
+                        ignoreRowClick: true,
+                        allowOverflow: true,
+                        button: true,
                     }
                 ]
             };

@@ -1,0 +1,8 @@
+.tableAvatar,
+.tableCategory {
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
