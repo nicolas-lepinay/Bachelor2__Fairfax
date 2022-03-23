@@ -150,7 +150,8 @@ export const Button = styled.button`
 
 export const NewPostButton = styled.button`
     align-items: center;
-    background-color: crimson;
+    background-color: #ef4b6c;
+    box-shadow: 10px 16px 40px 0 rgba(255,84,117,.46);
     bottom: 30px;
     border: none;
     border-radius: 50%;
@@ -167,6 +168,6 @@ export const NewPostButton = styled.button`
     z-index: 10;
     transition: all 0.5s;
     &:hover {
-        background-color: #c01134;
+        background-color: #df4664;
     }
 `

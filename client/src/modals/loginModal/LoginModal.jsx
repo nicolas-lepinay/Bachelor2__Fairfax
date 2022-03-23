@@ -252,7 +252,7 @@ function LoginModal({ handleClose }) {
                     
                                     <LinkAndIcon>
                                         <SVG><KeyIcon/></SVG>
-                                        <a href="#">Forgot your password?</a>
+                                            <a href="/password-forgotten">Forgot your password?</a>
                                     </LinkAndIcon>
                     
                                     <Button type="submit" whileTap={{ scale: 0.92 }}>Continue</Button>

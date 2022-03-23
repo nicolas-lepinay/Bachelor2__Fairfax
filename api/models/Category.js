@@ -11,8 +11,13 @@ const CategorySchema = new mongoose.Schema({
         description: {
             type: String
         },
-        image: {
-            type: String
+        images: {
+            type: Array,
+            default: []
+        },
+        icons: {
+            type: Array,
+            default: []
         },
         slug: {
             type: String,
