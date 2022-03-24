@@ -6,14 +6,23 @@ import DataTable from 'react-data-table-component'
 /*import tinymce from 'tinymce/tinymce';
 import $ from 'jquery';*/
 import CountUp from 'react-countup';
-import Chart from 'chart.js/auto';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes } from "@fortawesome/free-solid-svg-icons";
-/*import { Content } from '../../post/SingleComment.styled.jsx';*/
 import Modal from 'react-modal';
-import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faChartBar, faNewspaper, faUsers, faListUl, faTimes, faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import adminContent from './adminContent.css';
 import DisplayedText from './DisplayedText.jsx';
+
 
 const customStyles = {
     content: {
@@ -25,13 +34,19 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
         display: 'flex',
         flexDirection: 'column',
-        width:'30%',
-        height:'30%',
+        width: '30%',
+        height: '30%',
 
     },
-
 };
 
+const dataTableStyles = {
+    table: {
+        style: {
+            minWidth: '100%',
+        },
+    },
+}
 
 Modal.setAppElement('#root');
 
@@ -48,7 +63,10 @@ function AdminContent(props) {
     const [title, setTitle] = useState('')
     const [date, setDate] = useState('')
 
+    const [chartData, setChartData] = useState([{}]);
+    const [chartType, setChartType] = useState("Posts");
 
+    // Data for data-table
     useEffect(() => {
         const getData = async () => {
             try {
@@ -61,6 +79,20 @@ function AdminContent(props) {
         }
         getData();
     }, [type]);
+
+    // Data for chart
+    useEffect(() => {
+        const getChartData = async () => {
+            try {
+                const res = await axios.get(`/admin/${chartType}/date`);
+                setChartData(res.data);
+                console.log(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getChartData();
+    }, [chartType]);
 
     function openModal(id) {
 
@@ -87,16 +119,16 @@ function AdminContent(props) {
     function closeModal() {
         setIsOpen(false);
     }
-    function update(id ){
+    function update(id) {
 
-        console.log(title +"   "+ date);
-         const posts = { title:title ,createdAt:date };
+        console.log(title + "   " + date);
+        const posts = { title: title, createdAt: date };
         axios.put(`/posts/${id}`, posts)
-        .then(response => this.setState({ updatedAt: response.data.updatedAt }))
-        .catch(error => {
-            this.setState({ errorMessage: error.message });
-            console.error('There was an error!', error);
-        });
+            .then(response => this.setState({ updatedAt: response.data.updatedAt }))
+            .catch(error => {
+                this.setState({ errorMessage: error.message });
+                console.error('There was an error!', error);
+            });
     }
 
 
@@ -105,65 +137,67 @@ function AdminContent(props) {
     }
 
     function GeneratedContent(props) {
-        if (type === "chart") {
+        if (type === "Charts") {
 
             return <div>
                 <div id="cardsContainer">
                     <div id="topCont">
-                        <div className="card" data-chart="posts">
+                        <div className="card" data-chart="posts" onClick={() => setChartType("Posts")}>
                             <div className="rounded-icon">
                                 <FontAwesomeIcon icon={faNewspaper} />
                             </div>
                             <div>
                                 <CountUp end={data[0].posts} duration={1.5} id="postCount" />
-                                <p>published articles</p>
+                                <p>Published articles</p>
                             </div>
                         </div>
-                        <div className="card" data-chart="category">
+                        <div className="card" data-chart="category" onClick={() => setChartType("Categories")}>
                             <div className="rounded-icon">
                                 <FontAwesomeIcon icon={faListUl} />
                             </div>
                             <div>
                                 <CountUp end={data[0].categories} duration={1.5} id="categoryCount" />
-                                <p>category created</p>
+                                <p>Categories created</p>
                             </div>
                         </div>
-                        <div className="card" data-chart="user">
+                        <div className="card" data-chart="user" onClick={() => setChartType("Users")}>
                             <div className="rounded-icon">
                                 <FontAwesomeIcon icon={faUsers} />
                             </div>
                             <div>
                                 <CountUp end={data[0].users} duration={1.5} id="usersCount" />
-                                <p>registered users</p>
+                                <p>Registered users</p>
                             </div>
                         </div>
-                        <div className="card" data-chart="comment">
+                        <div className="card" data-chart="comment" onClick={() => setChartType("Comments")}>
                             <div className="rounded-icon">
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
                             <div>
                                 <CountUp end={data[0].comments} duration={1.5} id="commentCount" />
-                                <p>comment posted</p>
+                                <p>Comments posted</p>
                             </div>
                         </div>
                     </div>
-                    {/* 
-                    <Chart id="chartCont" className="card">
-                        <p id="defaultMessage">Select a category to view its statistics.</p>
+                    {
+                        /*<Chart id="chartCont" className="card">
+                            <p id="defaultMessage">Select a category to view its statistics.</p>
                     </Chart>*/}
                 </div>
             </div>;
         } else {
 
             const columnsList = {
-                "posts": [
+                "Posts": [
                     {
                         name: 'Title',
                         selector: row => row.title,
+                        sortable: true,
                     },
                     {
                         name: 'Creation date',
                         selector: row => row.createdAt,
+                        sortable: true,
                     },
                     {
                         name: 'Action',
@@ -172,18 +206,17 @@ function AdminContent(props) {
                                 {/* <p>test</p> */}
                                 <div>
 
-                                    <button onClick={() => openModal(row._id)} className="edit"><svg className='editsvg' width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
+                                    <button onClick={() => openModal(row._id)} className="editButton">
+                                        <FontAwesomeIcon icon={faEdit} />
                                     </button>
                                 </div>
 
-                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                                <button className="deleteButton" onClick={() => deleteRow(row._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
                             </>
                         ),
                     }
                 ],
-                "category": [
+                "Categories": [
                     {
                         name: 'Image',
                         selector: row => row.icons,
@@ -196,12 +229,13 @@ function AdminContent(props) {
                     {
                         name: 'Name',
                         selector: row => row.name,
+                        sortable: true,
                     },
                     {
                         name: "Action",
                         cell: (row) => (
                             <>
-                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                                <button className="deleteButton" onClick={() => deleteRow(row._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
                             </>
                         ),
 
@@ -210,7 +244,7 @@ function AdminContent(props) {
                         button: true,
                     }
                 ],
-                "user": [
+                "Users": [
                     {
                         name: 'Avatar',
                         selector: row => row.avatar,
@@ -223,10 +257,12 @@ function AdminContent(props) {
                     {
                         name: 'Username',
                         selector: row => row.username,
+                        sortable: true,
                     },
                     {
                         name: 'Role',
                         selector: row => row.role,
+                        sortable: true,
                     },
                     {
                         name: 'Email',
@@ -236,20 +272,22 @@ function AdminContent(props) {
                         name: 'Action',
                         cell: (row) => (
                             <>
-                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                                <button className="deleteButton" onClick={() => deleteRow(row._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
                             </>
                         ),
                     }
                 ],
-                "comment": [
+                "Comments": [
                     {
                         name: 'Post',
                         selector: row => row.postId,
+                        sortable: true,
 
                     },
                     {
                         name: 'User',
                         selector: row => row.userId,
+                        sortable: true,
                     },
                     {
                         name: 'Comment',
@@ -262,7 +300,7 @@ function AdminContent(props) {
                         name: "Action",
                         cell: (row) => (
                             <>
-                                <button className="deleteButton"><FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteRow(row._id)} /></button>
+                                <button className="deleteButton" onClick={() => deleteRow(row._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
                             </>
                         ),
 
@@ -273,23 +311,12 @@ function AdminContent(props) {
                 ]
             };
             console.log("ColumnsList : ", columnsList);
-            const columnsToExclude = ['comments', 'likes', 'views']
-            /*
-                        Object.entries(data[0]).forEach(([key, value]) => {
-                            var column = {};
-                            if (!columnsToExclude.includes(key)) {
-                                column.name = key;
-                                column.selector = (row, value) => row.value;//row.value;//key;//row => row.key;
-                                column.sortable = true;
-                                columnsList.push(column);
-                            }
-                        })
-                        console.log(columnsList);
-                        console.log(data);*/
-            return <><DataTable columns={columnsList[type]} data={data} /></> /* <div className="card" id="table">
-               
-                <table id="tableAdmin" className="table" style={{ minWidth: 100 + '%' }}></table>
-            </div></DataTable>*/;
+
+            return (
+                <div id="tableContainer">
+                    <DataTable columns={columnsList[type]} data={data} pagination customStyles={dataTableStyles} />
+                </div>
+            );
         }
 
     }
@@ -310,9 +337,9 @@ function AdminContent(props) {
                     </svg>
                     </button>
                     <label htmlFor="titel">Title</label>
-                    <input type="text"  onChange={event => setTitle(event.target.value)} placeholder={datatwo.title} />
+                    <input type="text" onChange={event => setTitle(event.target.value)} placeholder={datatwo.title} />
                     <label htmlFor="titel">Creation date</label>
-                    <input type="datetime-local" onChange={event => setDate(event.target.value)}  placeholder={datatwo.createdAt} />
+                    <input type="datetime-local" onChange={event => setDate(event.target.value)} placeholder={datatwo.createdAt} />
                     <button onClick={() => update(datatwo._id)}>update</button>
                 </Modal>
                 <GeneratedContent />

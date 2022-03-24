@@ -38,6 +38,32 @@ module.exports.comment_Date_GET = async (req, res) => {
 }
 
 //Get Post Number By Number of Day
+module.exports.postCatDate_GET = async (req, res) => {
+    const day = parseInt(req.query.day); // /day=1
+    try {
+        var match_stage = {
+            $match: { 
+                createdAt: { $gte: new Date(new Date() - day * 60 * 60 * 24 * 1000)  } 
+            }
+        }
+        
+        var group_stage = {
+            $group: {
+                _id: "$categoryId",
+                count: { $sum: 1 }
+            }
+        }
+        
+        var pipeline = [ match_stage, group_stage ]
+        var posts = await Post.aggregate(pipeline)
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+//Get Post Number By Number of Day
 module.exports.postDate_GET = async (req, res) => {
     const day = parseInt(req.query.day); // /day=1
     try {

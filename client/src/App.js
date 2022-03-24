@@ -9,6 +9,7 @@ import Messenger from "./pages/messenger/Messenger.jsx"
 import Admin from "./pages/admin/Admin";
 import { UserContext } from "./context/UserContext"
 import { useState, useMemo, useEffect } from "react";
+import AdminContext from "./components/admin/context/adminContext";
 
 import {
   BrowserRouter as Router,
@@ -23,6 +24,9 @@ function App() {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("fairfax_user")) || null);
     const currentUser = useMemo( () => ({user, setUser}), [user, setUser] );
+
+    const [activeAdmin, setActiveAdmin] = useState("Charts");
+    const adminContext = {activeAdmin, setActiveAdmin};
 
     const DefaultRoutes = () => {
         const [socket, setSocket] = useState(null);
@@ -39,7 +43,7 @@ function App() {
           }, [socket, user]);
 
         return (
-          <>
+          <AdminContext.Provider value={adminContext}>
             <Switch>
                 <Route path="/home" >
                     <Home socket={socket}/>
@@ -78,7 +82,7 @@ function App() {
                     {user ? <Messenger socket={socket}/> : <Redirect to="/"/>}
                 </Route>
             </Switch>
-          </>
+          </AdminContext.Provider>
         );
       };
 
