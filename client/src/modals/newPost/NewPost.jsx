@@ -37,9 +37,6 @@ function NewPost({ handleClose, category }) {
     // Is the post / post's title long enough :
     const [isValid, setIsValid] = useState(false);
 
-    // Refs :
-    const modalWrapper = useRef();
-    const titleRef = useRef();
     const [title, setTitle] = useState("");
 
     // Text editor toolbar options :
@@ -51,9 +48,8 @@ function NewPost({ handleClose, category }) {
         fontSize: { options: [12, 15, 20] },
     }
 
-    const checkValid = (titleText) => {
+    const checkValid = () => {
         let content = editorState.getCurrentContent().getPlainText('\u0001').trim();
-        // let title = titleRef.current.value.trim();
 
         content.length > 10 && content.length < 5000 && title.trim().length > 10 && title.trim().length < 100 ? setIsValid(true) : setIsValid(false);
     }
@@ -70,24 +66,9 @@ function NewPost({ handleClose, category }) {
         var newPost = {
             userId: user._id,
             categoryId: category._id,
-            title: titleRef.current.value,
+            title: title.trim(),
             content: jsonData,
         }
-
-        // if(file) {
-        //     const formData = new FormData();
-        //     const date = new Date(Date.now()).toISOString().replaceAll(':', '-'); // 2022-12-25T18-30-00.000Z
-            
-        //     const fileName = date + "_" + file.name;
-        //     formData.append("name", fileName);
-        //     formData.append("file", file);
-        //     newPost.img = fileName;
-        //     try {
-        //         await axios.post("/api/upload", formData)
-        //     } catch (err) {
-        //         console.log(err)
-        //     }
-        // }
 
         try {
             const res = await axios.post("/api/posts", newPost);

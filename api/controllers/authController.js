@@ -75,13 +75,13 @@ module.exports.passwordForgot_POST = async (req, res) => {
             var transporter = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'forum.fairfax@gmail.com',
-                    pass: 'Abcd1234?'
+                    user: 'off.the.tracx@gmail.com',
+                    pass: 'cyhqgdoondahxdbu'
                 }
                 });
         
                 var mailOptions = {
-                from: 'forum.fairfax@gmail.com',
+                from: 'The Wizards of Fairfax <off.the.tracx@gmail.com>',
                 to: email,
                 subject: 'Reset Password',
                 text: 
