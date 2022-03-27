@@ -52,11 +52,11 @@ function LoginModal({ handleClose }) {
 
     // Shaking modal animation (invalid submition) :
     const shakeModal = () => {
-        modalWrapper?.current?.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
-        modalWrapper?.current?.style.transform = `translate3d(0, 0, 0)`;
-        modalWrapper?.current?.style.perspective = '1000px';
+        modalWrapper.current.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
+        modalWrapper.current.style.transform = `translate3d(0, 0, 0)`;
+        modalWrapper.current.style.perspective = '1000px';
         setTimeout(function() {
-            modalWrapper?.current?.style = null;
+            modalWrapper.current.style = null;
         }, 1500);
     }
 
