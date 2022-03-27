@@ -52,17 +52,17 @@ function LoginModal({ handleClose }) {
 
     // Shaking modal animation (invalid submition) :
     const shakeModal = () => {
-        modalWrapper.current.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
-        modalWrapper.current.style.transform = `translate3d(0, 0, 0)`;
-        modalWrapper.current.style.perspective = '1000px';
+        modalWrapper?.current?.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
+        modalWrapper?.current?.style.transform = `translate3d(0, 0, 0)`;
+        modalWrapper?.current?.style.perspective = '1000px';
         setTimeout(function() {
-            modalWrapper.current.style = null;
+            modalWrapper?.current?.style = null;
         }, 1500);
     }
 
     // Check if passwords match :
     const checkPasswordsMatch = () => {
-        password1.current.value !== password2.current.value ? setMismatch(true) : setMismatch(false);
+        password1?.current?.value !== password2?.current?.value ? setMismatch(true) : setMismatch(false);
     }
 
     // Check if password is valid :
@@ -72,8 +72,8 @@ function LoginModal({ handleClose }) {
         const upperCase = (str) => /[A-Z]/g.test(str)
         const digit = (str) => /\d+/g.test(str)
 
-        minLength(password1.current.value) ? setValidLength(true) : setValidLength(false)
-        lowerCase(password1.current.value) && upperCase(password1.current.value) && digit(password1.current.value) ? setValidPattern(true) : setValidPattern(false)
+        minLength(password1?.current?.value) ? setValidLength(true) : setValidLength(false)
+        lowerCase(password1?.current?.value) && upperCase(password1?.current?.value) && digit(password1?.current?.value) ? setValidPattern(true) : setValidPattern(false)
     }
 
     // Check if password is valid overall :
@@ -84,13 +84,13 @@ function LoginModal({ handleClose }) {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        if(password2.current.value !== password1.current.value) {
-            password2.current.setCustomValidity("Passwords do not match.");
+        if(password2?.current?.value !== password1?.current?.value) {
+            password2?.current?.setCustomValidity("Passwords do not match.");
         } else {
             const user = {
-                username: username.current.value,
-                email: email.current.value,
-                password: password1.current.value
+                username: username?.current?.value,
+                email: email?.current?.value,
+                password: password1?.current?.value
             }
             try {
                 await axios.post("/api/auth/register", user);
@@ -105,7 +105,7 @@ function LoginModal({ handleClose }) {
     const handleLogin = async (e) => {
         e.preventDefault();        
         try {
-            const res = await axios.post("/api/auth/login", { identifier: identifier.current.value, password: password.current.value })
+            const res = await axios.post("/api/auth/login", { identifier: identifier?.current?.value, password: password?.current?.value })
             setCurrentUser(res.data);
             localStorage.setItem("fairfax_user", JSON.stringify(res.data))
             document.getElementById('root').style.filter = 'blur(0px)'; // J'enlève le fond flouté

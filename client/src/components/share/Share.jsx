@@ -19,7 +19,7 @@ export default function Share() {
             userId: user._id,
             category: "1",
             title: "Some title",
-            content: content.current.value
+            content: content?.current?.value
         }
 
         if(file) {

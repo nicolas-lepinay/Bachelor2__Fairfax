@@ -170,11 +170,11 @@ export default function Settings(){
 
     // Shaking input (invalid submition) :
     const shakeInput = (inputRef) => {
-        inputRef.current.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
-        inputRef.current.style.transform = `translate3d(0, 0, 0)`;
-        inputRef.current.style.perspective = '1000px';
+        inputRef?.current?.style.animation = `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`;
+        inputRef?.current?.style.transform = `translate3d(0, 0, 0)`;
+        inputRef?.current?.style.perspective = '1000px';
         setTimeout(function() {
-            inputRef.current.style = null;
+            inputRef?.current?.style = null;
         }, 1500);
     }
 
