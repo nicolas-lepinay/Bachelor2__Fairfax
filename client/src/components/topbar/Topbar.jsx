@@ -32,11 +32,11 @@ export default function Topbar({ socket }) {
         
         useEffect(() => {
             const fetchPost = async () => {
-                const res = await axios.get(`/posts/${notification.postId}`);
+                const res = await axios.get(`/api/posts/${notification.postId}`);
                 setPostTitle(res.data?.title);
             }
             const fetchUser = async () => {
-                const res = await axios.get(`/users?userId=${notification.senderId}`);
+                const res = await axios.get(`/api/users?userId=${notification.senderId}`);
                 setUsername(res.data.username);
             }
 

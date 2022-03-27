@@ -16,7 +16,7 @@ function Conversation( { conversation }) {
         // Interlocuteur :
         const getUser = async () => {
             try {
-                const res = await axios.get(`/users?userId=${userId}`);
+                const res = await axios.get(`/api/users?userId=${userId}`);
                 setUser(res.data);
 
             } catch(err) {

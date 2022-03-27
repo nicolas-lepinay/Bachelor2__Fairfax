@@ -11,7 +11,7 @@ function ChatOnline({ onlineUsers, currentUserId, setChat }) {
 
     useEffect(() => {
         const getFriends = async () => {
-            const res = await axios.get(`/users/friends/${currentUserId}`);
+            const res = await axios.get(`/api/users/friends/${currentUserId}`);
             setFriends(res.data);
         };
         getFriends();
@@ -23,13 +23,13 @@ function ChatOnline({ onlineUsers, currentUserId, setChat }) {
 
     const handleClick = async (friend) => {
         try {
-            const res = await axios.get(`/conversations/find/${currentUserId}/${friend._id}`);
+            const res = await axios.get(`/api/conversations/find/${currentUserId}/${friend._id}`);
             // Si une conversation existe :
             res.data && setChat(res.data);
 
             // Si aucune conversation n'existe, j'en crée une :
             if(!res.data) {
-                const response = await axios.post(`/conversations`, { senderId: currentUserId, receiverId: friend._id } );
+                const response = await axios.post(`/api/conversations`, { senderId: currentUserId, receiverId: friend._id } );
                 setChat(response.data);
             }
         } catch(err) {

@@ -24,7 +24,7 @@ function WorldMap({ handleClose }) {
     useEffect( () => {
         const getCategories = async () => {
             try {
-                const categoryList = await axios.get("/categories/findAll");
+                const categoryList = await axios.get("/api/categories/findAll");
                 setCategories(categoryList.data);
             } catch (err) {
                 console.log(err)

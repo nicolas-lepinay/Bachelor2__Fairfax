@@ -35,7 +35,7 @@ function Messenger({ socket }) {
     useEffect( () => {
         const getConversations = async () => {
             try {
-                const res = await axios.get(`/conversations/${user._id}`);
+                const res = await axios.get(`/api/conversations/${user._id}`);
                 //setConversations(res.data);
                 res.data.forEach( (conversation) => {
                     conversation.messages.length > 0 && setConversations(old => [...old, conversation]); // Je n'affiche que les conversations non-vides (au moins 1 message)
@@ -51,7 +51,7 @@ function Messenger({ socket }) {
     useEffect( () => {
         const getMessages = async () => {
             try {
-                const res = await axios.get(`/messages/${chat?._id}`);
+                const res = await axios.get(`/api/messages/${chat?._id}`);
                 setMessages(res.data);
             } catch (err) {
                 console.log(err);
@@ -109,7 +109,7 @@ function Messenger({ socket }) {
         });     
 
         try {
-            const res = await axios.post("/messages", message);
+            const res = await axios.post("/api/messages", message);
             setMessages([...messages, res.data]);
             setNewMessage(""); // Clear the textarea
         } catch(err) {

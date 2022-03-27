@@ -47,7 +47,7 @@ export default function Settings(){
     // Check if email already exists or not :
     const emailExists = async () => {
         try {
-            const res = await axios.get(`/users?email=${email}`);
+            const res = await axios.get(`/api/users?email=${email}`);
             setError('email');
             shakeInput(emailInput);
             return true;
@@ -63,7 +63,7 @@ export default function Settings(){
         if(!currentPassword || !newPassword) return false;  
            
         try {
-            const res = await axios.post("/auth/login", { identifier: user.username, password: currentPassword });
+            const res = await axios.post("/api/auth/login", { identifier: user.username, password: currentPassword });
             setError(null);
             return true;
         } catch(err) {
@@ -140,7 +140,7 @@ export default function Settings(){
             formData.append("file", file.data);
 
             try {
-                await axios.post("/upload/avatar", formData)
+                await axios.post("/api/upload/avatar", formData)
             } catch (err) {
                 console.log(err)
             }
@@ -155,7 +155,7 @@ export default function Settings(){
 
         try {
             // Update user in database :
-            const updatedUser = await axios.put(`/users/${user._id}`, data, { headers } );
+            const updatedUser = await axios.put(`/api/users/${user._id}`, data, { headers } );
             // Update user object in React :
             setUser(updatedUser.data);
             // Update user object in local storage :

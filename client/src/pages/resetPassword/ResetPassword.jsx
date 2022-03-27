@@ -29,7 +29,7 @@ export default function ResetPassword() {
                 const passwordChange = {
                     password: password
                 }
-                await axios.post(`/auth/resetPassword/${id}`, passwordChange);
+                await axios.post(`/api/auth/resetPassword/${id}`, passwordChange);
                 history.push("/");
             } catch(err) {
                 alert("An error occured while attempting to reset your password.")

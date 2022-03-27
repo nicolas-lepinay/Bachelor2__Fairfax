@@ -68,7 +68,7 @@ function PostPage({socket}) {
     useEffect ( () => {
         const fetchPost = async () => {
             try {
-                const res = await axios.get(`/posts?slug=${postSlug}`);
+                const res = await axios.get(`/api/posts?slug=${postSlug}`);
                 setPost(res.data);
             } catch(err) {
                 console.log(err);
@@ -82,7 +82,7 @@ function PostPage({socket}) {
     useEffect ( () => {
         const fetchComments = async () => {
             try {
-                const res = await axios.get(`/comments?postId=${post._id}`);
+                const res = await axios.get(`/api/comments?postId=${post._id}`);
                 setComments(res.data);
             } catch(err) {
                 console.log(err)
@@ -95,7 +95,7 @@ function PostPage({socket}) {
     useEffect ( () => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get(`/users?userId=${post?.userId}`);
+                const res = await axios.get(`/api/users?userId=${post?.userId}`);
                 setAuthor(res.data);
             } catch(err) {
                 console.log(err)
@@ -109,7 +109,7 @@ function PostPage({socket}) {
         const increaseViews = async () => {
             const userId = user?._id || 'guest';
             try {
-                await axios.put(`/posts/${post._id}/views`, { userId: userId } );
+                await axios.put(`/api/posts/${post._id}/views`, { userId: userId } );
             } catch(err) {
                 console.log(err)
             }

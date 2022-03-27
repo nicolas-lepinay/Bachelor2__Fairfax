@@ -25,7 +25,7 @@ function ProfileFollowing({ profileUser }) {
     useEffect( () => {
         const getFollowing = async () => {
             try {
-                const followingList = await axios.get("/users/following/" + profileUser._id);
+                const followingList = await axios.get("/api/users/following/" + profileUser._id);
                 setFollowing(followingList.data);
             } catch (err) {
                 console.log(err)
@@ -33,7 +33,7 @@ function ProfileFollowing({ profileUser }) {
         }
         const getFollowers = async () => {
             try {
-                const followersList = await axios.get("/users/followers/" + profileUser._id);
+                const followersList = await axios.get("/api/users/followers/" + profileUser._id);
                 setFollowers(followersList.data);
             } catch (err) {
                 console.log(err)

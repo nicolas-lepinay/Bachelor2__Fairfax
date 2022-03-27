@@ -22,8 +22,8 @@ function ProfileOverview({ profileUser }) {
 
     const followHandler = async () => {
         try {
-            await axios.put(`/users/${profileUser._id}/follow`, {userId: user?._id});
-            const updatedUser = await axios.get(`/users?userId=${user?._id}`);
+            await axios.put(`/api/users/${profileUser._id}/follow`, {userId: user?._id});
+            const updatedUser = await axios.get(`/api/users?userId=${user?._id}`);
             setUser(updatedUser.data);
             setFollowed(!followed);
         } catch(err) {

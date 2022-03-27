@@ -66,7 +66,7 @@ function SingleComment({ comment, socket, setPost, openLogin }) {
     // 🦸‍♀️ Fetch comment's author :
     useEffect ( () => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?userId=${comment.userId}`);
+            const res = await axios.get(`/api/users?userId=${comment.userId}`);
             setAuthor(res.data);
         }
         fetchUser();
@@ -75,7 +75,7 @@ function SingleComment({ comment, socket, setPost, openLogin }) {
     // ⤵️ Fetch comment's subcomments :
     useEffect ( () => {
         const fetchSubcomments = async () => {
-            const res = await axios.get(`/comments?commentId=${comment._id}`);
+            const res = await axios.get(`/api/comments?commentId=${comment._id}`);
             setSubcomments(res.data);
         }
         fetchSubcomments();
@@ -113,7 +113,7 @@ function SingleComment({ comment, socket, setPost, openLogin }) {
     // ❤️ Like handling :
     const likeHandler = async () => {
         try {
-            await axios.put(`/comments/${comment._id}/like`, { userId: user._id } );
+            await axios.put(`/api/comments/${comment._id}/like`, { userId: user._id } );
         } catch(err) {
             console.log(err)
         }
@@ -138,8 +138,8 @@ function SingleComment({ comment, socket, setPost, openLogin }) {
             content: jsonData,
         }
         try {
-            await axios.post("/comments", newSubcomment);                   // Publish comment
-            const res = await axios.get(`/posts?id=${comment.postId}`);     // Re-fetch post to update comments list
+            await axios.post("/api/comments", newSubcomment);                   // Publish comment
+            const res = await axios.get(`/api/posts?id=${comment.postId}`);     // Re-fetch post to update comments list
             setPost(res.data); 
             setDisplayEditor(false);                                        // Hide text editor
             setSubEditorState(EditorState.createEmpty());                   // Clear subcomment text editor

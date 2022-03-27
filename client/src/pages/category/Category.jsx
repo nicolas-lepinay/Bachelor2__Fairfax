@@ -41,7 +41,7 @@ function Category({socket}) {
     useEffect ( () => {
         const fetchCategory = async () => {
             try {
-                const res = await axios.get(`/categories?slug=${slug}`);
+                const res = await axios.get(`/api/categories?slug=${slug}`);
                 setCategory(res.data);
 
             } catch(err) {
@@ -62,7 +62,7 @@ function Category({socket}) {
     // ✉️ Fetch posts (when category changes) :
     useEffect ( () => {
         const fetchPosts = async () => {
-            const res = await axios.get(`/posts/category/${category._id}?skip=${skip}&limit=${limit}`);
+            const res = await axios.get(`/api/posts/category/${category._id}?skip=${skip}&limit=${limit}`);
             setPosts(res.data);
         }
         fetchPosts();
@@ -71,7 +71,7 @@ function Category({socket}) {
     // ✉️ Fetch posts (load more posts) :
     useEffect ( () => {
         const fetchPosts = async () => {
-            const res = await axios.get(`/posts/category/${category._id}?skip=${skip}&limit=${limit}`);
+            const res = await axios.get(`/api/posts/category/${category._id}?skip=${skip}&limit=${limit}`);
             res.data.map((post) => {
                 setPosts(old => [...old, post])
             })

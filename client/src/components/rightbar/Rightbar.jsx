@@ -18,7 +18,7 @@ export default function Rightbar({user}) {
     useEffect( () => {
         const getFriends = async () => {
             try {
-                const friendList = await axios.get("/users/friends/" + user._id);
+                const friendList = await axios.get("/api/users/friends/" + user._id);
                 setFriends(friendList.data);
             } catch (err) {
                 console.log(err)
@@ -51,8 +51,8 @@ export default function Rightbar({user}) {
 
         const followHandler = async () => {
             try {
-                await axios.put(`/users/${user._id}/follow`, {userId: currentUser._id});
-                const updatedUser = await axios.get(`/users?userId=${currentUser._id}`);
+                await axios.put(`/api/users/${user._id}/follow`, {userId: currentUser._id});
+                const updatedUser = await axios.get(`/api/users?userId=${currentUser._id}`);
                 setCurrentUser(updatedUser.data);
                 setFollowed(!followed);
             } catch(err) {

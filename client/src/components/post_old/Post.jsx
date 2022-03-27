@@ -28,7 +28,7 @@ export default function Post({post, socket}) {
     // 🦸‍♀️ Fetch post's author :
     useEffect ( () => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?userId=${post.userId}`);
+            const res = await axios.get(`/api/users?userId=${post.userId}`);
             setUser(res.data);
         }
         fetchUser();
@@ -36,7 +36,7 @@ export default function Post({post, socket}) {
     
     const likeHandler = () => {
         try {
-            axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
+            axios.put(`/api/posts/${post._id}/like`, { userId: currentUser._id });
         } catch(err) {
             console.log(err)
         }
@@ -62,7 +62,7 @@ export default function Post({post, socket}) {
 
     // useEffect ( () => {
     //     const fetchComme = async () => {
-    //         const res = await axios.get(`/posts/${post._id}/comments`);
+    //         const res = await axios.get(`/api/posts/${post._id}/comments`);
     //         setComm(res.data);
     //     }
     //     fetchComme();

@@ -23,7 +23,7 @@ export default function PasswordForgot() {
             const emailRecup = {
                 email: email
             }
-            await axios.post("/auth/passwordForgot", emailRecup);
+            await axios.post("/api/auth/passwordForgot", emailRecup);
             alert(`An email was send to ${email} for you to reset your password.`)
             history.push('/')
         } catch(err) {

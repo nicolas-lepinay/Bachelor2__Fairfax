@@ -31,14 +31,14 @@ export default function Share() {
             formData.append("file", file);
             newPost.img = fileName;
             try {
-                await axios.post("/upload", formData)
+                await axios.post("/api/upload", formData)
             } catch (err) {
                 console.log(err)
             }
         }
 
         try {
-            await axios.post("/posts", newPost);
+            await axios.post("/api/posts", newPost);
             // window.location.reload();
         } catch (err) {
             console.log(err)

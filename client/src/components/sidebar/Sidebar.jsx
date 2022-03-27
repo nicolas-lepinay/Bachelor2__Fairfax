@@ -23,7 +23,7 @@ export default function Sidebar() {
     useEffect( () => {
         const getFriends = async () => {
             try {
-                const friendList = await axios.get("/users/friends/" + user._id);
+                const friendList = await axios.get("/api/users/friends/" + user._id);
                 setFriends(friendList.data);
             } catch (err) {
                 console.log(err)
@@ -35,7 +35,7 @@ export default function Sidebar() {
     useEffect( () => {
         const getCategories = async () => {
             try {
-                const categoryList = await axios.get("/categories/findAll");
+                const categoryList = await axios.get("/api/categories/findAll");
                 setCategories(categoryList.data);
             } catch (err) {
                 console.log(err)

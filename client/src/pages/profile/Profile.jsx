@@ -26,7 +26,7 @@ function Profile() {
     useEffect ( () => {
         const fetchProfileUser = async () => {
             try {
-                const res = await axios.get(`/users?slug=${slug}`);
+                const res = await axios.get(`/api/users?slug=${slug}`);
                 setProfileUser(res.data);
             } catch(err) {
                 history.push('/home');

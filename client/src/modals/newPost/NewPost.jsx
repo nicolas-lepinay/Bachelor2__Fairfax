@@ -83,14 +83,14 @@ function NewPost({ handleClose, category }) {
         //     formData.append("file", file);
         //     newPost.img = fileName;
         //     try {
-        //         await axios.post("/upload", formData)
+        //         await axios.post("/api/upload", formData)
         //     } catch (err) {
         //         console.log(err)
         //     }
         // }
 
         try {
-            const res = await axios.post("/posts", newPost);
+            const res = await axios.post("/api/posts", newPost);
             history.push(`${category.slug}/${res.data?.slug}`)
             handleClose();
         } catch (err) {

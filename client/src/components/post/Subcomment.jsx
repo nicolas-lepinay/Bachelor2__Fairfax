@@ -52,7 +52,7 @@ function Subcomment({ subcomment, openLogin }) {
     // 🦸‍♀️ Fetch comment's author :
     useEffect ( () => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?userId=${subcomment.userId}`);
+            const res = await axios.get(`/api/users?userId=${subcomment.userId}`);
             setAuthor(res.data);
         }
         fetchUser();
@@ -71,7 +71,7 @@ function Subcomment({ subcomment, openLogin }) {
     // ❤️ Like handling :
     const likeHandler = async () => {
         try {
-            await axios.put(`/comments/${subcomment._id}/like`, { userId: user._id } );
+            await axios.put(`/api/comments/${subcomment._id}/like`, { userId: user._id } );
         } catch(err) {
             console.log(err)
         }

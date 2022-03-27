@@ -63,7 +63,7 @@ function Post({ post, comments, author, socket, toggleReply, setToggleReply, ope
 
     const likeHandler = async () => {
         try {
-            await axios.put(`/posts/${post._id}/like`, { userId: user?._id } );
+            await axios.put(`/api/posts/${post._id}/like`, { userId: user?._id } );
         } catch(err) {
             console.log(err)
         }

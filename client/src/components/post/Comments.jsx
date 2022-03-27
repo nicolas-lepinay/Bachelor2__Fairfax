@@ -70,8 +70,8 @@ export default function Comments({ postId, comments, author, socket, toggleReply
             content: jsonData,
         }
         try {
-            await axios.post("/comments", newComment);              // Publish comment
-            const res = await axios.get(`/posts?id=${postId}`);     // Re-fetch post to update comments
+            await axios.post("/api/comments", newComment);              // Publish comment
+            const res = await axios.get(`/api/posts?id=${postId}`);     // Re-fetch post to update comments
             setPost(res.data); 
             setToggleReply(false);
         } catch (err) {

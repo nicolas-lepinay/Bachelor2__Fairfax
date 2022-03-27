@@ -13,7 +13,7 @@ function Message({ message, own }) {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res = await axios.get(`/users?userId=${message.userId}`);
+                const res = await axios.get(`/api/users?userId=${message.userId}`);
                 setUser(res.data);
 
             } catch(err) {

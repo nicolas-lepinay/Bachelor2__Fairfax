@@ -27,7 +27,7 @@ function CommentActivity({ comments, profileUser }) {
         useEffect ( () => {
             // Fetch comment's post :
             const fetchPost = async () => {
-                const res = await axios.get(`/posts?id=${comment.postId}`);
+                const res = await axios.get(`/api/posts?id=${comment.postId}`);
                 setPost(res.data);
             }
             // Send comment's content to EditorState :
@@ -38,12 +38,12 @@ function CommentActivity({ comments, profileUser }) {
         useEffect ( () => {
             // Fetch post's author :
             const fetchAuthor = async () => {
-                const res = await axios.get(`/users?userId=${post?.userId}`);
+                const res = await axios.get(`/api/users?userId=${post?.userId}`);
                 setAuthor(res.data);
             }
             // Fetch post's category :
             const fetchCategory = async () => {
-                const res = await axios.get(`/categories?categoryId=${post?.categoryId}`);
+                const res = await axios.get(`/api/categories?categoryId=${post?.categoryId}`);
                 setCategory(res.data);
             }
             post?._id && fetchAuthor();

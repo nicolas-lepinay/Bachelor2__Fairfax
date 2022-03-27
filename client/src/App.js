@@ -31,7 +31,7 @@ function App() {
     
         // 🔌 Socket.io :
         useEffect(() => {
-            setSocket(io("ws://localhost:9000"));
+            setSocket(io("ws://45.9.191.110:9000"));
         }, [])
     
         useEffect(() => {

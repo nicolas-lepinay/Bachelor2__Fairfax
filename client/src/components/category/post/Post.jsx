@@ -44,7 +44,7 @@ function Post({ post, i }) {
     // 🦸‍♀️ Fetch post's author :
     useEffect ( () => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users?userId=${post.userId}`);
+            const res = await axios.get(`/api/users?userId=${post.userId}`);
             setAuthor(res.data);
         }
         fetchUser();

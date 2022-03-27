@@ -93,7 +93,7 @@ function LoginModal({ handleClose }) {
                 password: password1.current.value
             }
             try {
-                await axios.post("/auth/register", user);
+                await axios.post("/api/auth/register", user);
                 slidePanel(); // Le panneau coulisse pour inviter l'utilisateur à se connecter
             } catch(err) {
                 console.log(err);
@@ -105,7 +105,7 @@ function LoginModal({ handleClose }) {
     const handleLogin = async (e) => {
         e.preventDefault();        
         try {
-            const res = await axios.post("/auth/login", { identifier: identifier.current.value, password: password.current.value })
+            const res = await axios.post("/api/auth/login", { identifier: identifier.current.value, password: password.current.value })
             setCurrentUser(res.data);
             localStorage.setItem("fairfax_user", JSON.stringify(res.data))
             document.getElementById('root').style.filter = 'blur(0px)'; // J'enlève le fond flouté

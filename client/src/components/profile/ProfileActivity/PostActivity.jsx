@@ -25,11 +25,11 @@ function PostActivity({ posts, profileUser }) {
 
         useEffect ( () => {
             const fetchCategory = async () => {
-                const res = await axios.get(`/categories?categoryId=${post.categoryId}`);
+                const res = await axios.get(`/api/categories?categoryId=${post.categoryId}`);
                 setCategory(res.data);
             }
             const fetchUser = async () => {
-                const res = await axios.get(`/users?userId=${post.userId}`);
+                const res = await axios.get(`/api/users?userId=${post.userId}`);
                 setAuthor(res.data);
             }
 
