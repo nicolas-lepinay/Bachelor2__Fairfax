@@ -150,7 +150,7 @@ function LoginModal({ handleClose }) {
                     animate="visible"
                     exit="exit"
                 >
-                    <ModalWrapper innerRef={modalWrapper}>
+                    <ModalWrapper ref={modalWrapper}>
                         <ModalContainer className={active}>
                             <FormWrapper className="signup">
                                 {/* <!-- | FORM SIGN-UP | --> */}
@@ -165,7 +165,7 @@ function LoginModal({ handleClose }) {
                                             placeholder="Choose a username" 
                                             pattern="^[ a-zA-Z0-9._]{3,20}" title="Only letters, numbers, spaces, dots and underscores. Length required: 3 ~ 20" 
                                             required 
-                                            innerRef={username} 
+                                            ref={username} 
                                         />
                                     </InputAndIcon>
                     
@@ -177,7 +177,7 @@ function LoginModal({ handleClose }) {
                                             placeholder="Enter your email address" 
                                             maxlength="40" 
                                             required 
-                                            innerRef={email}
+                                            ref={email}
                                         />
                                     </InputAndIcon>
                     
@@ -190,7 +190,7 @@ function LoginModal({ handleClose }) {
                                             required 
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}" 
                                             title="At least 6 characters, including a number, an uppercase letter and a lowercase letter." 
-                                            innerRef={password1} 
+                                            ref={password1} 
                                             onChange={checkPasswordValid}
                                         />
                                     </InputAndIcon>
@@ -202,7 +202,7 @@ function LoginModal({ handleClose }) {
                                             type="password" 
                                             placeholder="Confirm your password" 
                                             required 
-                                            innerRef={password2} 
+                                            ref={password2} 
                                             onChange={checkPasswordValid}
                                         />
                                     </InputAndIcon>
@@ -242,12 +242,12 @@ function LoginModal({ handleClose }) {
                     
                                     <InputAndIcon>
                                         <FontAwesomeIcon icon={faUser} style={MATERIAL_STYLE} />
-                                        <Input type="text" placeholder="Username or email address" required innerRef={identifier}/>
+                                        <Input type="text" placeholder="Username or email address" required ref={identifier}/>
                                     </InputAndIcon>
                     
                                     <InputAndIcon>
                                         <FontAwesomeIcon icon={faLock} style={MATERIAL_STYLE} />
-                                        <Input type="password" placeholder="Enter your password" required innerRef={password}/>
+                                        <Input type="password" placeholder="Enter your password" required ref={password}/>
                                     </InputAndIcon>
                     
                                     <LinkAndIcon>

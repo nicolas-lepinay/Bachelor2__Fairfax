@@ -220,7 +220,7 @@ export default function Settings(){
                                 type="email"
                                 onChange={ (e) => handleEmailChange(e.target.value) }
                                 className={error === 'email' ? 'error' : ''}
-                                innerRef={emailInput}
+                                ref={emailInput}
                             />
                         </InputWrapper>
             
@@ -236,7 +236,7 @@ export default function Settings(){
                                 title="At least 6 characters, including a number, an uppercase letter and a lowercase letter." 
                                 className={error === 'newPassword' ? 'error' : ''}
                                 onChange={ (e) => handleNewPasswordChange(e.target.value) }
-                                innerRef={newPasswordInput}
+                                ref={newPasswordInput}
                             />
                         </InputWrapper>
 
@@ -250,7 +250,7 @@ export default function Settings(){
                                 type="password"
                                 onChange={ (e) => handleCurrentPasswordChange(e.target.value) }
                                 className={error === 'currentPassword' ? 'error' : ''}
-                                innerRef={currentPasswordInput}
+                                ref={currentPasswordInput}
                                 disabled={!newPassword}
                             />
                         </InputWrapper>
