@@ -257,7 +257,7 @@ export default function Settings(){
 
                         {error === 'currentPassword' && <ErrorMessage className="error">Oops! Password is incorrect.</ErrorMessage>}
 
-                        <Button disabled={(!email && !currentPassword && !newPassword) || error || (newPassword && !currentPassword) || (!newPassword && currentPassword)}>Apply changes</Button>
+                        <Button disabled={(!email && !currentPassword && !newPassword && !file) || error || (newPassword && !currentPassword) || (!newPassword && currentPassword)}>Apply changes</Button>
                     </Form>
                 </Wrapper>
             </Container>
