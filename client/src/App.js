@@ -3,49 +3,49 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Category from "./pages/category/Category";
+import Messages from "./pages/messages/Messages";
 
 import { AuthContext } from "./context/AuthContext";
 
 import { useContext } from "react";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
 } from "react-router-dom";
 
 function App() {
+  const { user } = useContext(AuthContext);
 
-    const { user } = useContext(AuthContext);
-
-
-    return (
+  return (
     <Router>
-        <Switch>
-            {/*Toujours ajouter 'exact' pour la racine ! */}
-            <Route exact path="/">
-                {user ? <Home/> : <Register/>}
-            </Route>
+      <Switch>
+        {/*Toujours ajouter 'exact' pour la racine ! */}
+        <Route exact path="/">
+          {user ? <Home /> : <Register />}
+        </Route>
 
-            <Route path="/login">
-                {user ? <Redirect to="/"/> : <Login/>}
-            </Route>
+        <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
 
-            <Route path="/register">
-            {user ? <Redirect to="/"/> : <Register/>}
-            </Route>
+        <Route path="/register">
+          {user ? <Redirect to="/" /> : <Register />}
+        </Route>
 
-            <Route path="/profile/:username">
-                <Profile/>
-            </Route>
+        <Route path="/profile/:username">
+          <Profile />
+        </Route>
 
-            <Route path="/category/:categoryName">
-                <Category/>
-            </Route>
-        </Switch>
+        <Route path="/category/:categoryName">
+          <Category />
+        </Route>
+
+        <Route path="/messages">
+          <Messages />
+        </Route>
+      </Switch>
     </Router>
-
-    )
+  );
 }
 
 export default App;
