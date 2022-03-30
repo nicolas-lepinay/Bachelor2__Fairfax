@@ -99,6 +99,7 @@ export const Trivia = styled.div`
         & h1 {
             background-image: radial-gradient(circle, #ded0a0 0%, #a79666 100%);
             background-clip: text;
+            -webkit-background-clip: text;
             color: transparent;
             font-family: 'Bluu Next', serif;
             font-size: 3.9rem;
