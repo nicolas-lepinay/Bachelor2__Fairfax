@@ -1,5 +1,5 @@
 // 🌌 React :
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 
@@ -7,9 +7,13 @@ import { useHistory } from "react-router-dom";
 import Post from '../../components/category/post/Post.jsx';
 import Navbar from "../../components/navbar/Navbar";
 import NewPost from "../../modals/newPost/NewPost.jsx";
+import LoginModal from '../../modals/loginModal/LoginModal.jsx';
 
 // 💅🏻 Styled Components :
 import { Wrapper, NewPostButton, Container, Banner, Title, Image, Logo, Bottom, Overlay, MainContent, Grid, Center, Button } from './Category.styled';
+
+// 🦸 UserContext :
+import { UserContext } from "../../context/UserContext";
 
 // 🎬 Framer Motion :
 import { AnimatePresence } from 'framer-motion';
@@ -22,6 +26,9 @@ function Category({socket}) {
 
     const slug = useParams().slug;
     const history = useHistory();
+    
+    // 🦸 UserContext :
+    const { user, setUser } = useContext(UserContext);
 
     const [category, setCategory] = useState({});
     const [posts, setPosts] = useState([]);
@@ -34,8 +41,10 @@ function Category({socket}) {
 
     const scrollRef = useRef(null);
 
-    // Is 'NEW POST' open ? :
+    // Is a modal open ? :
     const [newPostOpen, setNewPostOpen] = useState(false);
+    const [loginOpen, setLoginOpen] = useState(false);
+
 
     // 🚧 Fetch category's name and id :
     useEffect ( () => {
@@ -97,8 +106,15 @@ function Category({socket}) {
     }, []);
 
     // Open New Post modal :
-    const openModal = () => {
+    const openNewPost = () => {
         setNewPostOpen(true);
+        document.getElementById('root').style.transition = '0.8s filter ease-in-out';
+        document.getElementById('root').style.filter = 'blur(5px) brightness(30%)';
+    }
+
+    // Open New Post modal :
+    const openLogin = () => {
+        setLoginOpen(true);
         document.getElementById('root').style.transition = '0.8s filter ease-in-out';
         document.getElementById('root').style.filter = 'blur(5px) brightness(30%)';
     }
@@ -106,6 +122,7 @@ function Category({socket}) {
     // Close New Post modal :
     const closeModal = () => {
         setNewPostOpen(false);
+        setLoginOpen(false);
         document.getElementById('root').style.filter = 'blur(0px) brightness(1)';
     }
 
@@ -116,7 +133,7 @@ function Category({socket}) {
 
     return (
         <>
-            <NewPostButton onClick={openModal}>+</NewPostButton>
+            <NewPostButton onClick={user ? openNewPost : openLogin}>+</NewPostButton>
             <Wrapper onMouseMove={ (event) => handleMouseMove(event) }>
                 <Navbar socket={socket} visible={showNavbar || mousePosition.left < 90} />
                 <Container>
@@ -153,8 +170,8 @@ function Category({socket}) {
                 onExitComplete={() => null}
             >
             {newPostOpen && <NewPost handleClose={closeModal} category={category} />}
+            {loginOpen && <LoginModal handleClose={closeModal} />}
             </AnimatePresence>
-
         </>
     )
 }
