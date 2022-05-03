@@ -23,15 +23,23 @@
 
 📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐟𝐨𝐥𝐝𝐞𝐝) :
 
+![FireShot Capture 013 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494225-8d471714-f6d0-4c63-80da-e951324cb18c.png)
 
 📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐮𝐧𝐟𝐨𝐥𝐝𝐞𝐝) :
 
+![FireShot Capture 013-2 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494228-0ef3c62e-92b6-4db0-8661-45c38b819991.png)
 
 📸 𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲 𝐩𝐚𝐠𝐞 (𝐭𝐡𝐞 𝐂𝐚𝐟é) :
 
+![FireShot Capture 014 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494233-8a79603c-dde8-4ba3-8b46-1edc5f9aaf18.png)
+
 📸 𝐍𝐞𝐰 𝐩𝐨𝐬𝐭 :
 
+![FireShot Capture 020 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494240-9fe84e5a-5f52-4f09-8f22-16c6f2dc46bc.png)
+
 📸 𝐀 𝐩𝐨𝐬𝐭 𝐩𝐚𝐠𝐞 :
+
+![FireShot Capture 019 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494236-6aff7914-2b4b-4d54-ba93-ec775566c736.png)
 
 📸 𝐏𝐫𝐨𝐟𝐢𝐥𝐞 (1) :
 
@@ -44,12 +52,7 @@
 
 📸 𝐒𝐞𝐭𝐭𝐢𝐧𝐠𝐬 :
 
-
-![FireShot Capture 013 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494225-8d471714-f6d0-4c63-80da-e951324cb18c.png)
-![FireShot Capture 013-2 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494228-0ef3c62e-92b6-4db0-8661-45c38b819991.png)
-![FireShot Capture 014 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494233-8a79603c-dde8-4ba3-8b46-1edc5f9aaf18.png)
-![FireShot Capture 019 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494236-6aff7914-2b4b-4d54-ba93-ec775566c736.png)
-![FireShot Capture 020 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494240-9fe84e5a-5f52-4f09-8f22-16c6f2dc46bc.png)
+![FireShot Capture 021 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166495147-17c96808-f277-42f6-a230-fa0bc01e9690.png)
 
 
 
