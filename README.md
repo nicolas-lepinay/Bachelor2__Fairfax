@@ -1,5 +1,6 @@
 # 𝐅𝐚𝐢𝐫𝐟𝐚𝐱
 
+<img width="1093" alt="Logo_Gold" src="https://user-images.githubusercontent.com/87578863/166494008-a7f25f7b-16f8-4d92-94f9-b8fe499d05ea.png">
 
 💬 𝐅𝐚𝐢𝐫𝐟𝐚𝐱 : a magic-themed forum / social media web application conceived as a virtual mini-city. Explore the city map, pick a location and start discussing with people.
 
