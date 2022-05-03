@@ -10,14 +10,24 @@
 
  
 📸 𝐋𝐚𝐧𝐝𝐢𝐧𝐠 𝐩𝐚𝐠𝐞 :
+
+![FireShot Capture 002 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494331-616dd097-829d-4c3d-8297-848bfc83086c.png)
  
 📸 𝐋𝐨𝐠𝐢𝐧 / 𝐒𝐢𝐠𝐧-𝐮𝐩 :
 
+![FireShot Capture 003 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494211-277bfd9c-483c-4498-99dc-5ed9d724841c.png)
+
 📸 𝐋𝐢𝐯𝐞 𝐜𝐡𝐚𝐭 :
+
+![FireShot Capture 009 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494216-245db2f1-8c7f-4bb4-b97d-0d71f81009a7.png)
 
 📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐟𝐨𝐥𝐝𝐞𝐝) :
 
+![FireShot Capture 010 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494218-76f20264-eb7f-406c-ba98-7f9d9702d25c.png)
+
 📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐮𝐧𝐟𝐨𝐥𝐝𝐞𝐝) :
+
+![FireShot Capture 012 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494223-8a624239-e0cf-4131-b795-e8331271025b.png)
 
 📸 𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲 𝐩𝐚𝐠𝐞 (𝐭𝐡𝐞 𝐂𝐚𝐟é) :
 
