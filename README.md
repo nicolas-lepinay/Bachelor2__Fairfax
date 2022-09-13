@@ -21,13 +21,9 @@
 
 ![FireShot Capture 012 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494223-8a624239-e0cf-4131-b795-e8331271025b.png)
 
-📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐟𝐨𝐥𝐝𝐞𝐝) :
+📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 :
 
-![FireShot Capture 013 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494225-8d471714-f6d0-4c63-80da-e951324cb18c.png)
-
-📸 𝐂𝐢𝐭𝐲 𝐦𝐚𝐩 (𝐮𝐧𝐟𝐨𝐥𝐝𝐞𝐝) :
-
-![FireShot Capture 013-2 - Fairfax - fairfax website](https://user-images.githubusercontent.com/87578863/166494228-0ef3c62e-92b6-4db0-8661-45c38b819991.png)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/87578863/189861890-576ccf1a-3da1-4ae3-8ae9-c2a477a61308.gif)
 
 📸 𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲 𝐩𝐚𝐠𝐞 (𝐭𝐡𝐞 𝐂𝐚𝐟é) :
 
